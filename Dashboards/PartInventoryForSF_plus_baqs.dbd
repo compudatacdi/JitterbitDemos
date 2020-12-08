@@ -1,0 +1,700 @@
+<?xml version="1.0" standalone="yes"?>
+<diffgr:diffgram xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:diffgr="urn:schemas-microsoft-com:xml-diffgram-v1">
+  <DashboardDataSet xmlns="http://tempuri.org/DashboardDataSet.xsd">
+    <DashboardDefinition diffgr:id="DashboardDefinition1" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <Description>Epicor Part Inventory for sF</Description>
+      <IsAdvancedSearch>false</IsAdvancedSearch>
+      <LikeList />
+      <DockLayoutXML>&lt;FormMetrics Top="237" Left="556" Height="605" Width="808" ActivePane="c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0" LastPanel="50260458-e0c3-4161-a601-e09d87ef5166" /&gt;&lt;SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;&lt;SOAP-ENV:Body&gt;&lt;a1:UltraDockManager id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;ControlPanes href="#ref-3" /&gt;&lt;DefaultGroupSettings href="#ref-4" /&gt;&lt;DockAreas href="#ref-5" /&gt;&lt;ShowCloseButton&gt;false&lt;/ShowCloseButton&gt;&lt;UseDefaultContextMenus&gt;false&lt;/UseDefaultContextMenus&gt;&lt;LayoutStyle&gt;1&lt;/LayoutStyle&gt;&lt;UnpinnedTabInfoLeft href="#ref-6" /&gt;&lt;UnpinnedTabInfoTop href="#ref-7" /&gt;&lt;UnpinnedTabInfoBottom href="#ref-8" /&gt;&lt;UnpinnedTabInfoRight href="#ref-9" /&gt;&lt;ShowMenuButton&gt;2&lt;/ShowMenuButton&gt;&lt;/a1:UltraDockManager&gt;&lt;a1:DockableControlPanesCollection id="ref-3" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;/a1:DockableControlPanesCollection&gt;&lt;a1:GroupSettings id="ref-4" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;TabLocation&gt;1&lt;/TabLocation&gt;&lt;TabStyle&gt;1&lt;/TabStyle&gt;&lt;/a1:GroupSettings&gt;&lt;a1:DockAreasCollection id="ref-5" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-10" /&gt;&lt;/a1:DockAreasCollection&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-6" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-11" /&gt;&lt;tabAreaSide&gt;Left&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-7" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-12" /&gt;&lt;tabAreaSide&gt;Top&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-8" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-13" /&gt;&lt;tabAreaSide&gt;Bottom&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-9" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-14" /&gt;&lt;tabAreaSide&gt;Right&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:DockAreaPane id="ref-10" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Size xsi:type="a2:Size" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;width&gt;591&lt;/width&gt;&lt;height&gt;470&lt;/height&gt;&lt;/Size&gt;&lt;Id xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;545775545&lt;/_a&gt;&lt;_b&gt;22738&lt;/_b&gt;&lt;_c&gt;19852&lt;/_c&gt;&lt;_d&gt;150&lt;/_d&gt;&lt;_e&gt;126&lt;/_e&gt;&lt;_f&gt;99&lt;/_f&gt;&lt;_g&gt;59&lt;/_g&gt;&lt;_h&gt;73&lt;/_h&gt;&lt;_i&gt;29&lt;/_i&gt;&lt;_j&gt;53&lt;/_j&gt;&lt;_k&gt;76&lt;/_k&gt;&lt;/Id&gt;&lt;DockedParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/DockedParentId&gt;&lt;FloatingParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/FloatingParentId&gt;&lt;Key id="ref-16"&gt;TopDockArea&lt;/Key&gt;&lt;Panes href="#ref-17" /&gt;&lt;SelectedTabIndex&gt;0&lt;/SelectedTabIndex&gt;&lt;/a1:DockAreaPane&gt;&lt;SOAP-ENC:Array id="ref-11" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-12" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-13" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-14" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;a1:DockablePanesCollection id="ref-17" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-18" /&gt;&lt;/a1:DockablePanesCollection&gt;&lt;a1:DockableControlPane id="ref-18" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Text id="ref-19"&gt;Parts for SF Reporting&lt;/Text&gt;&lt;TextTab href="#ref-19" /&gt;&lt;Size xsi:type="a2:Size" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;width&gt;0&lt;/width&gt;&lt;height&gt;0&lt;/height&gt;&lt;/Size&gt;&lt;Id xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;-1575417781&lt;/_a&gt;&lt;_b&gt;-9969&lt;/_b&gt;&lt;_c&gt;17624&lt;/_c&gt;&lt;_d&gt;164&lt;/_d&gt;&lt;_e&gt;5&lt;/_e&gt;&lt;_f&gt;138&lt;/_f&gt;&lt;_g&gt;178&lt;/_g&gt;&lt;_h&gt;216&lt;/_h&gt;&lt;_i&gt;87&lt;/_i&gt;&lt;_j&gt;230&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/Id&gt;&lt;DockedParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;545775545&lt;/_a&gt;&lt;_b&gt;22738&lt;/_b&gt;&lt;_c&gt;19852&lt;/_c&gt;&lt;_d&gt;150&lt;/_d&gt;&lt;_e&gt;126&lt;/_e&gt;&lt;_f&gt;99&lt;/_f&gt;&lt;_g&gt;59&lt;/_g&gt;&lt;_h&gt;73&lt;/_h&gt;&lt;_i&gt;29&lt;/_i&gt;&lt;_j&gt;53&lt;/_j&gt;&lt;_k&gt;76&lt;/_k&gt;&lt;/DockedParentId&gt;&lt;FloatingParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/FloatingParentId&gt;&lt;Key id="ref-20"&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/Key&gt;&lt;ControlName id="ref-21"&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/ControlName&gt;&lt;OriginalControlBounds xsi:type="a2:Rectangle" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;x&gt;0&lt;/x&gt;&lt;y&gt;0&lt;/y&gt;&lt;width&gt;576&lt;/width&gt;&lt;height&gt;440&lt;/height&gt;&lt;/OriginalControlBounds&gt;&lt;ControlPaneIndex&gt;0&lt;/ControlPaneIndex&gt;&lt;/a1:DockableControlPane&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</DockLayoutXML>
+      <DockLayoutXMLDefault />
+      <InhibitRefreshAll>true</InhibitRefreshAll>
+      <IncludeAppBuiltTree>false</IncludeAppBuiltTree>
+      <TargetMobile>false</TargetMobile>
+    </DashboardDefinition>
+    <DashboardQuery diffgr:id="DashboardQuery1" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <DynamicQueryID>PartForSF</DynamicQueryID>
+      <QueryPanelID>57af8ec3-e9af-45c0-a744-d899b46c6ae2</QueryPanelID>
+      <RefreshInterval>-1</RefreshInterval>
+      <SynchronizeViews>true</SynchronizeViews>
+      <Caption>Parts for SF Reporting</Caption>
+      <PublishToTitle>false</PublishToTitle>
+      <PublishToTitleColumn />
+      <PublishToTitleCaption />
+      <DockLayoutXML>&lt;SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;&lt;SOAP-ENV:Body&gt;&lt;a1:UltraDockManager id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;ControlPanes href="#ref-3" /&gt;&lt;DefaultGroupSettings href="#ref-4" /&gt;&lt;DockAreas href="#ref-5" /&gt;&lt;ShowCloseButton&gt;false&lt;/ShowCloseButton&gt;&lt;UseDefaultContextMenus&gt;false&lt;/UseDefaultContextMenus&gt;&lt;LayoutStyle&gt;1&lt;/LayoutStyle&gt;&lt;UnpinnedTabInfoLeft href="#ref-6" /&gt;&lt;UnpinnedTabInfoTop href="#ref-7" /&gt;&lt;UnpinnedTabInfoBottom href="#ref-8" /&gt;&lt;UnpinnedTabInfoRight href="#ref-9" /&gt;&lt;ShowMenuButton&gt;2&lt;/ShowMenuButton&gt;&lt;/a1:UltraDockManager&gt;&lt;a1:DockableControlPanesCollection id="ref-3" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;/a1:DockableControlPanesCollection&gt;&lt;a1:GroupSettings id="ref-4" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;TabLocation&gt;1&lt;/TabLocation&gt;&lt;TabStyle&gt;1&lt;/TabStyle&gt;&lt;/a1:GroupSettings&gt;&lt;a1:DockAreasCollection id="ref-5" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-10" /&gt;&lt;/a1:DockAreasCollection&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-6" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-11" /&gt;&lt;tabAreaSide&gt;Left&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-7" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-12" /&gt;&lt;tabAreaSide&gt;Top&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-8" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-13" /&gt;&lt;tabAreaSide&gt;Bottom&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:UnpinnedTabAreaInfo id="ref-9" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;tabGroups href="#ref-14" /&gt;&lt;tabAreaSide&gt;Right&lt;/tabAreaSide&gt;&lt;/a1:UnpinnedTabAreaInfo&gt;&lt;a1:DockAreaPane id="ref-10" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Size xsi:type="a2:Size" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;width&gt;591&lt;/width&gt;&lt;height&gt;449&lt;/height&gt;&lt;/Size&gt;&lt;Id xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;450292976&lt;/_a&gt;&lt;_b&gt;-27172&lt;/_b&gt;&lt;_c&gt;17892&lt;/_c&gt;&lt;_d&gt;134&lt;/_d&gt;&lt;_e&gt;96&lt;/_e&gt;&lt;_f&gt;143&lt;/_f&gt;&lt;_g&gt;160&lt;/_g&gt;&lt;_h&gt;59&lt;/_h&gt;&lt;_i&gt;24&lt;/_i&gt;&lt;_j&gt;117&lt;/_j&gt;&lt;_k&gt;220&lt;/_k&gt;&lt;/Id&gt;&lt;DockedParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/DockedParentId&gt;&lt;FloatingParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/FloatingParentId&gt;&lt;Key id="ref-16"&gt;TopDockArea&lt;/Key&gt;&lt;Panes href="#ref-17" /&gt;&lt;SelectedTabIndex&gt;0&lt;/SelectedTabIndex&gt;&lt;/a1:DockAreaPane&gt;&lt;SOAP-ENC:Array id="ref-11" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-12" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-13" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;SOAP-ENC:Array id="ref-14" SOAP-ENC:arrayType="a1:UnpinnedTabGroupInfo[0]" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;/SOAP-ENC:Array&gt;&lt;a1:DockablePanesCollection id="ref-17" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-18" /&gt;&lt;/a1:DockablePanesCollection&gt;&lt;a1:DockableControlPane id="ref-18" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;Settings href="#ref-19" /&gt;&lt;Text id="ref-20"&gt;Epicor Part Inventory&lt;/Text&gt;&lt;TextTab href="#ref-20" /&gt;&lt;Size xsi:type="a2:Size" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;width&gt;0&lt;/width&gt;&lt;height&gt;0&lt;/height&gt;&lt;/Size&gt;&lt;Id xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;-149059159&lt;/_a&gt;&lt;_b&gt;10706&lt;/_b&gt;&lt;_c&gt;17231&lt;/_c&gt;&lt;_d&gt;154&lt;/_d&gt;&lt;_e&gt;207&lt;/_e&gt;&lt;_f&gt;132&lt;/_f&gt;&lt;_g&gt;228&lt;/_g&gt;&lt;_h&gt;151&lt;/_h&gt;&lt;_i&gt;42&lt;/_i&gt;&lt;_j&gt;235&lt;/_j&gt;&lt;_k&gt;13&lt;/_k&gt;&lt;/Id&gt;&lt;DockedParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;450292976&lt;/_a&gt;&lt;_b&gt;-27172&lt;/_b&gt;&lt;_c&gt;17892&lt;/_c&gt;&lt;_d&gt;134&lt;/_d&gt;&lt;_e&gt;96&lt;/_e&gt;&lt;_f&gt;143&lt;/_f&gt;&lt;_g&gt;160&lt;/_g&gt;&lt;_h&gt;59&lt;/_h&gt;&lt;_i&gt;24&lt;/_i&gt;&lt;_j&gt;117&lt;/_j&gt;&lt;_k&gt;220&lt;/_k&gt;&lt;/DockedParentId&gt;&lt;FloatingParentId xsi:type="a3:Guid" xmlns:a3="http://schemas.microsoft.com/clr/ns/System"&gt;&lt;_a&gt;0&lt;/_a&gt;&lt;_b&gt;0&lt;/_b&gt;&lt;_c&gt;0&lt;/_c&gt;&lt;_d&gt;0&lt;/_d&gt;&lt;_e&gt;0&lt;/_e&gt;&lt;_f&gt;0&lt;/_f&gt;&lt;_g&gt;0&lt;/_g&gt;&lt;_h&gt;0&lt;/_h&gt;&lt;_i&gt;0&lt;/_i&gt;&lt;_j&gt;0&lt;/_j&gt;&lt;_k&gt;0&lt;/_k&gt;&lt;/FloatingParentId&gt;&lt;Key id="ref-21"&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/Key&gt;&lt;ControlName id="ref-22"&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ControlName&gt;&lt;OriginalControlBounds xsi:type="a2:Rectangle" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/System.Drawing/System.Drawing"&gt;&lt;x&gt;0&lt;/x&gt;&lt;y&gt;0&lt;/y&gt;&lt;width&gt;552&lt;/width&gt;&lt;height&gt;392&lt;/height&gt;&lt;/OriginalControlBounds&gt;&lt;ControlPaneIndex&gt;0&lt;/ControlPaneIndex&gt;&lt;/a1:DockableControlPane&gt;&lt;a1:PaneSettings id="ref-19" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinDock/Infragistics4.Win.UltraWinDock.v12.2"&gt;&lt;ShowCaption&gt;2&lt;/ShowCaption&gt;&lt;/a1:PaneSettings&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</DockLayoutXML>
+      <AutoRefreshOnLoad>true</AutoRefreshOnLoad>
+      <IsPrimary>true</IsPrimary>
+      <ParentView />
+      <ParentColumn />
+      <ChildColumn />
+      <PanelSize>{X=0,Y=0,Width=591,Height=470}</PanelSize>
+      <ViewName>V_PartForSF_1View</ViewName>
+    </DashboardQuery>
+    <DashboardView diffgr:id="DashboardView1" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ViewType>Grid</ViewType>
+      <Caption>Epicor Part Inventory</Caption>
+      <ViewPanelID>809d7bc6-6024-45b3-87e9-788fd3afa464</ViewPanelID>
+      <PanelSize>{X=0,Y=0,Width=591,Height=449}</PanelSize>
+    </DashboardView>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns223" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_PartNum</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Part</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns224" msdata:rowOrder="1">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_PartDescription</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Description</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns225" msdata:rowOrder="2">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>PartWhse_WarehouseCode</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Warehouse</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns226" msdata:rowOrder="3">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>PartWhse_OnHandQty</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>decimal</DataType>
+      <Caption>Qty On Hand</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns227" msdata:rowOrder="4">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>PartWhse_DemandQty</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>decimal</DataType>
+      <Caption>Total Demand Qty</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns228" msdata:rowOrder="5">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Calculated_Available</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>decimal</DataType>
+      <Caption>Available</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns229" msdata:rowOrder="6">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>PartClass_Description</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Class</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns230" msdata:rowOrder="7">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_IUM</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>UOM</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns231" msdata:rowOrder="8">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_TypeCode</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Type</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns232" msdata:rowOrder="9">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_NonStock</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>bit</DataType>
+      <Caption>Non-Stock Item</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns233" msdata:rowOrder="10">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>ProdGrup_Description</ColumnName>
+      <IsVisible>true</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Group</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewColumns diffgr:id="DashboardViewColumns234" msdata:rowOrder="11">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <ColumnName>Part_Company</ColumnName>
+      <IsVisible>false</IsVisible>
+      <DataType>nvarchar</DataType>
+      <Caption>Company</Caption>
+      <DashboardPrompt>false</DashboardPrompt>
+      <IsKeyField>false</IsKeyField>
+      <QuickSearchId />
+      <IsFocused>false</IsFocused>
+    </DashboardViewColumns>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions1" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>ForceAllUpdate</PropertyName>
+      <PropertyType>System.Boolean</PropertyType>
+      <PropertyValue>False</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions2" msdata:rowOrder="1">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>ViewColumnTable</PropertyName>
+      <PropertyType>System.String</PropertyType>
+      <PropertyValue>&lt;NewDataSet&gt;
+  &lt;xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"&gt;
+    &lt;xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:MainDataTable="DashboardViewColumns" msdata:UseCurrentLocale="true"&gt;
+      &lt;xs:complexType&gt;
+        &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+          &lt;xs:element name="DashboardViewColumns"&gt;
+            &lt;xs:complexType&gt;
+              &lt;xs:sequence&gt;
+                &lt;xs:element name="Company" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="DefinitionID" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="QueryID" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ViewID" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ColumnName" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="IsVisible" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="OnXAxis" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="OnYAxis" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="OnZAxis" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="DataType" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="Caption" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="LabelSize" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="LabelLocation" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="LabelGuid" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ControlSize" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ControlLocation" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ControlGuid" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="DashboardPrompt" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="DashboardHonorNull" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="DashboardCondition" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="ControlType" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="BaseType" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="RetrieverCombo" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="DescColumnName" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="IsKeyField" type="xs:boolean" default="false" minOccurs="0" /&gt;
+                &lt;xs:element name="QuickSearchId" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="DisplayCaption" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="IsFocused" type="xs:boolean" default="false" minOccurs="0" /&gt;
+                &lt;xs:element name="ControlName" type="xs:string" minOccurs="0" /&gt;
+              &lt;/xs:sequence&gt;
+            &lt;/xs:complexType&gt;
+          &lt;/xs:element&gt;
+        &lt;/xs:choice&gt;
+      &lt;/xs:complexType&gt;
+    &lt;/xs:element&gt;
+  &lt;/xs:schema&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_PartNum&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Part&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_PartDescription&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Description&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;PartWhse_WarehouseCode&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Warehouse&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;PartWhse_OnHandQty&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;decimal&lt;/DataType&gt;
+    &lt;Caption&gt;Qty On Hand&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;PartWhse_DemandQty&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;decimal&lt;/DataType&gt;
+    &lt;Caption&gt;Total Demand Qty&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Calculated_Available&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;decimal&lt;/DataType&gt;
+    &lt;Caption&gt;Available&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;PartClass_Description&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Class&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_IUM&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;UOM&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_TypeCode&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Type&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_NonStock&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;bit&lt;/DataType&gt;
+    &lt;Caption&gt;Non-Stock Item&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;ProdGrup_Description&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;true&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Group&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+  &lt;DashboardViewColumns&gt;
+    &lt;Company&gt;0800&lt;/Company&gt;
+    &lt;DefinitionID&gt;PartInventoryForSF&lt;/DefinitionID&gt;
+    &lt;QueryID&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/QueryID&gt;
+    &lt;ViewID&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/ViewID&gt;
+    &lt;ColumnName&gt;Part_Company&lt;/ColumnName&gt;
+    &lt;IsVisible&gt;false&lt;/IsVisible&gt;
+    &lt;DataType&gt;nvarchar&lt;/DataType&gt;
+    &lt;Caption&gt;Company&lt;/Caption&gt;
+    &lt;DashboardPrompt&gt;false&lt;/DashboardPrompt&gt;
+    &lt;DashboardHonorNull&gt;false&lt;/DashboardHonorNull&gt;
+    &lt;DashboardCondition /&gt;
+    &lt;IsKeyField&gt;false&lt;/IsKeyField&gt;
+    &lt;QuickSearchId /&gt;
+    &lt;IsFocused&gt;false&lt;/IsFocused&gt;
+  &lt;/DashboardViewColumns&gt;
+&lt;/NewDataSet&gt;</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions3" msdata:rowOrder="2">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>Updatable</PropertyName>
+      <PropertyType>System.Boolean</PropertyType>
+      <PropertyValue>False</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions4" msdata:rowOrder="3">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>StaticGetNew</PropertyName>
+      <PropertyType>System.Boolean</PropertyType>
+      <PropertyValue>False</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions6" msdata:rowOrder="4">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>GridCaption</PropertyName>
+      <PropertyType>System.String</PropertyType>
+      <PropertyValue>Epicor Part Inventory</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions8" msdata:rowOrder="5">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>GridSummaries</PropertyName>
+      <PropertyType>System.Boolean</PropertyType>
+      <PropertyValue>False</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions9" msdata:rowOrder="6">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>ViewButtons</PropertyName>
+      <PropertyType>System.String</PropertyType>
+      <PropertyValue>&lt;DocumentElement /&gt;</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions10" msdata:rowOrder="7">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>GridGroupBy</PropertyName>
+      <PropertyType>System.Boolean</PropertyType>
+      <PropertyValue>False</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions11" msdata:rowOrder="8">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>AddNewSubscribers</PropertyName>
+      <PropertyType>System.String</PropertyType>
+      <PropertyValue>&lt;DocumentElement /&gt;</PropertyValue>
+    </DashboardViewOptions>
+    <DashboardViewOptions diffgr:id="DashboardViewOptions15" msdata:rowOrder="9">
+      <Company>0800</Company>
+      <DefininitionID>PartInventoryForSF</DefininitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <ViewID>50260458-e0c3-4161-a601-e09d87ef5166</ViewID>
+      <PropertyName>GridLayout</PropertyName>
+      <PropertyType>System.String</PropertyType>
+      <PropertyValue>&lt;SOAP-ENV:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:clr="http://schemas.microsoft.com/soap/encoding/clr/1.0" SOAP-ENV:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"&gt;&lt;SOAP-ENV:Body&gt;&lt;a1:UltraGridDisplayLayout id="ref-1" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;AddNewBox href="#ref-3" /&gt;&lt;GroupByBox href="#ref-4" /&gt;&lt;Override href="#ref-5" /&gt;&lt;ViewStyleBand&gt;1&lt;/ViewStyleBand&gt;&lt;Bands href="#ref-6" /&gt;&lt;/a1:UltraGridDisplayLayout&gt;&lt;a1:AddNewBox id="ref-3" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Prompt id="ref-7"&gt;Add ...&lt;/Prompt&gt;&lt;/a1:AddNewBox&gt;&lt;a1:GroupByBox id="ref-4" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Prompt id="ref-8"&gt;Drag a column header here to group by that column.&lt;/Prompt&gt;&lt;/a1:GroupByBox&gt;&lt;a1:UltraGridOverride id="ref-5" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;AllowAddNew&gt;2&lt;/AllowAddNew&gt;&lt;AllowDelete&gt;2&lt;/AllowDelete&gt;&lt;AllowUpdate&gt;2&lt;/AllowUpdate&gt;&lt;HeaderClickAction&gt;2&lt;/HeaderClickAction&gt;&lt;NullText id="ref-9"&gt;&lt;/NullText&gt;&lt;/a1:UltraGridOverride&gt;&lt;a1:BandsCollection id="ref-6" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-10" /&gt;&lt;/a1:BandsCollection&gt;&lt;a1:UltraGridBand id="ref-10" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Key id="ref-11"&gt;Results&lt;/Key&gt;&lt;Columns href="#ref-12" /&gt;&lt;SortedCols href="#ref-13" /&gt;&lt;/a1:UltraGridBand&gt;&lt;a1:ColumnsCollection id="ref-12" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Count&gt;14&lt;/Count&gt;&lt;_x0030_ href="#ref-14" /&gt;&lt;_x0031_ href="#ref-15" /&gt;&lt;_x0032_ href="#ref-16" /&gt;&lt;_x0033_ href="#ref-17" /&gt;&lt;_x0034_ href="#ref-18" /&gt;&lt;_x0035_ href="#ref-19" /&gt;&lt;_x0036_ href="#ref-20" /&gt;&lt;_x0037_ href="#ref-21" /&gt;&lt;_x0038_ href="#ref-22" /&gt;&lt;_x0039_ href="#ref-23" /&gt;&lt;_x0031_0 href="#ref-24" /&gt;&lt;_x0031_1 href="#ref-25" /&gt;&lt;_x0031_2 href="#ref-26" /&gt;&lt;_x0031_3 href="#ref-27" /&gt;&lt;/a1:ColumnsCollection&gt;&lt;a1:SortedColumnsCollection id="ref-13" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Count&gt;1&lt;/Count&gt;&lt;_x0030_ href="#ref-28" /&gt;&lt;/a1:SortedColumnsCollection&gt;&lt;a1:UltraGridColumn id="ref-14" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;8&lt;/MaxLength&gt;&lt;Header href="#ref-29" /&gt;&lt;Hidden&gt;true&lt;/Hidden&gt;&lt;Key id="ref-30"&gt;Part_Company&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;99&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-15" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;50&lt;/MaxLength&gt;&lt;Header href="#ref-31" /&gt;&lt;Key id="ref-32"&gt;Part_PartNum&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;98&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-16" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;1000&lt;/MaxLength&gt;&lt;Header href="#ref-33" /&gt;&lt;Key id="ref-34"&gt;Part_PartDescription&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;108&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-17" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;8&lt;/MaxLength&gt;&lt;Header href="#ref-35" /&gt;&lt;Key id="ref-36"&gt;PartWhse_WarehouseCode&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;110&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-18" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;CellAppearanceHolder href="#ref-38" /&gt;&lt;Header href="#ref-39" /&gt;&lt;Key id="ref-40"&gt;PartWhse_OnHandQty&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;117&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;EditorComponentName id="ref-41"&gt;&lt;/EditorComponentName&gt;&lt;UseEditorMaskSettings&gt;true&lt;/UseEditorMaskSettings&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-19" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;CellAppearanceHolder href="#ref-42" /&gt;&lt;Header href="#ref-43" /&gt;&lt;Key id="ref-44"&gt;PartWhse_DemandQty&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;141&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;EditorComponentName href="#ref-41" /&gt;&lt;UseEditorMaskSettings&gt;true&lt;/UseEditorMaskSettings&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-20" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;CellAppearanceHolder href="#ref-45" /&gt;&lt;Header href="#ref-46" /&gt;&lt;Key id="ref-47"&gt;Calculated_Available&lt;/Key&gt;&lt;MaskInput id="ref-48"&gt;-nn,nnn.nn&lt;/MaskInput&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;98&lt;/Width&gt;&lt;Format id="ref-49"&gt;##,##0.00&lt;/Format&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-21" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;30&lt;/MaxLength&gt;&lt;Header href="#ref-50" /&gt;&lt;Key id="ref-51"&gt;PartClass_Description&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;80&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-22" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;6&lt;/MaxLength&gt;&lt;Header href="#ref-52" /&gt;&lt;Key id="ref-53"&gt;Part_IUM&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;80&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-23" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;2&lt;/MaxLength&gt;&lt;Header href="#ref-54" /&gt;&lt;Key id="ref-55"&gt;Part_TypeCode&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;79&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-24" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Header href="#ref-56" /&gt;&lt;Key id="ref-57"&gt;Part_NonStock&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;129&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-25" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;MaxLength&gt;30&lt;/MaxLength&gt;&lt;Header href="#ref-58" /&gt;&lt;Key id="ref-59"&gt;ProdGrup_Description&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;Width&gt;84&lt;/Width&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-26" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Header href="#ref-60" /&gt;&lt;Hidden&gt;true&lt;/Hidden&gt;&lt;Key id="ref-61"&gt;SysRowID&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:UltraGridColumn id="ref-27" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Header href="#ref-62" /&gt;&lt;Hidden&gt;true&lt;/Hidden&gt;&lt;Key id="ref-63"&gt;RowMod&lt;/Key&gt;&lt;PromptChar&gt;&lt;/PromptChar&gt;&lt;AllowRowSummaries&gt;2&lt;/AllowRowSummaries&gt;&lt;IsBound&gt;true&lt;/IsBound&gt;&lt;/a1:UltraGridColumn&gt;&lt;a1:SerializedColumnID id="ref-28" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;Key href="#ref-34" /&gt;&lt;RelativeIndex&gt;2&lt;/RelativeIndex&gt;&lt;Bound&gt;true&lt;/Bound&gt;&lt;SortIndicator&gt;1&lt;/SortIndicator&gt;&lt;IsGroupByColumn&gt;false&lt;/IsGroupByColumn&gt;&lt;/a1:SerializedColumnID&gt;&lt;a1:ColumnHeader id="ref-29" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;13&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-31" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;0&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-33" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;1&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-35" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;2&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a2:AppearanceHolder id="ref-38" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;Appearance href="#ref-64" /&gt;&lt;/a2:AppearanceHolder&gt;&lt;a1:ColumnHeader id="ref-39" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;3&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a2:AppearanceHolder id="ref-42" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;Appearance href="#ref-65" /&gt;&lt;/a2:AppearanceHolder&gt;&lt;a1:ColumnHeader id="ref-43" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;4&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a2:AppearanceHolder id="ref-45" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;Appearance href="#ref-66" /&gt;&lt;/a2:AppearanceHolder&gt;&lt;a1:ColumnHeader id="ref-46" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;5&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-50" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;6&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-52" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;7&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-54" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;8&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-56" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;9&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-58" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;10&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-60" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;11&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a1:ColumnHeader id="ref-62" xmlns:a1="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win.UltraWinGrid/Infragistics4.Win.UltraWinGrid.v12.2"&gt;&lt;VisiblePosition&gt;12&lt;/VisiblePosition&gt;&lt;/a1:ColumnHeader&gt;&lt;a2:Appearance id="ref-64" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;TextHAlign&gt;3&lt;/TextHAlign&gt;&lt;Id&gt;0&lt;/Id&gt;&lt;/a2:Appearance&gt;&lt;a2:Appearance id="ref-65" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;TextHAlign&gt;3&lt;/TextHAlign&gt;&lt;Id&gt;0&lt;/Id&gt;&lt;/a2:Appearance&gt;&lt;a2:Appearance id="ref-66" xmlns:a2="http://schemas.microsoft.com/clr/nsassem/Infragistics.Win/Infragistics4.Win.v12.2"&gt;&lt;TextHAlign&gt;3&lt;/TextHAlign&gt;&lt;Id&gt;0&lt;/Id&gt;&lt;/a2:Appearance&gt;&lt;/SOAP-ENV:Body&gt;&lt;/SOAP-ENV:Envelope&gt;</PropertyValue>
+    </DashboardViewOptions>
+    <ExportBAQs diffgr:id="ExportBAQs1" msdata:rowOrder="0">
+      <OriginalExportID>PartForSF</OriginalExportID>
+      <DynamicQueryDataSet>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</DynamicQueryDataSet>
+    </ExportBAQs>
+    <DashboardProperties diffgr:id="DashboardProperties51" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>PanelSize</PropertyID>
+      <PropertyValue>{Width=792, Height=566}</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties52" msdata:rowOrder="1">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>LastPanel</PropertyID>
+      <PropertyValue>50260458-e0c3-4161-a601-e09d87ef5166</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties53" msdata:rowOrder="2">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>Caption</PropertyID>
+      <PropertyValue>Epicor Part Inventory</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties54" msdata:rowOrder="3">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>Size</PropertyID>
+      <PropertyValue>{Width=808, Height=605}</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties55" msdata:rowOrder="4">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>Location</PropertyID>
+      <PropertyValue>{X=556,Y=237}</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties56" msdata:rowOrder="5">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>Version</PropertyID>
+      <PropertyValue />
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties57" msdata:rowOrder="6">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>AutoRefreshAll</PropertyID>
+      <PropertyValue>False</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties58" msdata:rowOrder="7">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>CGCCode</PropertyID>
+      <PropertyValue />
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties59" msdata:rowOrder="8">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>NavigationData</PropertyID>
+      <PropertyValue>&lt;NavigationDataSet xmlns="http://tempuri.org/NavigationDataSet.xsd"&gt;
+  &lt;xs:schema id="NavigationDataSet" targetNamespace="http://tempuri.org/NavigationDataSet.xsd" xmlns:mstns="http://tempuri.org/NavigationDataSet.xsd" xmlns="http://tempuri.org/NavigationDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" attributeFormDefault="qualified" elementFormDefault="qualified"&gt;
+    &lt;xs:element name="NavigationDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true"&gt;
+      &lt;xs:complexType&gt;
+        &lt;xs:choice minOccurs="0" maxOccurs="unbounded"&gt;
+          &lt;xs:element name="Navigation"&gt;
+            &lt;xs:complexType&gt;
+              &lt;xs:sequence&gt;
+                &lt;xs:element name="Key" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="Seq" type="xs:int" minOccurs="0" /&gt;
+                &lt;xs:element name="IsQuery" type="xs:boolean" minOccurs="0" /&gt;
+                &lt;xs:element name="Name" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="Caption" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="PrevPage" type="xs:string" default="" minOccurs="0" /&gt;
+                &lt;xs:element name="NextPage" type="xs:string" default="" minOccurs="0" /&gt;
+              &lt;/xs:sequence&gt;
+            &lt;/xs:complexType&gt;
+          &lt;/xs:element&gt;
+          &lt;xs:element name="NavigationJump"&gt;
+            &lt;xs:complexType&gt;
+              &lt;xs:sequence&gt;
+                &lt;xs:element name="Key" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="JumpPage" type="xs:string" /&gt;
+                &lt;xs:element name="Sequence" type="xs:int" minOccurs="0" /&gt;
+              &lt;/xs:sequence&gt;
+            &lt;/xs:complexType&gt;
+          &lt;/xs:element&gt;
+          &lt;xs:element name="NavigationPage"&gt;
+            &lt;xs:complexType&gt;
+              &lt;xs:sequence&gt;
+                &lt;xs:element name="Key" type="xs:string" minOccurs="0" /&gt;
+                &lt;xs:element name="Caption" type="xs:string" minOccurs="0" /&gt;
+              &lt;/xs:sequence&gt;
+            &lt;/xs:complexType&gt;
+          &lt;/xs:element&gt;
+        &lt;/xs:choice&gt;
+      &lt;/xs:complexType&gt;
+      &lt;xs:unique name="NavigationTableKey1"&gt;
+        &lt;xs:selector xpath=".//mstns:Navigation" /&gt;
+        &lt;xs:field xpath="mstns:Key" /&gt;
+      &lt;/xs:unique&gt;
+      &lt;xs:unique name="Constraint1"&gt;
+        &lt;xs:selector xpath=".//mstns:NavigationJump" /&gt;
+        &lt;xs:field xpath="mstns:Key" /&gt;
+        &lt;xs:field xpath="mstns:JumpPage" /&gt;
+      &lt;/xs:unique&gt;
+    &lt;/xs:element&gt;
+    &lt;xs:annotation&gt;
+      &lt;xs:appinfo&gt;
+        &lt;msdata:Relationship name="Navigation_NavigationJump" msdata:parent="Navigation" msdata:child="NavigationJump" msdata:parentkey="Key" msdata:childkey="Key" /&gt;
+      &lt;/xs:appinfo&gt;
+    &lt;/xs:annotation&gt;
+  &lt;/xs:schema&gt;
+  &lt;Navigation&gt;
+    &lt;Key&gt;c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0&lt;/Key&gt;
+    &lt;Seq&gt;1&lt;/Seq&gt;
+    &lt;IsQuery&gt;true&lt;/IsQuery&gt;
+    &lt;Name&gt;PartForSF&lt;/Name&gt;
+    &lt;Caption&gt;Parts for SF Reporting&lt;/Caption&gt;
+    &lt;PrevPage /&gt;
+    &lt;NextPage /&gt;
+  &lt;/Navigation&gt;
+  &lt;Navigation&gt;
+    &lt;Key&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/Key&gt;
+    &lt;Seq&gt;2&lt;/Seq&gt;
+    &lt;IsQuery&gt;false&lt;/IsQuery&gt;
+    &lt;Name&gt;Grid: Epicor Part Inventory&lt;/Name&gt;
+    &lt;Caption&gt;Epicor Part Inventory&lt;/Caption&gt;
+    &lt;PrevPage /&gt;
+    &lt;NextPage /&gt;
+  &lt;/Navigation&gt;
+  &lt;NavigationPage&gt;
+    &lt;Key /&gt;
+    &lt;Caption /&gt;
+  &lt;/NavigationPage&gt;
+  &lt;NavigationPage&gt;
+    &lt;Key&gt;Prev&lt;/Key&gt;
+    &lt;Caption&gt;Prev&lt;/Caption&gt;
+  &lt;/NavigationPage&gt;
+  &lt;NavigationPage&gt;
+    &lt;Key&gt;Next&lt;/Key&gt;
+    &lt;Caption&gt;Next&lt;/Caption&gt;
+  &lt;/NavigationPage&gt;
+  &lt;NavigationPage&gt;
+    &lt;Key&gt;50260458-e0c3-4161-a601-e09d87ef5166&lt;/Key&gt;
+    &lt;Caption&gt;Epicor Part Inventory&lt;/Caption&gt;
+  &lt;/NavigationPage&gt;
+&lt;/NavigationDataSet&gt;</PropertyValue>
+    </DashboardProperties>
+    <DashboardProperties diffgr:id="DashboardProperties60" msdata:rowOrder="9">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <PropertyID>PrimaryQuery</PropertyID>
+      <PropertyValue>V_PartForSF_1View</PropertyValue>
+    </DashboardProperties>
+    <DashboardQueryOptions diffgr:id="DashboardQueryOptions6" msdata:rowOrder="0">
+      <Company>0800</Company>
+      <DefinitionID>PartInventoryForSF</DefinitionID>
+      <QueryID>c9a4c80a-6d96-491e-a2dc-d3bb5dd775d0</QueryID>
+      <PropertyName>IsBaqUpdatable</PropertyName>
+      <PropertyValue>False</PropertyValue>
+    </DashboardQueryOptions>
+  </DashboardDataSet>
+</diffgr:diffgram>
