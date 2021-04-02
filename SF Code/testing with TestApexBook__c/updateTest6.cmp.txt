@@ -1,0 +1,14 @@
+<!-- <aura:component > -->
+<!-- <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" > -->
+
+<!-- NOTE:  controller="MyHelloWorld3" > points to the apex class MyHelloWorld3 -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="MyHelloWorld3">
+
+    <!-- <lightning:button name="abc123" label="abc 123" onclick="{!c.handleabc123}" /> -->
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>   
+
+   	<aura:attribute name="buttonLabel" type="String" default="Get password" />
+    <lightning:button name="abc1234" label="{!v.buttonLabel}" onclick="{!c.handleabc1234}" />
+
+</aura:component>

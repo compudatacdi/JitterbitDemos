@@ -1,0 +1,149 @@
+// 03/31/21 eric blackwelder
+// created to test apex code
+// fields in TestApexBook__c:  Name, Price__c
+// intention here is to update sf record from ec data, triggered by button
+
+
+global class MyHelloWorld3 {
+    
+    public static String url_result = '_a';
+
+    //@invocablevariable        global String accname;
+    //@InvocableMethod(label='Get Account Names' description='Returns the list of account names corresponding to the specified account IDs.' category='Account')
+//    @InvocableMethod
+@AuraEnabled
+
+    
+    //eb1:
+    //@future (callout=true)
+    //public static String url_result = '_a';
+
+    //public class MyException extends Exception {}
+    
+    
+	//public Opportunity currentRecordX{get; set;}
+    //public TestApexBook__c currentRecord{get; set;}
+    
+    //public static string getTest6() {
+    //public static string getTest6(string testApexBookID) {
+    public static string getTest6(string testApexBookID) {
+        //string name = "not found";
+        string name;
+        name = 'not found';
+        
+        TestApexBook__c[] testApexBook2;
+        //test data:
+        //	id a051U00001nUq5yQAC	name test1
+        //testApexBook2 = [SELECT Id,Name FROM TestApexBook__c WHERE name = 'test6'];
+        //works:
+        //testApexBook2 = [SELECT Id,Name FROM TestApexBook__c WHERE id = 'a051U00001nUq5yQAC'];
+        //need to substitute variable into the []
+        testApexBook2 = [SELECT Id,Name FROM TestApexBook__c WHERE id = :testApexBookID];
+
+
+        
+            
+        for (TestApexBook__c a : testApexBook2) {
+            name = a.Name;
+        }
+        
+        //name = 'zzz';
+        return name;
+        
+        
+	}
+
+
+    public static void updateTest6() {
+        getCalloutResponseContents('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Name&$filter=CustID%20eq%20\'3M01\' ');
+
+//		public myExtension(ApexPages.StandardController controller) {
+			//currentRecord = [SELECT Id, Name FROM TestApexBook__c WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+
+        //compiles, but doubtful this will do what i want/need it to
+        //			TestApexBook__c currentRecordX = [SELECT Id, Name FROM TestApexBook__c WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+        		
+//        }
+    }
+
+    //eb1:
+    // Pass in the endpoint to be used using the string url
+    //public static String getCalloutResponseContents(String url) {
+    //NOTE: 'future' needed to call out, but happens async, so is done and can't pass anything back
+    @future (callout=true)
+    public static void getCalloutResponseContents(String url) {
+
+        //url_result = '_c';
+
+        // Instantiate a new http object
+        Http h = new Http();
+        
+         // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+        HttpRequest req = new HttpRequest();
+        //gets error:  401 - Unauthorized: Access is denied due to invalid credentials
+        //req.setEndpoint(url);
+
+        //THIS WORKED
+        //BUT IT PULLED IN ALL DATA, UPDATED TO THE LAST ONE FOUND
+        //NEEDS TO BE MODIFIED TO GIVE PARAMETERS (WHICH FAILED FURTHER BELOW)
+        //NOTE: the endpoint is setup in SF to connect to the pii epicor test instance
+        req.setEndpoint('callout:PII_Test');
+        
+        //The URI is invalid.:
+        //req.setEndpoint('callout:PII_Test/?$select=Name&$filter=CustID%20eq%20\'3M01\' ');
+
+        req.setMethod('GET');
+        
+        // Send the request, and return a response
+        HttpResponse res = h.send(req);
+        //return res.getBody();
+
+        //return '_z';
+        //url_result = '_z';
+        
+        
+
+// !!! WHERE DOES THIS GO ???  !!!
+        System.debug(res.getBody());
+
+        // Parse JSON response
+        JSONParser parser = JSON.createParser(res.getBody());
+        Double grandTotal = 0.0;
+        while (parser.nextToken() != null) {
+            if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                (parser.getText() == 'Name')) {
+                // Get the value.
+                parser.nextToken();
+
+                // Compute the grand total price for all invoices.
+                //grandTotal += parser.getDoubleValue();
+                url_result = parser.getText();
+
+//System.debug('url_result: ' + url_result );
+                
+            }
+        }
+
+
+        //yes, worked to update 1 record with hardcoded value here too (as expected)
+        TestApexBook__c[] testApexBook2;
+        testApexBook2 = [SELECT Id,Name FROM TestApexBook__c WHERE name = 'test6'];          
+        for (TestApexBook__c a : testApexBook2) {
+            //a.Name = a.Name + '_123';
+            a.Name = a.Name + url_result ;
+        }
+        try {
+            upsert testApexBook2;
+        } catch (DmlException e) {
+            // Process exception here
+        }
+        
+
+        
+    }
+    
+}
+
+
+
+

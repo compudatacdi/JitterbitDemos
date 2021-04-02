@@ -1,0 +1,11 @@
+testing with TestApexBook__c
+
+-------------
+
+created stuff so that when bring up a TestApexBook__c record:
+	- will pull data from EC from a customer and append it to TestApexBook__c record with name "test6"
+	- a button up top shows the value of the Name field of the current TestApexBook__c record
+
+this is POC stuff to move on to making custom stuff for part inventory
+
+files backed up here by manually creating files as need to work out the complexities of unit testing before use sf to do it

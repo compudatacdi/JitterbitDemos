@@ -1,0 +1,55 @@
+({
+	myAction : function(component, event, helper) {
+		
+	},
+    
+    doInit : function(component, event, helper) {
+        //this works upon firing if have the "aura:handler" in the component
+        //runs when go into the detail tab, or if hit refresh
+		//component.set("v.buttonLabel", "New label");
+        helper.updateTest6(component);
+
+    },
+
+    handleabc1234 : function(component, event, helper) {
+
+        //saves, but when hit button, not work AND prevents line below from executing
+        //MyHelloWorld3.updateTest6();
+        //c.updateTest6();
+
+        //THIS DID IT!!!!
+        helper.updateTest6(component);
+ 
+        //another method for updating a button label (and possibly other objects)
+        //could be useful for error messages
+        //this works to change the button text
+        //component.set("v.buttonLabel", "New label");
+
+        //sforce.apex.execute("MyHelloWorld3","updateTest6",{}"});
+
+        //---------
+        //trying to get current record data:
+        //public Opportunity currentRecord{get; set;}
+//        TestApexBook currentRecord{get; set;};
+
+//		public myExtension(ApexPages.StandardController controller) {
+//			currentRecord = [SELECT Id, Name FROM TestApexBook WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+//        }
+
+//TestApexBook__c currentRecordX = [SELECT Id, Name FROM TestApexBook__c WHERE Id = :ApexPages.currentPage().getParameters().get('id')];
+
+
+        //this works!!!  simply puts the id of the record into the button text
+        //var testApexBookID = component.get("v.recordId");
+		//component.set("v.buttonLabel", testApexBookID);
+        
+        
+        //can't save this:
+        //List<TestApexBook__c> contactResult = [Select ID, Name from TestApexBook__c where ID =:testApexBookID];
+//setCon = new ApexPages.StandardSetController(Database.getQueryLocator([Select ID, Name from TestApexBook__c where ID =:testApexBookID]));
+//var X = new ApexPages.StandardSetController(Database.getQueryLocator([Select ID, Name from TestApexBook__c where ID =:testApexBookID]));
+
+        
+    },
+
+})

@@ -1,0 +1,77 @@
+({
+	helperMethod : function() {
+		
+	},
+ 
+    updateTest6 : function(component) {
+        
+        //trying to get at the current record:
+        //TestApexBookID : component.get("v.recordId");
+        
+        //!!below works (assuming the id value i see is for this record, haha)
+        var testApexBookID = component.get("v.recordId");
+        //component.set("v.buttonLabel", testApexBookID);
+        
+        
+        //compiles, not run, error = attribute 'Name' of component 'markup://c:updateTest6 {1719:0}'
+        //var testApexBookID = component.get("v.Name");
+        //component.set("v.buttonLabel", testApexBookID);
+        
+        //not compile: Unexpected token Id
+        //var X = [SELECT Id, Name FROM TestApexBook__c];
+        //var X = new ApexPages.StandardSetController(Database.getQueryLocator([SELECT Id, Name FROM TestApexBook__c]));
+        
+                
+        //LAST:  GOT THIS TO WORK!!!:
+        var name = component.get("c.getTest6");
+        //not run, no error 
+        //var name = component.get("c.getTest6(" + testApexBookID + ")");
+        //var name = component.get("c.getTest6('x')");
+        name.setParams({"testApexBookID":testApexBookID});
+        //works:
+        //name.setParams({"xyz":"a051U00001nUq5yQAC"});
+ 
+        //String name = component.get("c.getTest6");
+        //String str = "Geeks";
+        //String str = new String("Geeks");
+
+        //component.set("v.buttonLabel", "zz");
+        //name = "xx";
+        //component.set("v.buttonLabel", name);
+        //component.set("v.buttonLabel", name.value);
+        //component.set("v.buttonLabel", name.text);
+        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+        name.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                component.set("v.buttonLabel", response.getReturnValue());
+            }
+            else {
+                //console.log("Failed with state: " + state);
+                component.set("v.buttonLabel", "Failed with state: " + state);
+            }
+        });
+        $A.enqueueAction(name);
+        
+        
+        //comment out only temporary to test stuff above:
+        /*
+        //this calls the updateTest6 method in the MyHelloWorld3 apex code
+        var action = component.get("c.updateTest6");
+        action.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                //component.set("v.userList", response.getReturnValue());
+                component.set("v.buttonLabel", "SUCCESS");
+            }
+            else {
+                console//.log("Failed with state: " + state);
+                component.set("v.buttonLabel", "Failed with state: " + state);
+            }
+        });
+        $A.enqueueAction(action);
+        */
+        
+    } ,
+    
+})
