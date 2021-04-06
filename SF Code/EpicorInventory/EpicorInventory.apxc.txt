@@ -1,0 +1,182 @@
+global class EpicorInventory 
+{
+
+    public static String url_result = 'xyz';
+    //public String url_result = 'xyz';
+    public static Map<String, String> epicorInventoryData = new Map<String, String>();
+
+	@AuraEnabled
+    //public static string getEpicorInventory(string product2ID) {
+    public static Map<String,String> getEpicorInventory(string product2ID) {
+        
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,Name&$filter=CustID%20eq%20\'3M01\' ');
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'3M01\' ');
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'THRE01\' ');
+//works now:
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'ABLE01\' ');
+
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustType,Name&$filter=CustID%20eq%20\'zzz\'');
+ 
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=Company%20eq%20\'PI03\'%20and%20SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
+
+        
+//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=PartNum%20eq%20\'Widget Red\' ');
+
+
+        // KEEP THIS AS MAY WANT TO PULL PART DATA LATER
+        //!!!  	THIS WORKS NOW, WOOHOOOO  !!!
+		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
+		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum,SFId_c&$filter=SFId_c%20eq%20\'' + product2ID + '\'');
+
+        //ok, let's change it to use the baq:
+		getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');        
+
+        
+//https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=01t1U000004uRvjQAE
+//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum,SFId_c&$filter=SFId_c%20eq%20\'' + product2ID + '\'');        
+        
+        
+//					 	     https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20 '01t1U000004uRvjQAE'
+//						     https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?                $filter=SFId_c%20eq%20'01t1U000004uRvjQAE'
+//getEpicorInventory2('');
+
+		//testx();
+        
+        /*
+        //testing, works:
+        string name;
+        //name = 'not found';
+		//url_result = 'aaa';
+        name = url_result;
+        return name;
+		*/
+
+        //Map<String, String> epicorInventoryData = new Map<String, String>();
+        //epicorInventoryData.put('a', '1');
+        //epicorInventoryData.put('b', '2');
+        return epicorInventoryData;
+        
+    }
+
+    
+    //@future (callout=true)
+    public static void getEpicorInventory2(String url) {
+
+		// Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+        HttpRequest req = new HttpRequest();
+		//req.setEndpoint('callout:PII_Test');
+		//req.setEndpoint('callout:PII_Pilot');
+		//ERROR:
+		//req.setEndpoint('callout:PII_Test/PI03');
+        req.setEndpoint(url);
+        //works:
+        //req.setEndpoint('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers');
+		//req.setEndpoint('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'THRE01\' ');
+
+        req.setMethod('GET');
+        
+        String username = 'jbit_pi03';
+        String password = 'Surf$UP123';
+        Blob headerValue = Blob.valueOf(username + ':' + password);
+        String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
+        //String authorizationHeader = EncodingUtil.base64Encode(headerValue);
+        req.setHeader('Authorization', authorizationHeader);
+
+        
+        // Instantiate a new http object
+        Http h = new Http();
+        // Send the request, and return a response
+        HttpResponse res = h.send(req);
+        System.debug(res.getBody());
+
+        // Parse JSON response
+        JSONParser parser = JSON.createParser(res.getBody());
+        //Double grandTotal = 0.0;
+        while (parser.nextToken() != null) {
+
+            if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                //(parser.getText() == 'PartNum')) {
+                //(parser.getText() == 'PartNum' || parser.getText() == 'SFId_c')) {
+                (parser.getText() == 'Part_PartNum' || parser.getText() == 'Calculated_OnHand'
+                || parser.getText() == 'Calculated_Allocated' || parser.getText() == 'Calculated_Demand'
+                || parser.getText() == 'Calculated_Available')) 
+            {
+
+                //(parser.getText() == 'Name')) {
+                // Get the value.
+                	string fieldName = parser.getText();
+                	
+                    parser.nextToken();
+
+                   	//original trial returning one value
+                    //url_result = parser.getText();
+                    
+                	string fieldValue; // = parser.getText();
+                	if(fieldName == 'Calculated_OnHand'
+                        || fieldName == 'Calculated_Allocated' || fieldName == 'Calculated_Demand'
+                        || fieldName == 'Calculated_Available')
+                    {
+                        //fieldValue = String.valueOf(decimal.valueOf(parser.getText()));
+                        fieldValue = currency(parser.getText());
+                    }
+                	else
+                    {
+                        fieldValue = parser.getText();
+                    }
+                        
+                    epicorInventoryData.put(fieldName, fieldValue);
+
+//System.debug('url_result: ' + url_result );
+                
+	            }
+        }
+
+
+        //url_result = 'zzz';
+        
+/*
+        //yes, worked to update 1 record with hardcoded value here too (as expected)
+        TestApexBook__c[] testApexBook2;
+        testApexBook2 = [SELECT Id,Name FROM TestApexBook__c WHERE name = 'test6'];          
+        for (TestApexBook__c a : testApexBook2) {
+            //a.Name = a.Name + '_123';
+            a.Name = a.Name + url_result ;
+        }
+        try {
+            upsert testApexBook2;
+        } catch (DmlException e) {
+            // Process exception here
+        }
+*/        
+        
+    }
+    
+
+    public static String currency(String i)
+    {
+        // - Error this doesn't handle negative number converts -15 to -14.999  instead of -15.001 before round
+        //String s = ( Decimal.valueOf(i==null||i.trim()==''?'0':i).setScale(2) + 0.001 ).format();
+        //return s.substring(0,s.length()-1);
+    
+        if (( i == null) || ( i == ''))
+        {
+            return '0';
+        }
+        else
+        {
+            string s;
+            if ( Decimal.valueOf(i) >= 0 )
+            {
+                s =  ( Decimal.valueOf(i).setScale(2) + 0.001 ).format();
+            }
+            else
+            {
+                s = ( Decimal.valueOf(i).setScale(2) - 0.001 ).format();
+            }
+	        return s.substring(0,s.length()-1);
+        }
+    
+    }
+    
+}

@@ -1,0 +1,51 @@
+({
+	helperMethod : function() 
+    {
+		
+	},
+    
+
+    getEpicorInventory : function(component) 
+    {
+                
+        //!!below works (assuming the id value i see is for this record, haha)
+        var product2ID = component.get("v.recordId");
+        //testing:
+		//component.set("v.buttonLabel", product2ID);
+
+		var epicorInventory = component.get("c.getEpicorInventory");
+        //not work as expected, but ok, only testing:
+        //component.set("v.buttonLabel", name);
+        
+        epicorInventory.setParams({"product2ID":product2ID});
+
+        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+        epicorInventory.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                //returning a string:
+                //component.set("v.buttonLabel", response.getReturnValue());
+                
+                //returning a dictionary:
+                var epicorInventoryData = response.getReturnValue();
+                //component.set("v.buttonLabel", epicorInventoryData["PartNum"]);
+                //component.set("v.buttonLabel", epicorInventoryData["SFId_c"]);
+                //component.set("v.buttonLabel", epicorInventoryData["Calculated_OnHand"]);
+                component.set("v.valueOnHand", epicorInventoryData["Calculated_OnHand"]);
+
+                component.set("v.valueAllocated", epicorInventoryData["Calculated_Allocated"]);
+                component.set("v.valueDemand", epicorInventoryData["Calculated_Demand"]);
+                component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
+
+
+            }
+            else {
+                //console.log("Failed with state: " + state);
+                component.set("v.buttonLabel", "Failed with state: " + state);
+            }
+        });
+        $A.enqueueAction(epicorInventory);
+                
+    } ,
+        
+})

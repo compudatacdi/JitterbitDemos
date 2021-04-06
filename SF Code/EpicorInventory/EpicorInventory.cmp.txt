@@ -1,0 +1,27 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="EpicorInventory">
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>   
+
+   	<aura:attribute name="buttonLabel" type="String" default="Refresh" />
+    <lightning:button name="btnRefresh" label="{!v.buttonLabel}" onclick="{!c.handle_btnRefresh}" />
+
+   	<!-- <lightning:textarea name="txtOnHand" readonly="true" label="On Hand" value="0" /> -->
+    <aura:attribute name="valueOnHand" type="String" default="0" />
+    <lightning:textarea name="txtOnHand" readonly="true" label="On Hand" value="{!v.valueOnHand}" />
+
+    <!-- <lightning:textarea name="txtAllocated" readonly="true" label="Allocated" value="0" /> -->
+    <aura:attribute name="valueAllocated" type="String" default="0" />
+    <lightning:textarea name="txtAllocated" readonly="true" label="Allocated" value="{!v.valueAllocated}" />
+
+    <!-- <lightning:textarea name="txtDemand" readonly="true" label="Demand" value="0" /> -->
+    <aura:attribute name="valueDemand" type="String" default="0" />
+    <lightning:textarea name="txtDemand" readonly="true" label="Demand" value="{!v.valueDemand}" />
+
+    <!-- <lightning:textarea name="txtAvailable" readonly="true" label="Available" value="0" /> -->
+    <aura:attribute name="valueAvailable" type="String" default="0" />
+    <lightning:textarea name="txtAvailable" readonly="true" label="Available" value="{!v.valueAvailable}" />
+
+    <lightning:formattedDateTime name="txtLastUpdated" readonly="true" label="Last Updated" value="0" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/>
+    <!-- works:  value="1479944705000" 		not work: value="04/05/2021"  -->
+    
+</aura:component>

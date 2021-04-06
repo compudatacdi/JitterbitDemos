@@ -1,0 +1,29 @@
+({
+	myAction : function(component, event, helper) 
+    {
+		
+	},
+
+    doInit : function(component, event, helper) 
+    {
+        //this works upon firing if have the "aura:handler" in the component
+        //runs when go into the detail tab, or if hit refresh
+		//component.set("v.buttonLabel", "New label");
+        helper.getEpicorInventory(component);
+
+    },
+
+    handle_btnRefresh : function(component, event, helper) 
+    {
+        helper.getEpicorInventory(component);
+        
+        //var product2ID = component.get("v.recordId");
+        //for testing:
+        //component.set("v.buttonLabel", product2ID);
+        
+        //var name = component.get("c.getTest6");
+        
+        
+    },
+    
+})
