@@ -4,48 +4,112 @@
 		
 	},
     
-
-    getEpicorInventory : function(component) 
+    getSalesforceProduct2 : function(component) 
     {
-                
-        //!!below works (assuming the id value i see is for this record, haha)
-        var product2ID = component.get("v.recordId");
-        //testing:
-		//component.set("v.buttonLabel", product2ID);
-
-		var epicorInventory = component.get("c.getEpicorInventory");
-        //not work as expected, but ok, only testing:
-        //component.set("v.buttonLabel", name);
         
-        epicorInventory.setParams({"product2ID":product2ID});
+		var product2ID = component.get("v.recordId");
+		var salesforceProduct2 = component.get("c.getSalesforceProduct2");
+        salesforceProduct2.setParams({"product2ID":product2ID});
+component.set("v.lblRefresh", "1");
 
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
-        epicorInventory.setCallback(this, function(response) {
+        salesforceProduct2.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 //returning a string:
                 //component.set("v.buttonLabel", response.getReturnValue());
+component.set("v.lblRefresh", "2");
                 
-                //returning a dictionary:
-                var epicorInventoryData = response.getReturnValue();
-                //component.set("v.buttonLabel", epicorInventoryData["PartNum"]);
-                //component.set("v.buttonLabel", epicorInventoryData["SFId_c"]);
-                //component.set("v.buttonLabel", epicorInventoryData["Calculated_OnHand"]);
-                component.set("v.valueOnHand", epicorInventoryData["Calculated_OnHand"]);
+                //returning a dictionary with known values in each pair:
+                var salesforceProduct2Data = response.getReturnValue();
+component.set("v.lblRefresh", "3");
 
-                component.set("v.valueAllocated", epicorInventoryData["Calculated_Allocated"]);
-                component.set("v.valueDemand", epicorInventoryData["Calculated_Demand"]);
-                component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
+                //testing when it was a string:
+                //component.set("v.lblRefresh", salesforceProduct2Data);
 
+            //salesforceProduct2Data.put('Name', a.Name);
+                
+component.set("v.lblRefresh", salesforceProduct2Data["Name"]);
+//component.set("v.lblRefresh", "4");
+
+                component.set("v.valueOnHand", salesforceProduct2Data["EpicorOnHand"]);
+//component.set("v.valueOnHand", "zzz");
+                component.set("v.valueAllocated", salesforceProduct2Data["EpicorAllocated"]);
+                component.set("v.valueDemand", salesforceProduct2Data["EpicorDemand"]);
+                component.set("v.valueAvailable", salesforceProduct2Data["EpicorAvailable"]);
+
+//                component.set("v.txtLastUpdated", salesforceProduct2Data["EpicorInvDateLast"]);
+//component.set("v.lblRefresh", salesforceProduct2Data["EpicorInvDateLast"]);
+				component.set("v.valueLastUpdated", salesforceProduct2Data["EpicorInvDateLast"]);
+
+
+//				component.set("v.lblUpdateStatus", "Epicor Status: " + salesforceProduct2Data["Epicor_Status"]);
+
+//component.set("v.buttonLabel", "3.2");
 
             }
             else {
+//component.set("v.lblRefresh", "3");
                 //console.log("Failed with state: " + state);
-                component.set("v.buttonLabel", "Failed with state: " + state);
+                component.set("v.lblRefresh", "Failed with state: " + state);
+            }
+        });
+        $A.enqueueAction(salesforceProduct2);
+        
+        //component.set("v.lblRefresh", returnValue);
+        
+    },
+    
+    getEpicorInventory : function(component) 
+    {
+                
+        var product2ID = component.get("v.recordId");
+        //for testing:
+		//component.set("v.lblRefresh", product2ID);
+
+        //instantiate getEpicorInventory which actually resides in EpicorInventory.apxc apex code,
+        //	which is referenced in the controller EpicorInventory.cmp as a controller itself in the definition up top
+		var epicorInventory = component.get("c.getEpicorInventory");        
+        epicorInventory.setParams({"product2ID":product2ID});
+
+//component.set("v.lblRefresh", "1");
+
+        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+        epicorInventory.setCallback(this, function(response) {
+            var state = response.getState();
+//component.set("v.lblRefresh", "2");
+            if (state === "SUCCESS") {
+                //returning a string:
+                //component.set("v.buttonLabel", response.getReturnValue());
+                
+//component.set("v.lblRefresh", "3.0");
+                //returning a dictionary with known values in each pair:
+                var epicorInventoryData = response.getReturnValue();
+//component.set("v.lblRefresh", "3.1");
+//component.set("v.buttonLabel", epicorInventoryData);
+                
+                component.set("v.valueOnHand", epicorInventoryData["Calculated_OnHand"]);
+                component.set("v.valueAllocated", epicorInventoryData["Calculated_Allocated"]);
+                component.set("v.valueDemand", epicorInventoryData["Calculated_Demand"]);
+                component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
+                
+                component.set("v.lblUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"]);
+                
+//component.set("v.buttonLabel", "3.2");
+
+            }
+            else {
+//component.set("v.lblRefresh", "3");
+                //console.log("Failed with state: " + state);
+                component.set("v.lblRefresh", "Failed with state: " + state);
             }
         });
         $A.enqueueAction(epicorInventory);
-                
+
+//var todaysDate = date.today();
+//component.set("v.valueLastUpdated", todaysDate);
+        
+        
     } ,
         
 })

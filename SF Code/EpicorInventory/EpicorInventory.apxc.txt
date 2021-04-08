@@ -2,87 +2,56 @@ global class EpicorInventory
 {
 
     public static String url_result = 'xyz';
-    //public String url_result = 'xyz';
     public static Map<String, String> epicorInventoryData = new Map<String, String>();
+    public static Map<String, String> salesforceProduct2Data = new Map<String, String>();
 
-	@AuraEnabled
-    //public static string getEpicorInventory(string product2ID) {
+	@AuraEnabled  //needed to be able to call it from the aura realm
     public static Map<String,String> getEpicorInventory(string product2ID) {
         
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,Name&$filter=CustID%20eq%20\'3M01\' ');
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'3M01\' ');
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'THRE01\' ');
-//works now:
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'ABLE01\' ');
-
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustType,Name&$filter=CustID%20eq%20\'zzz\'');
- 
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=Company%20eq%20\'PI03\'%20and%20SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
-
-        
-//        getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=PartNum%20eq%20\'Widget Red\' ');
-
-
         // KEEP THIS AS MAY WANT TO PULL PART DATA LATER
         //!!!  	THIS WORKS NOW, WOOHOOOO  !!!
 		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
 		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum,SFId_c&$filter=SFId_c%20eq%20\'' + product2ID + '\'');
 
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '1');
+
         //ok, let's change it to use the baq:
 		getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');        
 
-        
-//https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=01t1U000004uRvjQAE
-//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum,SFId_c&$filter=SFId_c%20eq%20\'' + product2ID + '\'');        
-        
-        
-//					 	     https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20 '01t1U000004uRvjQAE'
-//						     https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?                $filter=SFId_c%20eq%20'01t1U000004uRvjQAE'
-//getEpicorInventory2('');
-
-		//testx();
-        
-        /*
-        //testing, works:
-        string name;
-        //name = 'not found';
-		//url_result = 'aaa';
-        name = url_result;
-        return name;
-		*/
-
-        //Map<String, String> epicorInventoryData = new Map<String, String>();
-        //epicorInventoryData.put('a', '1');
-        //epicorInventoryData.put('b', '2');
         return epicorInventoryData;
         
     }
 
     
+    //KEEP: not sure if commented out for unit testing, or for regular use, keep just in case
     //@future (callout=true)
     public static void getEpicorInventory2(String url) {
 
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '2');
+        
 		// Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
         HttpRequest req = new HttpRequest();
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '2.1');
+        
+        //KEEP: use this when refactor to use endpoint/credential
 		//req.setEndpoint('callout:PII_Test');
-		//req.setEndpoint('callout:PII_Pilot');
-		//ERROR:
-		//req.setEndpoint('callout:PII_Test/PI03');
         req.setEndpoint(url);
-        //works:
-        //req.setEndpoint('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers');
-		//req.setEndpoint('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.CustomerSvc/Customers?$select=Company,CustID,Name&$filter=Company%20eq%20\'PI03\'%20and%20CustID%20eq%20\'THRE01\' ');
-
         req.setMethod('GET');
+
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '3');
         
         String username = 'jbit_pi03';
         String password = 'Surf$UP123';
         Blob headerValue = Blob.valueOf(username + ':' + password);
         String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
-        //String authorizationHeader = EncodingUtil.base64Encode(headerValue);
         req.setHeader('Authorization', authorizationHeader);
-
+        
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '4');
         
         // Instantiate a new http object
         Http h = new Http();
@@ -90,10 +59,30 @@ global class EpicorInventory
         HttpResponse res = h.send(req);
         System.debug(res.getBody());
 
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '5');
+        
+
         // Parse JSON response
         JSONParser parser = JSON.createParser(res.getBody());
-        //Double grandTotal = 0.0;
-        while (parser.nextToken() != null) {
+        //NOTE:  if epicor is down, this is where it fails because parser is empty:
+                
+        try {
+            while (parser.nextToken() != null) {
+            }
+        } catch(DmlException de) {
+            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + de);
+            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + e + ' / ' + parser);
+            //epicorInventoryData.put('Epicor_Status', 'Error: ' + e + ' / ' + parser);
+            epicorInventoryData.put('Epicor_Status', 'Error pulling data: ' + e );
+        }
+        
+//        while (parser.nextToken() != null) {
+
+        epicorInventoryData.put('Epicor_Status', 'OK');
 
             if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
                 //(parser.getText() == 'PartNum')) {
@@ -127,14 +116,17 @@ global class EpicorInventory
                         
                     epicorInventoryData.put(fieldName, fieldValue);
 
-//System.debug('url_result: ' + url_result );
+					//KEEP: for debugging, to add debug log info
+                	//System.debug('url_result: ' + url_result );
                 
 	            }
-        }
 
+            
+//TESTING:
+//epicorInventoryData.put('Calculated_OnHand', '99');
 
-        //url_result = 'zzz';
-        
+//        }
+
 /*
         //yes, worked to update 1 record with hardcoded value here too (as expected)
         TestApexBook__c[] testApexBook2;
@@ -152,7 +144,67 @@ global class EpicorInventory
         
     }
     
+    
+	@AuraEnabled  //needed to be able to call it from the aura realm
+    //public static string getSalesforceProduct2(string product2ID) {
+    public static Map<String,String> getSalesforceProduct2(string product2ID) {		
+        
+    	string returnValue;
+        
+        //yes, worked to update 1 record with hardcoded value here too (as expected)
+        Product2[] product2;
+//        product2 = [SELECT Id,Name FROM Product2 WHERE Id = '01t1U000004uRvjQAE'];
+//!! NEED TO SUBSTITUTE THE VARIABLE product2ID IN THE ABOVE LINE
+//
+		//NOTE:  the ":" allows you to substitute a variable value into the select statement
+        product2 = [SELECT Id,Name,EpicorOnHand__c,EpicorAllocated__c,EpicorDemand__c,EpicorAvailable__c,EpicorInvDateLast__c FROM Product2 WHERE Id = :product2ID];
 
+        //getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');        
+        //product2 = [SELECT Id,Name FROM Product2 WHERE id = \'' + product2ID + '\''];
+        //product2 = [SELECT Id,Name FROM Product2 WHERE id = '' + product2ID + ''];
+        //product2 = [SELECT Id,Name FROM Product2 WHERE id = '' :product2ID ''];
+
+    	returnValue = 'x';
+        
+    
+        for (Product2 a : product2) {
+            //a.Name = a.Name + '_123';
+            //a.Name = a.Name + url_result ;
+	    	returnValue = a.Name;
+
+            salesforceProduct2Data.put('Name', a.Name);
+		    salesforceProduct2Data.put('EpicorOnHand', String.valueOf(a.EpicorOnHand__c));
+		    
+            salesforceProduct2Data.put('EpicorAllocated', String.valueOf(a.EpicorAllocated__c));
+            salesforceProduct2Data.put('EpicorDemand', String.valueOf(a.EpicorDemand__c));
+            salesforceProduct2Data.put('EpicorAvailable', String.valueOf(a.EpicorAvailable__c));
+            
+            //salesforceProduct2Data.put('EpicorInvDateLast', String.valueOf(a.EpicorInvDateLast__c));
+            datetime epicorInvDateLast = a.EpicorInvDateLast__c;
+            salesforceProduct2Data.put('EpicorInvDateLast', epicorInvDateLast.format('MM/dd/YYYY h:mm a'));
+
+            
+a.EpicorOnHand__c = 50;
+a.EpicorAllocated__c = 5;
+a.EpicorDemand__c = 15;
+a.EpicorAvailable__c = 30;
+//a.Description = 'Red Widget';
+//upsert product2;
+            
+    	}
+
+        try {
+            upsert product2;
+        } catch (DmlException e) {
+            // Process exception here
+        }
+
+
+		//return returnValue;
+        return salesforceProduct2Data;
+        
+    }
+    
     public static String currency(String i)
     {
         // - Error this doesn't handle negative number converts -15 to -14.999  instead of -15.001 before round

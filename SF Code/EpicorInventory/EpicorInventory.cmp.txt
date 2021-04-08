@@ -2,26 +2,57 @@
 
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>   
 
-   	<aura:attribute name="buttonLabel" type="String" default="Refresh" />
-    <lightning:button name="btnRefresh" label="{!v.buttonLabel}" onclick="{!c.handle_btnRefresh}" />
+   	<aura:attribute name="lblRefresh" type="String" default="Refresh" />
+    <lightning:button name="btnRefresh" label="{!v.lblRefresh}" onclick="{!c.handle_btnRefresh}" />
 
    	<!-- <lightning:textarea name="txtOnHand" readonly="true" label="On Hand" value="0" /> -->
     <aura:attribute name="valueOnHand" type="String" default="0" />
-    <lightning:textarea name="txtOnHand" readonly="true" label="On Hand" value="{!v.valueOnHand}" />
+    <!--<lightning:textarea name="txtOnHand" readonly="true" label="On Hand" value="{!v.valueOnHand}" /> -->
+    <!-- <lightning:formattedText name="lblOnHand" value="On Hand: " /> -->
+    <p></p>
+	<lightning:formattedText name="lblOnHand" value="On Hand: " />
+    <lightning:formattedText name="txtOnHand" value="{!v.valueOnHand}" />
 
     <!-- <lightning:textarea name="txtAllocated" readonly="true" label="Allocated" value="0" /> -->
     <aura:attribute name="valueAllocated" type="String" default="0" />
-    <lightning:textarea name="txtAllocated" readonly="true" label="Allocated" value="{!v.valueAllocated}" />
+    <!-- <lightning:textarea name="txtAllocated" readonly="true" label="Allocated" value="{!v.valueAllocated}" /> -->
+    <p></p>
+    <lightning:formattedText name="lblAllocated" value="Allocated: " />
+    <lightning:formattedText name="txtAllocated" value="{!v.valueAllocated}" />
 
     <!-- <lightning:textarea name="txtDemand" readonly="true" label="Demand" value="0" /> -->
     <aura:attribute name="valueDemand" type="String" default="0" />
-    <lightning:textarea name="txtDemand" readonly="true" label="Demand" value="{!v.valueDemand}" />
+    <!-- <lightning:textarea name="txtDemand" readonly="true" label="Demand" value="{!v.valueDemand}" /> -->
+    <p></p>
+    <lightning:formattedText name="lblDemand" value="Demand: " />
+    <lightning:formattedText name="txtDemand" value="{!v.valueDemand}" />
 
     <!-- <lightning:textarea name="txtAvailable" readonly="true" label="Available" value="0" /> -->
     <aura:attribute name="valueAvailable" type="String" default="0" />
-    <lightning:textarea name="txtAvailable" readonly="true" label="Available" value="{!v.valueAvailable}" />
-
-    <lightning:formattedDateTime name="txtLastUpdated" readonly="true" label="Last Updated" value="0" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/>
+    <!-- <lightning:textarea name="txtAvailable" readonly="true" label="Available" value="{!v.valueAvailable}" /> -->
+    <p></p>
+    <lightning:formattedText name="lblAvailable" value="Available: " />
+    <lightning:formattedText name="txtAvailable" value="{!v.valueAvailable}" />
+    
+    
+    <br /> <!-- line break -->
+    <p></p>
+	<lightning:formattedText name="lblLastUpdated" value="Last Updated: " />
+    <!-- <aura:attribute name="valueLastUpdated" type="Date" default="0" /> -->
+    <aura:attribute name="valueLastUpdated" type="Date" default="0" />
+    <!-- <lightning:formattedDateTime name="txtLastUpdated" readonly="true" label="Last Updated" value="0" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/> -->
     <!-- works:  value="1479944705000" 		not work: value="04/05/2021"  -->
+    <!-- <lightning:formattedDateTime name="txtLastUpdated" readonly="true" label="Last Updated" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/> -->
+    <lightning:formattedText name="txtLastUpdated" readonly="true" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/>
+
+	<!--
+    <aura:attribute name="lblUpdateStatus" type="String" default="OK" />
+    <lightning:textarea name="txtUpdateStatus" readonly="true" label="Epicor Status" value="{!v.lblUpdateStatus}" />
+	-->
+    
+   	<aura:attribute name="lblUpdateStatus" type="String" default="Epicor Status: OK" />
+    <p><lightning:formattedText name="txtUpdateStatus" value="{!v.lblUpdateStatus}" /></p>
+    
+
     
 </aura:component>

@@ -8,18 +8,25 @@
     {
         //this works upon firing if have the "aura:handler" in the component
         //runs when go into the detail tab, or if hit refresh
-		//component.set("v.buttonLabel", "New label");
+		//component.set("v.lblRefresh", "New label");
         helper.getEpicorInventory(component);
 
     },
 
     handle_btnRefresh : function(component, event, helper) 
     {
-        helper.getEpicorInventory(component);
+        
+        //keep, commented out temp for testing other stuff:
+//        helper.getEpicorInventory(component);
+        
+		//var returnValue = helper.getSalesforceProduct2("01t1U000004uRvjQAE");
+        //component.set("v.lblRefresh", returnValue);
+        helper.getSalesforceProduct2(component);
+
         
         //var product2ID = component.get("v.recordId");
         //for testing:
-        //component.set("v.buttonLabel", product2ID);
+        //component.set("v.lblRefresh", product2ID);
         
         //var name = component.get("c.getTest6");
         
