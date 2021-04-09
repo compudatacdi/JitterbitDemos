@@ -36,6 +36,7 @@
     
     
     <br /> <!-- line break -->
+    <br /> <!-- line break -->
     <p></p>
 	<lightning:formattedText name="lblLastUpdated" value="Last Updated: " />
     <!-- <aura:attribute name="valueLastUpdated" type="Date" default="0" /> -->

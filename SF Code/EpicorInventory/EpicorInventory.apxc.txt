@@ -5,17 +5,22 @@ global class EpicorInventory
     public static Map<String, String> epicorInventoryData = new Map<String, String>();
     public static Map<String, String> salesforceProduct2Data = new Map<String, String>();
 
+
+    @AuraEnabled  //needed to be able to call it from the aura realm
+    public static Map<String,String> getInventory(string product2ID) {
+        
+        return epicorInventoryData;
+
+    }
+    
 	@AuraEnabled  //needed to be able to call it from the aura realm
     public static Map<String,String> getEpicorInventory(string product2ID) {
         
         // KEEP THIS AS MAY WANT TO PULL PART DATA LATER
-        //!!!  	THIS WORKS NOW, WOOHOOOO  !!!
 		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum&$filter=SFId_c%20eq%20\'01t1U000004uRvjQAE\' ');
 		//getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?$select=PartNum,SFId_c&$filter=SFId_c%20eq%20\'' + product2ID + '\'');
 
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '1');
-
+/*        
         //ok, let's change it to use the baq:
 		getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');        
 
@@ -27,31 +32,26 @@ global class EpicorInventory
     //KEEP: not sure if commented out for unit testing, or for regular use, keep just in case
     //@future (callout=true)
     public static void getEpicorInventory2(String url) {
-
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '2');
+*/
+        //test sfid:  01t1U000004uRvjQAE  / partnum: Widget Red
+        String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
+            
+        //for debugging:
+        //epicorInventoryData.put('Calculated_OnHand', '2');
         
 		// Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
         HttpRequest req = new HttpRequest();
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '2.1');
-        
+
         //KEEP: use this when refactor to use endpoint/credential
 		//req.setEndpoint('callout:PII_Test');
         req.setEndpoint(url);
         req.setMethod('GET');
 
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '3');
-        
         String username = 'jbit_pi03';
         String password = 'Surf$UP123';
         Blob headerValue = Blob.valueOf(username + ':' + password);
         String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
         req.setHeader('Authorization', authorizationHeader);
-        
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '4');
         
         // Instantiate a new http object
         Http h = new Http();
@@ -59,35 +59,29 @@ global class EpicorInventory
         HttpResponse res = h.send(req);
         System.debug(res.getBody());
 
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '5');
-        
-
         // Parse JSON response
         JSONParser parser = JSON.createParser(res.getBody());
         //NOTE:  if epicor is down, this is where it fails because parser is empty:
-                
+
+//epicorInventoryData.put('Part_PartNum', parser);
+//epicorInventoryData.put('Part_PartNum', '1');
+//epicorInventoryData.put('Part_PartNum', res.getBody());
+//string parserData = '';
+        
         try {
             while (parser.nextToken() != null) {
-            }
-        } catch(DmlException de) {
-            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + de);
-            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + de );
-        }
-        catch (Exception e) {
-            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + e + ' / ' + parser);
-            //epicorInventoryData.put('Epicor_Status', 'Error: ' + e + ' / ' + parser);
-            epicorInventoryData.put('Epicor_Status', 'Error pulling data: ' + e );
-        }
-        
-//        while (parser.nextToken() != null) {
+//maybe/probably need to move code from below up here
+//parserData += parser.getText() + ' / ';
 
-        epicorInventoryData.put('Epicor_Status', 'OK');
+//------------------
 
             if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
                 //(parser.getText() == 'PartNum')) {
                 //(parser.getText() == 'PartNum' || parser.getText() == 'SFId_c')) {
-                (parser.getText() == 'Part_PartNum' || parser.getText() == 'Calculated_OnHand'
+//testing by adding this one field Part_Company:                
+                (parser.getText() == 'Part_Company' ||
+                    
+                    parser.getText() == 'Part_PartNum' || parser.getText() == 'Calculated_OnHand'
                 || parser.getText() == 'Calculated_Allocated' || parser.getText() == 'Calculated_Demand'
                 || parser.getText() == 'Calculated_Available')) 
             {
@@ -97,7 +91,7 @@ global class EpicorInventory
                 	string fieldName = parser.getText();
                 	
                     parser.nextToken();
-
+                
                    	//original trial returning one value
                     //url_result = parser.getText();
                     
@@ -113,19 +107,92 @@ global class EpicorInventory
                     {
                         fieldValue = parser.getText();
                     }
-                        
+                    
                     epicorInventoryData.put(fieldName, fieldValue);
+                    //epicorInventoryData.put(fieldName, 'x');
+                    //epicorInventoryData.put('Part_PartNum', 'x');
 
-					//KEEP: for debugging, to add debug log info
+
+                //KEEP: for debugging, to add debug log info
                 	//System.debug('url_result: ' + url_result );
                 
 	            }
 
-            
-//TESTING:
-//epicorInventoryData.put('Calculated_OnHand', '99');
 
+//-----------------                
+                
+            }
+//epicorInventoryData.put('Part_PartNum', parserData);
+            
+        } catch(DmlException de) {
+            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + de);
+            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + e + ' / ' + parser);
+            //epicorInventoryData.put('Epicor_Status', 'Error: ' + e + ' / ' + parser);
+            epicorInventoryData.put('Epicor_Status', 'Error pulling data: ' + e );
+        }
+        
+//        while (parser.nextToken() != null) {
+
+        epicorInventoryData.put('Epicor_Status', 'OK');
+        
+        //update salesforce data with epicor data:
+        /*
+        component.set("v.valueOnHand", epicorInventoryData["Calculated_OnHand"]);
+        component.set("v.valueAllocated", epicorInventoryData["Calculated_Allocated"]);
+        component.set("v.valueDemand", epicorInventoryData["Calculated_Demand"]);
+        component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
+		*/
+        Product2[] product2;
+		//NOTE:  the ":" allows you to substitute a variable value into the select statement
+        product2 = [SELECT Id,Name,EpicorOnHand__c,EpicorAllocated__c,EpicorDemand__c,EpicorAvailable__c,EpicorInvDateLast__c FROM Product2 WHERE Id = :product2ID];
+        for (Product2 a : product2) {
+            a.EpicorOnHand__c = decimal.valueOf(epicorInventoryData.get('Calculated_OnHand'));
+            a.EpicorAllocated__c = decimal.valueOf(epicorInventoryData.get('Calculated_Allocated'));
+            a.EpicorDemand__c = decimal.valueOf(epicorInventoryData.get('Calculated_Demand'));
+            a.EpicorAvailable__c = decimal.valueOf(epicorInventoryData.get('Calculated_Available'));
+
+//zzz
+            datetime currDate = datetime.now();
+            a.EpicorInvDateLast__c = currDate;
+            
+            //a.Description = 'Red Widget';
+            //upsert product2;
+
+//a.EpicorDemand__c = 55;
+            
+    	}
+
+        try {
+            upsert product2;
+        } catch (DmlException e) {
+            // Process exception here
+        }
+        
+        
+        
+
+//not work:
+//parser.getCurrentToken();
+//parser.nextToken();
+//parser.nextToken();
+//epicorInventoryData.put('Part_PartNum', parser.getText());
+//works:
+//epicorInventoryData.put('Part_PartNum', 'z');
+//not compile:
+//epicorInventoryData.put('Part_PartNum', parser.getCurrentToken());
+        
+
+				//for testing:
+				//epicorInventoryData.put('Calculated_OnHand', '5');
+            
 //        }
+
+//epicorInventoryData.put('Part_PartNum', '2');
+
+		return epicorInventoryData;
 
 /*
         //yes, worked to update 1 record with hardcoded value here too (as expected)
@@ -149,29 +216,11 @@ global class EpicorInventory
     //public static string getSalesforceProduct2(string product2ID) {
     public static Map<String,String> getSalesforceProduct2(string product2ID) {		
         
-    	string returnValue;
-        
-        //yes, worked to update 1 record with hardcoded value here too (as expected)
         Product2[] product2;
-//        product2 = [SELECT Id,Name FROM Product2 WHERE Id = '01t1U000004uRvjQAE'];
-//!! NEED TO SUBSTITUTE THE VARIABLE product2ID IN THE ABOVE LINE
-//
 		//NOTE:  the ":" allows you to substitute a variable value into the select statement
         product2 = [SELECT Id,Name,EpicorOnHand__c,EpicorAllocated__c,EpicorDemand__c,EpicorAvailable__c,EpicorInvDateLast__c FROM Product2 WHERE Id = :product2ID];
-
-        //getEpicorInventory2('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');        
-        //product2 = [SELECT Id,Name FROM Product2 WHERE id = \'' + product2ID + '\''];
-        //product2 = [SELECT Id,Name FROM Product2 WHERE id = '' + product2ID + ''];
-        //product2 = [SELECT Id,Name FROM Product2 WHERE id = '' :product2ID ''];
-
-    	returnValue = 'x';
-        
     
         for (Product2 a : product2) {
-            //a.Name = a.Name + '_123';
-            //a.Name = a.Name + url_result ;
-	    	returnValue = a.Name;
-
             salesforceProduct2Data.put('Name', a.Name);
 		    salesforceProduct2Data.put('EpicorOnHand', String.valueOf(a.EpicorOnHand__c));
 		    
@@ -181,26 +230,27 @@ global class EpicorInventory
             
             //salesforceProduct2Data.put('EpicorInvDateLast', String.valueOf(a.EpicorInvDateLast__c));
             datetime epicorInvDateLast = a.EpicorInvDateLast__c;
-            salesforceProduct2Data.put('EpicorInvDateLast', epicorInvDateLast.format('MM/dd/YYYY h:mm a'));
+            //salesforceProduct2Data.put('EpicorInvDateLast', epicorInvDateLast.format('MM/dd/YYYY h:mm a'));
+            salesforceProduct2Data.put('EpicorInvDateLast', epicorInvDateLast.format('MM/dd/YYYY h:mm:ss a'));
 
-            
-a.EpicorOnHand__c = 50;
-a.EpicorAllocated__c = 5;
-a.EpicorDemand__c = 15;
-a.EpicorAvailable__c = 30;
-//a.Description = 'Red Widget';
-//upsert product2;
+
+			//for testing:
+            //a.EpicorOnHand__c = 50;
+            //a.EpicorAllocated__c = 5;
+            //a.EpicorDemand__c = 15;
+            //a.EpicorAvailable__c = 30;
+            //a.Description = 'Red Widget';
+            //upsert product2;
             
     	}
 
         try {
-            upsert product2;
+            //keep:
+            //upsert product2;
         } catch (DmlException e) {
             // Process exception here
         }
 
-
-		//return returnValue;
         return salesforceProduct2Data;
         
     }

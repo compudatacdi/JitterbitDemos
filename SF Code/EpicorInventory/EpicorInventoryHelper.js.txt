@@ -3,14 +3,16 @@
     {
 		
 	},
-    
+        
     getSalesforceProduct2 : function(component) 
     {
         
 		var product2ID = component.get("v.recordId");
 		var salesforceProduct2 = component.get("c.getSalesforceProduct2");
         salesforceProduct2.setParams({"product2ID":product2ID});
-component.set("v.lblRefresh", "1");
+
+        //for debugging:
+        //component.set("v.lblRefresh", "1");
 
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
         salesforceProduct2.setCallback(this, function(response) {
@@ -18,38 +20,24 @@ component.set("v.lblRefresh", "1");
             if (state === "SUCCESS") {
                 //returning a string:
                 //component.set("v.buttonLabel", response.getReturnValue());
-component.set("v.lblRefresh", "2");
                 
                 //returning a dictionary with known values in each pair:
                 var salesforceProduct2Data = response.getReturnValue();
-component.set("v.lblRefresh", "3");
 
                 //testing when it was a string:
                 //component.set("v.lblRefresh", salesforceProduct2Data);
-
-            //salesforceProduct2Data.put('Name', a.Name);
                 
-component.set("v.lblRefresh", salesforceProduct2Data["Name"]);
-//component.set("v.lblRefresh", "4");
+                //for debugging:
+                //component.set("v.lblRefresh", salesforceProduct2Data["Name"]);
 
                 component.set("v.valueOnHand", salesforceProduct2Data["EpicorOnHand"]);
-//component.set("v.valueOnHand", "zzz");
                 component.set("v.valueAllocated", salesforceProduct2Data["EpicorAllocated"]);
                 component.set("v.valueDemand", salesforceProduct2Data["EpicorDemand"]);
                 component.set("v.valueAvailable", salesforceProduct2Data["EpicorAvailable"]);
-
-//                component.set("v.txtLastUpdated", salesforceProduct2Data["EpicorInvDateLast"]);
-//component.set("v.lblRefresh", salesforceProduct2Data["EpicorInvDateLast"]);
 				component.set("v.valueLastUpdated", salesforceProduct2Data["EpicorInvDateLast"]);
-
-
-//				component.set("v.lblUpdateStatus", "Epicor Status: " + salesforceProduct2Data["Epicor_Status"]);
-
-//component.set("v.buttonLabel", "3.2");
 
             }
             else {
-//component.set("v.lblRefresh", "3");
                 //console.log("Failed with state: " + state);
                 component.set("v.lblRefresh", "Failed with state: " + state);
             }
@@ -72,43 +60,42 @@ component.set("v.lblRefresh", salesforceProduct2Data["Name"]);
 		var epicorInventory = component.get("c.getEpicorInventory");        
         epicorInventory.setParams({"product2ID":product2ID});
 
-//component.set("v.lblRefresh", "1");
+        //for debugging:
+        //component.set("v.lblRefresh", "1");
 
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
         epicorInventory.setCallback(this, function(response) {
             var state = response.getState();
-//component.set("v.lblRefresh", "2");
             if (state === "SUCCESS") {
                 //returning a string:
                 //component.set("v.buttonLabel", response.getReturnValue());
-                
-//component.set("v.lblRefresh", "3.0");
+
                 //returning a dictionary with known values in each pair:
                 var epicorInventoryData = response.getReturnValue();
-//component.set("v.lblRefresh", "3.1");
-//component.set("v.buttonLabel", epicorInventoryData);
                 
+//not work:
+//component.set("v.lblRefresh", epicorInventoryData["Part_PartNum"]);
+//works:
+//component.set("v.lblRefresh", "x");
+
+                /*
+                //keep this code. originally displayed from here, then changed concept.  may need to revisit.
                 component.set("v.valueOnHand", epicorInventoryData["Calculated_OnHand"]);
                 component.set("v.valueAllocated", epicorInventoryData["Calculated_Allocated"]);
                 component.set("v.valueDemand", epicorInventoryData["Calculated_Demand"]);
                 component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
+                */
                 
                 component.set("v.lblUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"]);
                 
-//component.set("v.buttonLabel", "3.2");
-
             }
             else {
-//component.set("v.lblRefresh", "3");
                 //console.log("Failed with state: " + state);
                 component.set("v.lblRefresh", "Failed with state: " + state);
             }
         });
         $A.enqueueAction(epicorInventory);
 
-//var todaysDate = date.today();
-//component.set("v.valueLastUpdated", todaysDate);
-        
         
     } ,
         
