@@ -33,25 +33,73 @@ global class EpicorInventory
     //@future (callout=true)
     public static void getEpicorInventory2(String url) {
 */
-        //test sfid:  01t1U000004uRvjQAE  / partnum: Widget Red
-        String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
-            
+        //test data sfid:  01t1U000004uRvjQAE  / partnum: Widget Red
+
+        //NOTE: change to use a named credential for better security and be more dynamic
+        //String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
+		String url = 'callout:PII_Test/BaqSvc/GetInventoryForSF(PI03)/?SFId=' + product2ID;
+
         //for debugging:
         //epicorInventoryData.put('Calculated_OnHand', '2');
+
+//zzz   
+//epicorInventoryData.put('Epicor_Status', ': test 1');
+
+//zzz moved from below
+		try {
+        //NOTE:  if connection to epicor fails, this crashes hard, the catch never executes, and return of variable never happens
         
-		// Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+    	// Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
         HttpRequest req = new HttpRequest();
 
         //KEEP: use this when refactor to use endpoint/credential
 		//req.setEndpoint('callout:PII_Test');
+
+        //req.setEndpoint(url);
+        //req.setEndpoint('force fail');
+        //	https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/
+        //	https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
+        //	01t1U000004uRvjQAE
+        //	https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'01t1U000004uRvjQAE\'';
+        //fails:
+        //req.setEndpoint('callout:PII_Test' + 'BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'');
+
+		//fails:
+        //string endointAddition = 'BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
+        //req.setEndpoint('callout:PII_Test' + endointAddition);
+        
+        //works:
+        //req.setEndpoint('https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'01t1U000004uRvjQAE\'');
+        
+        //works:
+		//change endpoint...
+		//	from:	https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/
+		//	to:		https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=01t1U000004uRvjQAE
+		//	(directly from swagger)
+        //req.setEndpoint('callout:PII_Test');
+
+        //from website:  callout:My_Named_Credential/some_path
+        //change endpoint back from one made above
+        //works:
+        //req.setEndpoint('callout:PII_Test/BaqSvc/GetInventoryForSF(PI03)/?SFId=01t1U000004uRvjQAE');
+        //works:
+		//url = 'callout:PII_Test/BaqSvc/GetInventoryForSF(PI03)/?SFId=01t1U000004uRvjQAE';
+        //req.setEndpoint(url);
+		//url = 'callout:PII_Test/BaqSvc/GetInventoryForSF(PI03)/?SFId=' + product2ID;
         req.setEndpoint(url);
+        
+
+        
         req.setMethod('GET');
 
-        String username = 'jbit_pi03';
-        String password = 'Surf$UP123';
+        //not need anymore since now using a named credential
+        /*
+        String username = 'username';
+        String password = 'password';
         Blob headerValue = Blob.valueOf(username + ':' + password);
         String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
         req.setHeader('Authorization', authorizationHeader);
+        */
         
         // Instantiate a new http object
         Http h = new Http();
@@ -68,7 +116,9 @@ global class EpicorInventory
 //epicorInventoryData.put('Part_PartNum', res.getBody());
 //string parserData = '';
         
-        try {
+//zzz
+//        try {
+            
             while (parser.nextToken() != null) {
 //maybe/probably need to move code from below up here
 //parserData += parser.getText() + ' / ';
@@ -116,6 +166,8 @@ global class EpicorInventory
                 //KEEP: for debugging, to add debug log info
                 	//System.debug('url_result: ' + url_result );
                 
+					epicorInventoryData.put('Epicor_Status', 'OK');
+                
 	            }
 
 
@@ -124,15 +176,17 @@ global class EpicorInventory
             }
 //epicorInventoryData.put('Part_PartNum', parserData);
             
-        } catch(DmlException de) {
+        } catch (DmlException de) {
             //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + de);
             epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + de );
         }
         catch (Exception e) {
             //epicorInventoryData.put('Calculated_OnHand', 'Epicor Error: ' + e + ' / ' + parser);
             //epicorInventoryData.put('Epicor_Status', 'Error: ' + e + ' / ' + parser);
-            epicorInventoryData.put('Epicor_Status', 'Error pulling data: ' + e );
+            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + e );
         }
+
+
         
 //        while (parser.nextToken() != null) {
 
@@ -154,7 +208,6 @@ global class EpicorInventory
             a.EpicorDemand__c = decimal.valueOf(epicorInventoryData.get('Calculated_Demand'));
             a.EpicorAvailable__c = decimal.valueOf(epicorInventoryData.get('Calculated_Available'));
 
-//zzz
             datetime currDate = datetime.now();
             a.EpicorInvDateLast__c = currDate;
             
@@ -167,8 +220,9 @@ global class EpicorInventory
 
         try {
             upsert product2;
+//			sleep(10000);
         } catch (DmlException e) {
-            // Process exception here
+            // Process exception here            
         }
         
         
@@ -255,8 +309,7 @@ global class EpicorInventory
         
     }
     
-    public static String currency(String i)
-    {
+    public static String currency(String i) {
         // - Error this doesn't handle negative number converts -15 to -14.999  instead of -15.001 before round
         //String s = ( Decimal.valueOf(i==null||i.trim()==''?'0':i).setScale(2) + 0.001 ).format();
         //return s.substring(0,s.length()-1);
@@ -280,5 +333,17 @@ global class EpicorInventory
         }
     
     }
+    
+    private static void sleep(integer milliseconds) 
+    {
+        Long timeDiff = 0;
+        DateTime firstTime = System.now();
+        do
+        {
+            timeDiff = System.now().getTime() - firstTime.getTime();
+        }
+        while(timeDiff <= milliseconds);      
+    }
+    
     
 }

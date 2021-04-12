@@ -45,15 +45,20 @@
     <!-- works:  value="1479944705000" 		not work: value="04/05/2021"  -->
     <!-- <lightning:formattedDateTime name="txtLastUpdated" readonly="true" label="Last Updated" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/> -->
     <lightning:formattedText name="txtLastUpdated" readonly="true" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/>
+    <!--
+		adding 'Rendered="true" ' above not help to refresh it
+        -->
 
 	<!--
     <aura:attribute name="lblUpdateStatus" type="String" default="OK" />
     <lightning:textarea name="txtUpdateStatus" readonly="true" label="Epicor Status" value="{!v.lblUpdateStatus}" />
 	-->
     
-   	<aura:attribute name="lblUpdateStatus" type="String" default="Epicor Status: OK" />
-    <p><lightning:formattedText name="txtUpdateStatus" value="{!v.lblUpdateStatus}" /></p>
-    
+   	<aura:attribute name="lblEpicorUpdateStatus" type="String" default="Epicor Status: OK 1" />
+    <p><lightning:formattedText name="txtEpicorUpdateStatus" value="{!v.lblEpicorUpdateStatus}" /></p>
+
+   	<aura:attribute name="lblSalesforceUpdateStatus" type="String" default="Salesforce Status: OK" />
+    <p><lightning:formattedText name="txtSalesforceUpdateStatus" value="{!v.lblSalesforceUpdateStatus}" /></p>    
 
     
 </aura:component>

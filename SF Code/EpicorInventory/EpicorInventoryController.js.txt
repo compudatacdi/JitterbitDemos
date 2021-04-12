@@ -11,12 +11,33 @@
 		//component.set("v.lblRefresh", "New label");
         
         //helper.getEpicorInventory(component);
-        helper.getSalesforceProduct2(component);
+
+        //helper.getSalesforceProduct2(component);
         helper.getEpicorInventory(component);
         helper.getSalesforceProduct2(component);
+        
+		//alert("I have changed");
+
+        //this.render();
+        //renderer.render();
+        //render();
 
     },
 
+/*    render : function(cmp, helper) {
+        var ret = this.superRender();
+        // do custom rendering here
+        return ret;
+    },
+*/
+    
+/*
+    public boolean val{get;set;}
+        method(){
+        val = true;
+    },
+*/  
+  
     handle_btnRefresh : function(component, event, helper) 
     {
         
@@ -26,11 +47,10 @@
 		//var returnValue = helper.getSalesforceProduct2("01t1U000004uRvjQAE");
         //component.set("v.lblRefresh", returnValue);
 
-        helper.getSalesforceProduct2(component);
+        //helper.getSalesforceProduct2(component);
         helper.getEpicorInventory(component);
         helper.getSalesforceProduct2(component);
 
-        
         //var product2ID = component.get("v.recordId");
         //for testing:
         //component.set("v.lblRefresh", product2ID);
@@ -39,5 +59,7 @@
         
         
     },
+    
+
     
 })

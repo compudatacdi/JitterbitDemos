@@ -12,23 +12,23 @@
         salesforceProduct2.setParams({"product2ID":product2ID});
 
         //for debugging:
-        //component.set("v.lblRefresh", "1");
+        //component.set("v.lblSalesforceUpdateStatus", "1");
 
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
         salesforceProduct2.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 //returning a string:
-                //component.set("v.buttonLabel", response.getReturnValue());
+                //component.set("v.lblSalesforceUpdateStatus", response.getReturnValue());
                 
                 //returning a dictionary with known values in each pair:
                 var salesforceProduct2Data = response.getReturnValue();
 
                 //testing when it was a string:
-                //component.set("v.lblRefresh", salesforceProduct2Data);
+                //component.set("v.lblSalesforceUpdateStatus", salesforceProduct2Data);
                 
                 //for debugging:
-                //component.set("v.lblRefresh", salesforceProduct2Data["Name"]);
+                //component.set("v.lblSalesforceUpdateStatus", salesforceProduct2Data["Name"]);
 
                 component.set("v.valueOnHand", salesforceProduct2Data["EpicorOnHand"]);
                 component.set("v.valueAllocated", salesforceProduct2Data["EpicorAllocated"]);
@@ -36,10 +36,29 @@
                 component.set("v.valueAvailable", salesforceProduct2Data["EpicorAvailable"]);
 				component.set("v.valueLastUpdated", salesforceProduct2Data["EpicorInvDateLast"]);
 
+				component.set("v.lblSalesforceUpdateStatus", "Salesforce Status: OK");
+                
             }
             else {
                 //console.log("Failed with state: " + state);
-                component.set("v.lblRefresh", "Failed with state: " + state);
+
+                //note: state is always "ERROR" if it fails it seems
+                //component.set("v.lblSalesforceUpdateStatus", "Failed with state: " + state);
+                
+
+                //component.set("v.lblSalesforceUpdateStatus", "Failed with state: " + response.getError());
+                let errors = response.getError();
+                let message = 'Unknown error'; // Default error message
+                // Retrieve the error message sent by the server
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    message = errors[0].message;
+                }
+                // Display the message
+                //console.error(message);
+				//component.set("v.lblSalesforceUpdateStatus", "Failed with state: " + message);
+				component.set("v.lblSalesforceUpdateStatus", "Salesforce Status: " + message);
+                
+                
             }
         });
         $A.enqueueAction(salesforceProduct2);
@@ -86,17 +105,61 @@
                 component.set("v.valueAvailable", epicorInventoryData["Calculated_Available"]);
                 */
                 
-                component.set("v.lblUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"]);
+
+//Promise(resolve => setTimeout(resolve, 5000));
+
+                //component.set("v.lblEpicorUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"]);
+//zzz
+                component.set("v.lblEpicorUpdateStatus", "Epicor Status: OK");
+//component.set("v.lblEpicorUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"] + "z");
+
                 
+//component.set("v.lblEpicorUpdateStatus", "Epicor Status: OK zz");
+//component.set("v.lblEpicorUpdateStatus", "Epicor Status: OK xx");
+
+
             }
             else {
                 //console.log("Failed with state: " + state);
-                component.set("v.lblRefresh", "Failed with state: " + state);
+                //component.set("v.lblRefresh", "Failed with state: " + state);
+                //component.set("v.lblEpicorUpdateStatus", "Epicor Status: Failed with " + state);
+
+                //component.set("v.lblRefresh", "Failed with state: " + response.getError());
+                let errors = response.getError();
+                let message = 'Unknown error'; // Default error message
+                // Retrieve the error message sent by the server
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    //message = errors[0].message;
+                    //string[] responseErrors = errors;
+                    //for (Integer i : errors.length) {
+                    message = '';
+					for (var i = 0; i < errors.length; i++) {
+                        if (message != ''){
+                            message += ' / ';
+                        }
+					    message += errors[i].message;
+                        if (errors[i].message = 'Argument cannot be null.'){
+                            message += ' (could be bad login/pwd) ';
+                        }
+                    }
+                }
+                // Display the message
+                //console.error(message);
+                ////ugh, still yields "ERROR"
+				//component.set("v.lblEpicorUpdateStatus", "Failed with state: " + message);
+				
+//zzz
+				component.set("v.lblEpicorUpdateStatus", "Epicor Status: " + message);
+//component.set("v.lblEpicorUpdateStatus", "Epicor Status: " + epicorInventoryData["Epicor_Status"] + " x");
+
+
+
             }
         });
         $A.enqueueAction(epicorInventory);
 
         
     } ,
-        
+    
+ 
 })
