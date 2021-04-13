@@ -6,57 +6,22 @@
 
     doInit : function(component, event, helper) 
     {
-        //this works upon firing if have the "aura:handler" in the component
-        //runs when go into the detail tab, or if hit refresh
-		//component.set("v.lblRefresh", "New label");
-        
-        //helper.getEpicorInventory(component);
+        //NOTE: this works upon firing if have the "aura:handler" in the component
+        //		runs when go into the detail tab, or if hit refresh
 
-        //helper.getSalesforceProduct2(component);
         helper.getEpicorInventory(component);
         helper.getSalesforceProduct2(component);
         
-		//alert("I have changed");
-
-        //this.render();
-        //renderer.render();
-        //render();
+		//alert("hello");
 
     },
 
-/*    render : function(cmp, helper) {
-        var ret = this.superRender();
-        // do custom rendering here
-        return ret;
-    },
-*/
-    
-/*
-    public boolean val{get;set;}
-        method(){
-        val = true;
-    },
-*/  
   
     handle_btnRefresh : function(component, event, helper) 
     {
         
-        //keep, commented out temp for testing other stuff:
-//        helper.getEpicorInventory(component);
-        
-		//var returnValue = helper.getSalesforceProduct2("01t1U000004uRvjQAE");
-        //component.set("v.lblRefresh", returnValue);
-
-        //helper.getSalesforceProduct2(component);
         helper.getEpicorInventory(component);
         helper.getSalesforceProduct2(component);
-
-        //var product2ID = component.get("v.recordId");
-        //for testing:
-        //component.set("v.lblRefresh", product2ID);
-        
-        //var name = component.get("c.getTest6");
-        
         
     },
     
