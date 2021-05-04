@@ -34,6 +34,8 @@
 
 				component.set("v.lblSalesforceUpdateStatus", "Salesforce Status: OK");
                 
+                //refresh the form
+				$A.get('e.force:refreshView').fire();
             }
             else {
                 //console.log("Failed with state: " + state);
