@@ -1,0 +1,137 @@
+global class EpicorSalesOrder {
+
+	public static Map<String, String> epicorSalesOrderData = new Map<String, String>();
+
+	public static Map<String, String> salesforceSalesOrderData = new Map<String, String>();
+
+    @AuraEnabled  //needed to be able to call it from the aura realm
+    public static Map<String,String> getEpicorOrderHedForOrder(decimal orderNum) {
+        
+
+        //NOTE: change to use a named credential for better security and be more dynamic
+        //String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
+		String url = 'callout:PII_Test/BaqSvc/GetOrderHedForOrderSF(PI03)/?OrderNum=' + orderNum;
+
+        //for debugging:
+        //epicorInventoryData.put('Calculated_OnHand', '2');
+
+
+		try {
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
+            //		and return of variable never happens
+            
+            // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(url);
+            req.setMethod('GET');
+    
+            
+            Http h = new Http();
+            HttpResponse res = h.send(req);
+            System.debug(res.getBody());
+    
+            JSONParser parser = JSON.createParser(res.getBody());
+            //NOTE:  if epicor is down, this is where it fails because parser is empty:
+    
+            while (parser.nextToken() != null) {
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                    (parser.getText() == 'OrderHed_CustNum' || parser.getText() == 'Terms_Description'
+                    || parser.getText() == 'OrderHed_OpenOrder' || parser.getText() == 'OrderHed_OrderDate'
+                    || parser.getText() == 'Customer_SFId_c')) 
+                {
+                    string fieldName = parser.getText();
+                    
+                    parser.nextToken();
+                    
+                    //original trial returning one value
+                    //url_result = parser.getText();
+                    
+                    string fieldValue; 
+                    if(fieldName == 'Calculated_OnHand'
+                       || fieldName == 'zzz')
+                    {
+                        //fieldValue = String.valueOf(decimal.valueOf(parser.getText()));
+                        fieldValue = currency(parser.getText());
+                    }
+                    else
+                    {
+                        fieldValue = parser.getText();
+                    }
+                    
+//epicorSalesOrderData.put('Calculated_OnHand', 'x');
+                    epicorSalesOrderData.put(fieldName, fieldValue);
+                    
+                    //KEEP: for debugging, to add debug log info
+                    //System.debug('url_result: ' + url_result );
+                    
+                    epicorSalesOrderData.put('Epicor_Status', 'OK');
+                    
+                }
+            }
+        } catch (DmlException de) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + e );
+        }
+
+        epicorSalesOrderData.put('Epicor_Status', 'OK');
+        
+//zzz
+        //update salesforce data with epicor data:
+        EpicorOrderHed__c[] epicorOrderHed;
+		//NOTE:  the ":" allows you to substitute a variable value into the select statement
+        epicorOrderHed = [SELECT Id,OrderNum__c,Terms__c FROM EpicorOrderHed__c WHERE OrderNum__c = :orderNum];
+        for (EpicorOrderHed__c a : epicorOrderHed) {
+            
+            a.Terms__c = epicorSalesOrderData.get('Terms_Description');
+//            a.EpicorAllocated__c = decimal.valueOf(epicorInventoryData.get('Calculated_Allocated'));
+//            a.EpicorDemand__c = decimal.valueOf(epicorInventoryData.get('Calculated_Demand'));
+//            a.EpicorAvailable__c = decimal.valueOf(epicorInventoryData.get('Calculated_Available'));
+
+//not sure if need since the record has a base date change field - try soql to see it
+//            datetime currDate = datetime.now();
+//            a.EpicorDateLast__c = currDate;
+            
+    	}
+
+
+        
+        try {
+            upsert epicorOrderHed;
+        } catch (DmlException e) {
+            // Process exception here            
+        }
+
+
+        return epicorSalesOrderData;
+         
+    }
+    
+
+    public static String currency(String i) {
+        // - Error this doesn't handle negative number converts -15 to -14.999  instead of -15.001 before round
+        //String s = ( Decimal.valueOf(i==null||i.trim()==''?'0':i).setScale(2) + 0.001 ).format();
+        //return s.substring(0,s.length()-1);
+    
+        if (( i == null) || ( i == ''))
+        {
+            return '0';
+        }
+        else
+        {
+            string s;
+            if ( Decimal.valueOf(i) >= 0 )
+            {
+                s =  ( Decimal.valueOf(i).setScale(2) + 0.001 ).format();
+            }
+            else
+            {
+                s = ( Decimal.valueOf(i).setScale(2) - 0.001 ).format();
+            }
+	        return s.substring(0,s.length()-1);
+        }
+    
+    }
+        
+}

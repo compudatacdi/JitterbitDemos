@@ -1,0 +1,80 @@
+<!-- <aura:component > -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="EpicorSalesOrder">
+
+    <!-- handle the instantiation event -->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+	<aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+    
+    <!-- refresh the data when 
+    <aura:handler event="force:refreshView" action="{!c.refresh}" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:dependency resource="markup://force:editRecord" type="EVENT" />
+    <aura:handler event="force:refreshView" action="{!c.doInit}" />
+	-->
+    
+    <!-- get and store the order number from the current record -->
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+    <force:recordData aura:id="recordLoader"
+      fields="OrderNum__c, LastModifiedDate"
+      recordId="{!v.recordId}"
+      targetFields="{!v.simpleRecord}"
+      targetError="{!v.recordError}"
+    />
+   	<aura:attribute name="orderNum" type="String" default="{!v.simpleRecord.OrderNum__c}" />
+   	<aura:attribute name="lastModifiedDate" type="String" default="{!v.simpleRecord.LastModifiedDate}" />
+    <!-- String/Id works fine	type="Date"		v.simpleRecord.LastModifiedDate    EpicorDateLast__c  -->
+
+
+    
+   	<aura:attribute name="lblRefreshThis" type="String" default="Refresh this Order" />
+    <lightning:button name="btnRefreshThis" label="{!v.lblRefreshThis}" onclick="{!c.handle_btnRefreshThis}" />
+
+   	<aura:attribute name="lblRefreshAccount" type="String" default="Refresh this Account's Orders" />
+    <lightning:button aura:id="btnRefreshAccount" name="btnRefreshAccount" label="{!v.lblRefreshAccount}" onclick="{!c.handle_btnRefreshAccount}" />
+
+    <aura:attribute name="lblRefreshAll" type="String" default="Refresh All Orders" />
+    <lightning:button name="btnRefreshAll" label="{!v.lblRefreshAll}" onclick="{!c.handle_btnRefreshAll}" />
+
+
+
+
+    <!--    
+<lightning:formattedText name="lblDemand" value="Demand: " />
+<span class="slds-assistive-text">Loading, Please Wait...</span>
+    
+-->
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <lightning:button label="Toggle" variant="brand" onclick="{! c.handleClick }" />
+    <div class="exampleHolder">
+        <aura:if isTrue="{! v.loaded }">
+            <!-- Put loaded content here -->
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" size="small" />
+            </aura:set>
+        </aura:if>
+    </div>
+
+    
+    
+    <br /> <!-- line break -->
+    <br /> <!-- line break -->
+    <p></p>
+	<lightning:formattedText name="lblLastUpdated" value="Last Updated: " />
+    <aura:attribute name="valueLastUpdated" type="Date" default="0" />
+    <!--lightning:formattedText name="txtLastUpdated" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit"/ -->
+	<lightning:formattedDateTime name="txtLastUpdated" value="{!v.valueLastUpdated}" year="2-digit" month="short" day="2-digit" weekday="short" hour="2-digit" minute="2-digit" />
+
+    <!-- readonly="true"    lastModifiedDate   -->
+    
+    
+  	<aura:attribute name="lblEpicorUpdateStatus" type="String" default="Epicor Status: OK" />
+    <p><lightning:formattedText name="txtEpicorUpdateStatus" value="{!v.lblEpicorUpdateStatus}" /></p>
+
+   	<aura:attribute name="lblSalesforceUpdateStatus" type="String" default="Salesforce Status: OK" />
+    <p><lightning:formattedText name="txtSalesforceUpdateStatus" value="{!v.lblSalesforceUpdateStatus}" /></p>    
+
+    
+</aura:component>

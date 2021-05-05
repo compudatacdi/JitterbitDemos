@@ -1,0 +1,94 @@
+({
+	helperMethod : function() {
+		
+	},
+    
+
+    
+    getEpicorOrderHedForOrder : function(component) 
+    {
+		//gets epicor order for the current sf product and updates sf data
+        
+        //component.set("v.lblRefresh", "getEpicorOrderHedForOrder 1");
+
+        //NOTE: seems you can only get recordID out of v, not additional fields
+        //var product2ID = component.get("v.recordId");
+//        var orderNum = component.get("v.orderNum__c");
+//        var orderNum = component.get("v.recordId");
+
+//component.set("v.lblRefreshThis", "in helper 1");
+
+        var orderNum = component.get("v.orderNum");
+        
+		//component.set("v.lblRefreshThis", "orderNum: " + orderNum);
+
+
+        //for testing:
+		//component.set("v.lblRefresh", product2ID);
+
+        //instantiate getEpicorOrderHedForOrder which actually resides in EpicorSalesOrder.apxc apex code,
+        //	which is referenced in the controller EpicorSalesOrder.cmp as a controller itself in the definition up top
+		var epicorOrderHed = component.get("c.getEpicorOrderHedForOrder");        
+        //epicorOrderHed.setParams({"product2ID":product2ID});
+        epicorOrderHed.setParams({"orderNum":orderNum});
+
+//component.set("v.lblRefreshThis", "in helper 2");
+
+        //for debugging:
+        //component.set("v.lblRefresh", "1");
+
+        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+        epicorOrderHed.setCallback(this, function(response) {
+            var state = response.getState();
+//component.set("v.lblRefreshThis", "in helper 3");
+            if (state === "SUCCESS") {
+//component.set("v.lblRefreshThis", "in helper success");
+                //returning a string:
+                //component.set("v.buttonLabel", response.getReturnValue());
+
+                //returning a dictionary with known values in each pair:
+                var epicorSalesOrderData = response.getReturnValue();
+
+//component.set("v.lblRefreshThis", epicorSalesOrderData["OrderHed_CustNum"]);
+component.set("v.lblRefreshThis", epicorSalesOrderData["Terms_Description"]);
+                
+                //refresh the data form
+                $A.get('e.force:refreshView').fire();
+                
+                component.set("v.lblEpicorUpdateStatus", "Epicor Status: OK");
+
+            }
+            else {
+//component.set("v.lblRefreshThis", "in helper error");
+                //console.log("Failed with state: " + state);
+                //component.set("v.lblEpicorUpdateStatus", "Epicor Status: Failed with " + state);
+                let errors = response.getError();
+                let message = 'Unknown error'; // Default error message
+                // Retrieve the error message sent by the server
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    //message = errors[0].message;
+                    //string[] responseErrors = errors;
+                    //for (Integer i : errors.length) {
+                    message = '';
+					for (var i = 0; i < errors.length; i++) {
+                        if (message != ''){
+                            message += ' / ';
+                        }
+					    message += errors[i].message;
+                        if (errors[i].message = 'Argument cannot be null.'){
+                            message += ' (could be bad login/pwd) ';
+                        }
+                    }
+                }
+                // Display the message
+				component.set("v.lblEpicorUpdateStatus", "Epicor Status: " + message);
+
+            }
+        });
+        $A.enqueueAction(epicorOrderHed);
+
+        
+    } ,
+    
+    
+})

@@ -1,0 +1,113 @@
+({
+	myAction : function(component, event, helper) {
+		
+	},
+
+    
+    doInit : function(component, event, helper) 
+    {
+		//alert("hello");
+		
+		
+        //var orderNum = component.get("v.orderNum");
+        //NOTE: the data is not populated upon init, so this is too early:
+		//component.set("v.lblRefreshThis", "orderNum: " + orderNum);
+        
+    },
+
+    
+  	onRender: function(component, event, helper) {     
+//		var lastModifiedDate = component.get("v.lastModifiedDate");
+
+        //this works fine:
+        //var lastModifiedDate = new Date().toISOString();        
+        var lastModifiedDate = new Date();
+
+        lastModifiedDate = component.get("v.lastModifiedDate");
+
+if (lastModifiedDate != null) {
+  //  block of code to be executed if the condition is true
+//    var month = lastModifiedDate.getMonth();
+//    component.set("v.lblRefreshThis", month);
+//component.set("v.lblRefreshThis", "not null");
+
+var zDate = new Date(lastModifiedDate); // >>is a date, but data is all jumbled
+var month = zDate.getMonth().toString();
+var day = zDate.getDay().toString();
+var year = zDate.getYear().toString();
+//works, and then big crash (?endless loop?):
+//component.set("v.lblRefreshThis", zDate);
+//component.set("v.lblRefreshThis", month + "/" + day + "/" + year);
+//component.set("v.lblRefreshThis",  day );
+
+    //>> 2021-05-05T18:00:11.000Z
+//component.set("v.lblRefreshThis",  lastModifiedDate );
+component.set("v.valueLastUpdated",  lastModifiedDate );
+
+
+}
+        
+//works unless try to populate with lastModifiedDate (>error: getMonth is not a function)
+//var month = lastModifiedDate.getMonth();
+//component.set("v.lblRefreshThis", month);
+        
+        
+        //NOTE: the data is not populated upon init, so this is too early:
+//var orderNum = component.get("v.orderNum");
+//component.set("v.lblRefreshThis", "orderNum: " + orderNum);
+//component.set("v.lblRefreshThis", "x");
+
+//        component.set("v.valueLastUpdated", lastModifiedDate);
+        //component.set("v.lblRefreshThis", lastModifiedDate); 
+        // >> if populate with id is ok, but date is blank, ugh
+        
+        //alert(lastModifiedDate);
+//var xDate = new Date();
+//var month = xDate.getMonth();
+        //alert(month);
+//        component.set("v.valueLastUpdated", lastModifiedDate);
+
+      
+  },
+    
+    
+    
+    handle_btnRefreshThis : function(component, event, helper) 
+    {
+		//alert("hello");
+        //component.set("v.HideSpinner", "true");
+
+        
+        component.set("v.loaded", "false");
+        
+        //var orderNum = component.get("v.orderNum");
+        //component.set("v.lblRefreshThis", myLabel);
+//        component.set("v.lblRefreshThis", "in controller");
+        
+
+        helper.getEpicorOrderHedForOrder(component);
+        
+        component.set("v.loaded", "true");
+
+    },
+
+    handle_btnRefreshAccount : function(component, event, helper) 
+    {
+		//alert("hello");
+        //component.set("v.HideSpinner", "true");
+        //
+    },
+    
+    handle_btnRefreshAll : function(component, event, helper) 
+    {
+		//alert("hello");
+        //component.set("v.HideSpinner", "true");
+        //
+    },
+    
+    handleClick: function (cmp, event) {
+            cmp.set('v.loaded', !cmp.get('v.loaded'));
+    },
+
+
+})
