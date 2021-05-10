@@ -22,19 +22,19 @@
         //this works fine:
         //var lastModifiedDate = new Date().toISOString();        
         var lastModifiedDate = new Date();
-
         lastModifiedDate = component.get("v.lastModifiedDate");
 
-if (lastModifiedDate != null) {
+		if (lastModifiedDate != null) {
   //  block of code to be executed if the condition is true
 //    var month = lastModifiedDate.getMonth();
 //    component.set("v.lblRefreshThis", month);
 //component.set("v.lblRefreshThis", "not null");
 
-var zDate = new Date(lastModifiedDate); // >>is a date, but data is all jumbled
-var month = zDate.getMonth().toString();
-var day = zDate.getDay().toString();
-var year = zDate.getYear().toString();
+//var zDate = new Date(lastModifiedDate); // >>is a date, but data is all jumbled
+    
+//var month = zDate.getMonth().toString();
+//var day = zDate.getDay().toString();
+//var year = zDate.getYear().toString();
 //works, and then big crash (?endless loop?):
 //component.set("v.lblRefreshThis", zDate);
 //component.set("v.lblRefreshThis", month + "/" + day + "/" + year);
@@ -42,11 +42,13 @@ var year = zDate.getYear().toString();
 
     //>> 2021-05-05T18:00:11.000Z
 //component.set("v.lblRefreshThis",  lastModifiedDate );
-component.set("v.valueLastUpdated",  lastModifiedDate );
 
-
-}
+    
+            component.set("v.valueLastUpdated",  lastModifiedDate );
         
+        
+        }
+                
 //works unless try to populate with lastModifiedDate (>error: getMonth is not a function)
 //var month = lastModifiedDate.getMonth();
 //component.set("v.lblRefreshThis", month);

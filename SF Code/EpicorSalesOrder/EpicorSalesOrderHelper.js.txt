@@ -50,7 +50,7 @@
                 var epicorSalesOrderData = response.getReturnValue();
 
 //component.set("v.lblRefreshThis", epicorSalesOrderData["OrderHed_CustNum"]);
-component.set("v.lblRefreshThis", epicorSalesOrderData["Terms_Description"]);
+//component.set("v.lblRefreshThis", epicorSalesOrderData["Terms_Description"]);
                 
                 //refresh the data form
                 $A.get('e.force:refreshView').fire();
