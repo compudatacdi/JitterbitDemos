@@ -5,20 +5,21 @@ global class EpicorSalesOrder {
 	public static Map<String, String> salesforceSalesOrderData = new Map<String, String>();
 
     
-	@future (callout=true) //makes this method able to have a callout
-    public static void xxx(decimal orderNum) {
+    @InvocableMethod  //makes this method able to be called by a trigger/flow/etc
+    public static void getEpicorOrderHedForOrder_Trigger() {
+
+		//specific hardcoded sales order number just for testing this POC        
+		getEpicorOrderHedForOrder_Callout(60501);   
+
+    }
+
+    @future (callout=true) //makes this method able to have a callout
+    public static void getEpicorOrderHedForOrder_Callout(decimal orderNum) {
     
-        //Integer orderNum = 60501;
         Map<String, String> epicorSalesOrderData = new Map<String, String>();
         
-        
-        //NOTE: change to use a named credential for better security and be more dynamic
-        //String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
-		
-        //epicorSalesOrderData.put('Epicor_Status', '0');
-
+        //NOTE: change to use a named credential (PII_Test) for better security and be more dynamic
         String url = 'callout:PII_Test/BaqSvc/GetOrderHedForOrderSF(PI03)/?OrderNum=' + orderNum;
-
     
 		try {
             //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
@@ -62,7 +63,6 @@ global class EpicorSalesOrder {
                     }
 
                     epicorSalesOrderData.put(fieldName, fieldValue);
-                    
 
                     //KEEP: for debugging, to add debug log info
                     //System.debug('url_result: ' + url_result );
@@ -92,12 +92,10 @@ global class EpicorSalesOrder {
             a.OpenOrder__c = Boolean.valueOf(epicorSalesOrderData.get('OrderHed_OpenOrder'));
             a.OrderDate__c = Date.valueOf(epicorSalesOrderData.get('OrderHed_OrderDate'));
 
-//a.Terms__c = epicorSalesOrderData.get('Epicor_Status').substring(0, 50); // >> ok
-//a.Terms__c = epicorSalesOrderData.get('Epicor_Status'); // >> ok
-
-//            a.Terms__c = 'terms 2';
-//            a.OpenOrder__c = true;
-
+            //for debugging:
+            //a.Terms__c = epicorSalesOrderData.get('Epicor_Status').substring(0, 50); // >> ok
+            //a.Terms__c = epicorSalesOrderData.get('Epicor_Status'); // >> ok
+			//a.Terms__c = 'terms 2';
             
         }
 
@@ -110,21 +108,10 @@ global class EpicorSalesOrder {
         
     }
     
-    
-    @InvocableMethod  //makes this method able to be called by a trigger/flow/etc
-    public static void zzz() {
-        //getEpicorOrderHedForOrder(60501);
-        //epicorSalesOrderData = getEpicorOrderHedForOrder(60501);
-        
-		xxx(60501);   
-
-    
-    }
 
     
     @AuraEnabled  //needed to be able to call it from the aura realm
     public static Map<String,String> getEpicorOrderHedForOrder(decimal orderNum) {
-        
 
         //NOTE: change to use a named credential for better security and be more dynamic
         //String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
