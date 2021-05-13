@@ -1,0 +1,21 @@
+global class EpicorSalesOrderHedAll {
+
+    
+    @InvocableMethod  //makes this method able to be called by a trigger/flow/etc
+    public static void getEpicorOrdersAll_Trigger() {
+
+		//specific hardcoded sales order number just for testing this POC        
+		getEpicorOrdersAll_Callout();   
+
+    }
+
+    @future (callout=true) //makes this method able to have a callout
+    public static void getEpicorOrdersAll_Callout() {
+    
+        Map<String, String> epicorSalesOrderData = new Map<String, String>();
+        
+    }
+    
+    
+
+}
