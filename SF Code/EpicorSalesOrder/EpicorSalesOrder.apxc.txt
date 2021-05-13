@@ -9,7 +9,19 @@ global class EpicorSalesOrder {
     public static void getEpicorOrderHedForOrder_Trigger() {
 
 		//specific hardcoded sales order number just for testing this POC        
-		getEpicorOrderHedForOrder_Callout(60501);   
+		getEpicorOrderHedForOrder_Callout(60501);
+		
+        //100 doesn't crash, 500 does
+        Integer start = System.Now().millisecond();
+	        while(System.Now().millisecond()< start+250){ 
+        }
+        Integer start1 = System.Now().millisecond();
+	        while(System.Now().millisecond()< start+250){ 
+        }
+        
+        // ULTIMATELY NEED TO SPLIT OUT THE CREATION OF HEADER & DETAIL RECORDS
+        // WHEN AUTOMATING A FULL PULL OF LOTS OF DATA IN A FLOW SITUATION
+        getEpicorOrderDtlForOrder_Callout(60501);
 
     }
 
@@ -21,9 +33,10 @@ global class EpicorSalesOrder {
         //NOTE: change to use a named credential (PII_Test) for better security and be more dynamic
         String url = 'callout:PII_Test/BaqSvc/GetOrderHedForOrderSF(PI03)/?OrderNum=' + orderNum;
     
+integer rowCount = 0;
+        
 		try {
-            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
-            //		and return of variable never happens
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes
             
             // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
             HttpRequest req = new HttpRequest();
@@ -41,9 +54,11 @@ global class EpicorSalesOrder {
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
                     (parser.getText() == 'OrderHed_CustNum' || parser.getText() == 'Terms_Description'
                     || parser.getText() == 'OrderHed_OpenOrder' || parser.getText() == 'OrderHed_OrderDate'
-                    || parser.getText() == 'Customer_SFId_c')) 
+                    || parser.getText() == 'Customer_SFId_c' || parser.getText() == 'OrderHed_OrderNum')) 
                 {
                     string fieldName = parser.getText();
+
+rowCount += 1;
                     
                     parser.nextToken();
                     
@@ -83,43 +98,384 @@ global class EpicorSalesOrder {
         
         //update salesforce data with epicor data:
         EpicorOrderHed__c[] epicorOrderHed;
+        
+
+//!!  NEED SOME LOGIC TO DETERMINE IF NEW OR EXISTING RECORD !!
+//epicorOrderHed.AccountID__c = epicorSalesOrderData.get('Customer_SFId_c');
+//epicorOrderHed.OrderNum__c = epicorSalesOrderData.get('OrderHed_OrderNum');
+//epicorOrderHed.Terms__c = epicorSalesOrderData.get('Terms_Description');
+//epicorOrderHed.OpenOrder__c = Boolean.valueOf(epicorSalesOrderData.get('OrderHed_OpenOrder'));
+//epicorOrderHed.OrderDate__c = Date.valueOf(epicorSalesOrderData.get('OrderHed_OrderDate'));
+//upsert epicorOrderHed;
+//EpicorOrderHed__c[] zz = new List<EpicorOrderHed__c>();
+/*
+EpicorOrderHed__c z = new EpicorOrderHed__c(
+	Name = String.valueOf(epicorSalesOrderData.get('OrderHed_OrderNum')),  
+    AccountID__c = epicorSalesOrderData.get('Customer_SFId_c'), 
+	OrderNum__c = 60501
+);
+insert z;
+*/
+//zz.add(z);
+////EpicorOrderHed__c.add(z);
+//insert zz; 
+        
+		string parentId = '';
+        
 		//NOTE:  the ":" allows you to substitute a variable value into the select statement
         epicorOrderHed = [SELECT Id,OrderNum__c,Terms__c,OpenOrder__c,OrderDate__c FROM EpicorOrderHed__c WHERE OrderNum__c = :orderNum];
 
-        for (EpicorOrderHed__c a : epicorOrderHed) {
+        if (epicorOrderHed.isEmpty()) {
+            EpicorOrderHed__c newEpicorOrderHed = new EpicorOrderHed__c(
+                Name = String.valueOf(epicorSalesOrderData.get('OrderHed_OrderNum')),  
+                AccountID__c = epicorSalesOrderData.get('Customer_SFId_c'), 
+                //OrderNum__c = 60501,
+                OrderNum__c = Integer.valueof(epicorSalesOrderData.get('OrderHed_OrderNum')),
+                
+//                Terms__c = epicorSalesOrderData.get('Terms_Description'),
+Terms__c = 'rowCount: ' + String.valueOf(rowCount),
+                
+                OpenOrder__c = Boolean.valueOf(epicorSalesOrderData.get('OrderHed_OpenOrder')),
+                OrderDate__c = Date.valueOf(epicorSalesOrderData.get('OrderHed_OrderDate'))
+            );
+            insert newEpicorOrderHed;
             
-            a.Terms__c = epicorSalesOrderData.get('Terms_Description');
-            a.OpenOrder__c = Boolean.valueOf(epicorSalesOrderData.get('OrderHed_OpenOrder'));
-            a.OrderDate__c = Date.valueOf(epicorSalesOrderData.get('OrderHed_OrderDate'));
+            //get the resulting ID of the created record
+            parentId = newEpicorOrderHed.Id;
 
-            //for debugging:
-            //a.Terms__c = epicorSalesOrderData.get('Epicor_Status').substring(0, 50); // >> ok
-            //a.Terms__c = epicorSalesOrderData.get('Epicor_Status'); // >> ok
-			//a.Terms__c = 'terms 2';
+        }        
+        else
+        {
+            for (EpicorOrderHed__c a : epicorOrderHed) {
+                a.Terms__c = epicorSalesOrderData.get('Terms_Description');
+                a.OpenOrder__c = Boolean.valueOf(epicorSalesOrderData.get('OrderHed_OpenOrder'));
+                a.OrderDate__c = Date.valueOf(epicorSalesOrderData.get('OrderHed_OrderDate'));
+    
+                //for debugging:
+                //a.Terms__c = epicorSalesOrderData.get('Epicor_Status').substring(0, 50); // >> ok
+                //a.Terms__c = epicorSalesOrderData.get('Epicor_Status'); // >> ok
+                //a.Terms__c = 'terms 2';
+
+				parentId = a.Id;
+                
+            }
+    
+            try {
+                upsert epicorOrderHed;
+            } catch (DmlException e) {
+                // Process exception here
+            }
+		}
+
+/*
+//zzz
+        //-----------
+        //update order detail records
+integer rowCount2 = 0;
+
+		try {
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes
             
+	        String urlOrderDtl = 'callout:PII_Test/BaqSvc/GetOrderDtlForOrderSF(PI03)/?OrderNum=' + orderNum;
+            
+
+            // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+            HttpRequest req2 = new HttpRequest();
+            req2.setEndpoint(urlOrderDtl);
+            req2.setMethod('GET');
+            
+            Http h2 = new Http();
+            HttpResponse res2 = h2.send(req2);
+            System.debug(res2.getBody());
+    
+            JSONParser parser2 = JSON.createParser(res2.getBody());
+            //NOTE:  if epicor is down, this is where it fails because parser is empty:
+
+//integer rowCount = 0;
+while (parser2.nextToken() != null) {
+rowCount2 += 1;
+}
+while(parser2.nextToken() != JSONToken.END_ARRAY) { // we started with an array of objects
+//	GetPerson gp = new GetPerson();
+//	rowCount += 1;
+	while(parser2.nextToken() != JSONToken.END_OBJECT){ // loop through each object
+//		rowCount += 1;
+		if(parser2.getCurrentToken() == JSONToken.FIELD_NAME) { //token should be field name
+//			rowCount += 1;
+        }
+	}
+}
+
+            
+        
+            while (parser.nextToken() != null) {
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                    (parser.getText() == 'OrderHed_CustNum' || parser.getText() == 'Terms_Description'
+                    || parser.getText() == 'OrderHed_OpenOrder' || parser.getText() == 'OrderHed_OrderDate'
+                    || parser.getText() == 'Customer_SFId_c' || parser.getText() == 'OrderHed_OrderNum')) 
+                {
+                    string fieldName = parser.getText();
+                    
+                    parser.nextToken();
+                    
+                    string fieldValue; 
+                    if(fieldName == 'Calculated_OnHand'
+                       || fieldName == 'zzz')
+                    {
+                        fieldValue = currency(parser.getText());
+                    }
+                    else
+                    {
+                        fieldValue = parser.getText();
+                    }
+
+                    epicorSalesOrderData.put(fieldName, fieldValue);
+                                        
+                }
+            }
+
+            
+        } catch (DmlException de) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + e );
         }
 
-        try {
-            upsert epicorOrderHed;
-        } catch (DmlException e) {
-            // Process exception here
-        }
-        
-        
+//hardcoded POC:
+EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c(
+	Name = String.valueof(1),  
+	//AccountID__c = epicorSalesOrderData.get('Customer_SFId_c'),
+	EpicorSalesOrderId__c = parentId,
+	//EpicorSalesOrderId__c = String.valueof(epicorSalesOrderData.get('OrderHed_OrderNum')),
+    OrderLine__c = 1,
+    PartNum__c = 'part',
+
+//    LineDesc__c = 'desc',
+    LineDesc__c = 'rowCount: ' + String.valueof(rowCount2),
+    
+    IUM__c = 'ea',
+    OrderQty__c = 42,
+    OrderNumOrderLine__c = 'ordernum 1'
+    
+    
+);
+insert newEpicorOrderDtl;
+*/
+
+        //NOTE:  can't call a 'future' method from a 'future' method (it simply doesn't execute apparently)
+		//getEpicorOrderDtlForOrder_Callout(60501);
+
     }
     
+    
+    //experiment as it does not seem to work above
+    //maybe each callout needs to be separated
+    @future (callout=true) //makes this method able to have a callout
+    public static void getEpicorOrderDtlForOrder_Callout(decimal orderNum) {
+    
+        Map<String, String> epicorSalesOrderData = new Map<String, String>();
+        
+//?temp? to get parent record id since split this code out into it's own method
+EpicorOrderHed__c[] epicorOrderHed;
+epicorOrderHed = [SELECT Id,OrderNum__c,Terms__c,OpenOrder__c,OrderDate__c FROM EpicorOrderHed__c WHERE OrderNum__c = :orderNum];
+string parentId;
+for (EpicorOrderHed__c a : epicorOrderHed) {
+	parentId = a.Id;
+}
 
+//zzz
+        //-----------
+        //update order detail records
+integer rowCount2 = 0;
+
+		try {
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes
+            
+	        String urlOrderDtl = 'callout:PII_Test/BaqSvc/GetOrderDtlForOrderSF(PI03)/?OrderNum=' + orderNum;
+            
+
+            // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+            HttpRequest req2 = new HttpRequest();
+            req2.setEndpoint(urlOrderDtl);
+            req2.setMethod('GET');
+            
+            Http h2 = new Http();
+            HttpResponse res2 = h2.send(req2);
+            System.debug(res2.getBody());
+    
+            JSONParser parser2 = JSON.createParser(res2.getBody());
+            //NOTE:  if epicor is down, this is where it fails because parser is empty:
+
+//integer rowCount = 0;
+/*
+while (parser2.nextToken() != null) {
+	//yields 27:
+    rowCount2 += 1;
+}
+*/
+while(parser2.nextToken() != JSONToken.END_ARRAY) { // we started with an array of objects
+
+//temp change to see if can swap between create/update:
+EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
+    
+	newEpicorOrderDtl.EpicorSalesOrderId__c = parentId;
+    
+    //integer orderNum = 0;
+
+	rowCount2 += 1; // >> 1 for each record in the epicor results
+    
+	while(parser2.nextToken() != JSONToken.END_OBJECT){ // loop through each object
+//		rowCount2 += 1;
+		if(parser2.getCurrentToken() == JSONToken.FIELD_NAME) { //token should be field name
+//			rowCount2 += 1;
+            
+            string fieldName = parser2.getText();
+			parser2.nextToken();
+            
+            switch on fieldName {
+                //when 'OrderDtl_OrderNum' {
+		        //    orderNum = Integer.valueof(parser2.getText());
+                //}
+                when 'OrderDtl_OrderLine' {
+		            newEpicorOrderDtl.Name = String.valueof(parser2.getText());
+		            newEpicorOrderDtl.OrderLine__c = Integer.valueof(parser2.getText());
+                }
+                when 'OrderDtl_PartNum' {
+		            newEpicorOrderDtl.PartNum__c = String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_LineDesc' {
+		            newEpicorOrderDtl.LineDesc__c = 'XXX1'; //String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_IUM' {
+		            newEpicorOrderDtl.IUM__c = String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_OrderQty' {
+		            newEpicorOrderDtl.OrderQty__c = Decimal.valueof(parser2.getText());
+                }
+
+            }
+    		newEpicorOrderDtl.OrderNumOrderLine__c = 
+            	String.valueof(orderNum) + ' ' 
+                + String.valueof(newEpicorOrderDtl.OrderLine__c);
+            
+            
+        }
+	}
+    
+//the insert works perfect, issue is it needs to also update if exists, so needs tweaking
+//    insert newEpicorOrderDtl;
+    //NO, this does not update a record
+    //upsert newEpicorOrderDtl;
+
+//check to see if the record exists in sf or not, then add or update
+string orderNumOrderLine = String.valueof(orderNum) + ' ' + String.valueof(newEpicorOrderDtl.OrderLine__c);
+//NEED TO ADD THE LINE UP ABOVE, BUT THIS IS TOO SOON!!!!
+//ugh, populating the MAP epicorSalesOrderData won't work with multiple records, unless clear inbetween
+
+EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,OrderNumOrderLine__c FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
+
+    //zzzzzzzzzzz
+//next: keep going with this, check for new/change and act appropriately
+if (checkEpicorOrderDtl.isEmpty()) {
+	insert newEpicorOrderDtl;
+}
+else {
+//	checkEpicorOrderDtl.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+	for (EpicorOrderDtl__c a : checkEpicorOrderDtl) {
+		a.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+		a.Name = newEpicorOrderDtl.Name;
+		a.OrderLine__c = newEpicorOrderDtl.OrderLine__c;
+		a.PartNum__c = newEpicorOrderDtl.PartNum__c;
+		a.LineDesc__c = newEpicorOrderDtl.LineDesc__c;
+		a.IUM__c = newEpicorOrderDtl.IUM__c;
+		a.OrderQty__c = newEpicorOrderDtl.OrderQty__c;
+		a.OrderNumOrderLine__c = newEpicorOrderDtl.OrderNumOrderLine__c;
+        try {
+            upsert checkEpicorOrderDtl;
+        } catch (DmlException e) {
+            // Process exception here
+        }        
+    }
+
+}
+
+    
+    
+}
+
+
+            
+/*            
+            while (parser.nextToken() != null) {
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                    (parser.getText() == 'OrderHed_CustNum' || parser.getText() == 'Terms_Description'
+                    || parser.getText() == 'OrderHed_OpenOrder' || parser.getText() == 'OrderHed_OrderDate'
+                    || parser.getText() == 'Customer_SFId_c' || parser.getText() == 'OrderHed_OrderNum')) 
+                {
+                    string fieldName = parser.getText();
+                    
+                    parser.nextToken();
+                    
+                    string fieldValue; 
+                    if(fieldName == 'Calculated_OnHand'
+                       || fieldName == 'zzz')
+                    {
+                        fieldValue = currency(parser.getText());
+                    }
+                    else
+                    {
+                        fieldValue = parser.getText();
+                    }
+
+                    epicorSalesOrderData.put(fieldName, fieldValue);
+                                        
+                }
+            }
+*/
+            
+        } catch (DmlException de) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + e );
+        }
+
+
+/*        
+//hardcoded POC:
+EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c(
+	Name = String.valueof(42),  
+	//AccountID__c = epicorSalesOrderData.get('Customer_SFId_c'),
+	EpicorSalesOrderId__c = parentId,
+	//EpicorSalesOrderId__c = String.valueof(epicorSalesOrderData.get('OrderHed_OrderNum')),
+    OrderLine__c = 42,
+    PartNum__c = 'part',
+
+//    LineDesc__c = 'desc',
+    LineDesc__c = 'rowCount: ' + String.valueof(rowCount2),
+    
+    IUM__c = 'ea',
+    OrderQty__c = 42,
+    OrderNumOrderLine__c = 'ordernum 42'
+);
+insert newEpicorOrderDtl;
+*/
+
+    }
+    
+    
     
     @AuraEnabled  //needed to be able to call it from the aura realm
     public static Map<String,String> getEpicorOrderHedForOrder(decimal orderNum) {
+///*
 
-        //NOTE: change to use a named credential for better security and be more dynamic
+		//NOTE: change to use a named credential for better security and be more dynamic
         //String url = 'https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/BaqSvc/GetInventoryForSF(PI03)/?SFId=\'' + product2ID + '\'';
 		String url = 'callout:PII_Test/BaqSvc/GetOrderHedForOrderSF(PI03)/?OrderNum=' + orderNum;
 
         //for debugging:
         //epicorInventoryData.put('Calculated_OnHand', '2');
-
 
 		try {
             //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
@@ -182,7 +538,7 @@ global class EpicorSalesOrder {
 
         //epicorSalesOrderData.put('Epicor_Status', 'OK');
         
-//zzz
+
         //update salesforce data with epicor data:
         EpicorOrderHed__c[] epicorOrderHed;
 		//NOTE:  the ":" allows you to substitute a variable value into the select statement
@@ -200,8 +556,224 @@ global class EpicorSalesOrder {
         } catch (DmlException e) {
             // Process exception here            
         }
+//*/
+        return epicorSalesOrderData;
+         
+    }
+    
+    
+    @AuraEnabled  //needed to be able to call it from the aura realm
+    public static Map<String,String> getEpicorOrderDtlForOrder(decimal orderNum) {
+        //----------------------------------
+epicorSalesOrderData.put('Debug_Message', '1');
 
 
+        //create/update order detail records
+integer rowCount2 = 0;
+EpicorOrderHed__c[] epicorOrderHed;
+                    
+//        epicorOrderHed.Clear();
+		/*
+        if(!epicorOrderHed.isEmpty()){
+        	epicorOrderHed.Clear();
+        }
+		*/
+
+        epicorOrderHed = [SELECT Id,OrderNum__c,Terms__c,OpenOrder__c,OrderDate__c FROM EpicorOrderHed__c WHERE OrderNum__c = :orderNum];
+        string parentId;
+        for (EpicorOrderHed__c a : epicorOrderHed) {
+            parentId = a.Id;
+        }
+
+epicorSalesOrderData.put('Debug_Message', '2');
+
+		try {
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes
+            
+	        String urlOrderDtl = 'callout:PII_Test/BaqSvc/GetOrderDtlForOrderSF(PI03)/?OrderNum=' + orderNum;
+            
+
+            // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+            HttpRequest req2 = new HttpRequest();
+            req2.setEndpoint(urlOrderDtl);
+            req2.setMethod('GET');
+epicorSalesOrderData.put('Debug_Message', '2.1');
+            
+            Http h2 = new Http();
+epicorSalesOrderData.put('Debug_Message', '2.2');
+
+// ------------ FAILING HERE ------------:
+            HttpResponse res2 = h2.send(req2);
+epicorSalesOrderData.put('Debug_Message', '2.3');
+            System.debug(res2.getBody());
+    
+            JSONParser parser2 = JSON.createParser(res2.getBody());
+            //NOTE:  if epicor is down, this is where it fails because parser is empty:
+epicorSalesOrderData.put('Debug_Message', '2.5');
+
+//integer rowCount = 0;
+/*
+while (parser2.nextToken() != null) {
+	//yields 27:
+    rowCount2 += 1;
+}
+*/
+while(parser2.nextToken() != JSONToken.END_ARRAY) { // we started with an array of objects
+
+//temp change to see if can swap between create/update:
+EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
+    
+	newEpicorOrderDtl.EpicorSalesOrderId__c = parentId;
+    
+    //integer orderNum = 0;
+
+	rowCount2 += 1; // >> 1 for each record in the epicor results
+    
+	while(parser2.nextToken() != JSONToken.END_OBJECT){ // loop through each object
+//		rowCount2 += 1;
+		if(parser2.getCurrentToken() == JSONToken.FIELD_NAME) { //token should be field name
+//			rowCount2 += 1;
+            
+            string fieldName = parser2.getText();
+			parser2.nextToken();
+            
+            switch on fieldName {
+                //when 'OrderDtl_OrderNum' {
+		        //    orderNum = Integer.valueof(parser2.getText());
+                //}
+                when 'OrderDtl_OrderLine' {
+		            newEpicorOrderDtl.Name = String.valueof(parser2.getText());
+		            newEpicorOrderDtl.OrderLine__c = Integer.valueof(parser2.getText());
+                }
+                when 'OrderDtl_PartNum' {
+		            newEpicorOrderDtl.PartNum__c = String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_LineDesc' {
+		            newEpicorOrderDtl.LineDesc__c = 'XXX1'; //String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_IUM' {
+		            newEpicorOrderDtl.IUM__c = String.valueof(parser2.getText());
+                }
+                when 'OrderDtl_OrderQty' {
+		            newEpicorOrderDtl.OrderQty__c = Decimal.valueof(parser2.getText());
+                }
+
+            }
+    		newEpicorOrderDtl.OrderNumOrderLine__c = 
+            	String.valueof(orderNum) + ' ' 
+                + String.valueof(newEpicorOrderDtl.OrderLine__c);
+            
+            
+        }
+	}
+epicorSalesOrderData.put('Debug_Message', '3');
+    
+//the insert works perfect, issue is it needs to also update if exists, so needs tweaking
+//    insert newEpicorOrderDtl;
+    //NO, this does not update a record
+    //upsert newEpicorOrderDtl;
+
+//check to see if the record exists in sf or not, then add or update
+string orderNumOrderLine = String.valueof(orderNum) + ' ' + String.valueof(newEpicorOrderDtl.OrderLine__c);
+//NEED TO ADD THE LINE UP ABOVE, BUT THIS IS TOO SOON!!!!
+//ugh, populating the MAP epicorSalesOrderData won't work with multiple records, unless clear inbetween
+
+EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,OrderNumOrderLine__c FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
+
+    //zzzzzzzzzzz
+//next: keep going with this, check for new/change and act appropriately
+if (checkEpicorOrderDtl.isEmpty()) {
+	insert newEpicorOrderDtl;
+}
+else {
+//	checkEpicorOrderDtl.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+	for (EpicorOrderDtl__c a : checkEpicorOrderDtl) {
+		a.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+		a.Name = newEpicorOrderDtl.Name;
+		a.OrderLine__c = newEpicorOrderDtl.OrderLine__c;
+		a.PartNum__c = newEpicorOrderDtl.PartNum__c;
+		a.LineDesc__c = newEpicorOrderDtl.LineDesc__c;
+		a.IUM__c = newEpicorOrderDtl.IUM__c;
+		a.OrderQty__c = newEpicorOrderDtl.OrderQty__c;
+		a.OrderNumOrderLine__c = newEpicorOrderDtl.OrderNumOrderLine__c;
+        try {
+            upsert checkEpicorOrderDtl;
+        } catch (DmlException e) {
+            // Process exception here
+        }        
+    }
+
+}
+
+    
+    
+}
+
+
+            
+/*            
+            while (parser.nextToken() != null) {
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                    (parser.getText() == 'OrderHed_CustNum' || parser.getText() == 'Terms_Description'
+                    || parser.getText() == 'OrderHed_OpenOrder' || parser.getText() == 'OrderHed_OrderDate'
+                    || parser.getText() == 'Customer_SFId_c' || parser.getText() == 'OrderHed_OrderNum')) 
+                {
+                    string fieldName = parser.getText();
+                    
+                    parser.nextToken();
+                    
+                    string fieldValue; 
+                    if(fieldName == 'Calculated_OnHand'
+                       || fieldName == 'zzz')
+                    {
+                        fieldValue = currency(parser.getText());
+                    }
+                    else
+                    {
+                        fieldValue = parser.getText();
+                    }
+
+                    epicorSalesOrderData.put(fieldName, fieldValue);
+                                        
+                }
+            }
+*/
+            
+        } catch (DmlException de) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + e );
+        }
+
+
+/*        
+//hardcoded POC:
+EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c(
+	Name = String.valueof(42),  
+	//AccountID__c = epicorSalesOrderData.get('Customer_SFId_c'),
+	EpicorSalesOrderId__c = parentId,
+	//EpicorSalesOrderId__c = String.valueof(epicorSalesOrderData.get('OrderHed_OrderNum')),
+    OrderLine__c = 42,
+    PartNum__c = 'part',
+
+//    LineDesc__c = 'desc',
+    LineDesc__c = 'rowCount: ' + String.valueof(rowCount2),
+    
+    IUM__c = 'ea',
+    OrderQty__c = 42,
+    OrderNumOrderLine__c = 'ordernum 42'
+);
+insert newEpicorOrderDtl;
+*/
+
+
+        
+        
+        //----------------------------------
+        
+        
+        
         return epicorSalesOrderData;
          
     }

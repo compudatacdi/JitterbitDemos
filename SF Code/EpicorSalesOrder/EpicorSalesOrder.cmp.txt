@@ -77,4 +77,12 @@
     <p><lightning:formattedText name="txtSalesforceUpdateStatus" value="{!v.lblSalesforceUpdateStatus}" /></p>    
 
     
+    <br /> <!-- line break -->
+    <br /> <!-- line break -->
+    <p></p>
+    <aura:attribute name="lblDebugMessage" type="String" default="" />
+    <p><lightning:formattedText name="txtDebugMessage" value="{!v.lblDebugMessage}" /></p>    
+    
+
+    
 </aura:component>
