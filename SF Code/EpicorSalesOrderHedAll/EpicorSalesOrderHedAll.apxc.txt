@@ -18,25 +18,17 @@ global class EpicorSalesOrderHedAll {
 		//Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 		Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail }, false);
 		*/
-            
-        //doing this prevents the callout method below from executing
-        //SendTestEmail() ;
-        
+       
 		getEpicorOrderHedAll_Callout();
-        
-                
-        //SendTestEmail('test message');
 
     }
 
 
     
-    //@InvocableMethod
-    //NOTE: Future method cannot be called from a future or batch method
-    //@future (callout=true)
     public static void SendTestEmail(string message) {
         
         //NOTE: cannot put this into a method with "@future (callout=true)" before it
+        //
         //		there is a limit on how many emails you can send:
         //			https://help.salesforce.com/articleView?id=000331939&type=1&mode=1
         //			apparently, it is set to 15 as of 05/14/21
@@ -45,7 +37,7 @@ global class EpicorSalesOrderHedAll {
         //			have to request sf to increase it by opening a case
         //				Requests are only considered for Production organizations. 
         //				We will not raise this limit for Sandboxes under any circumstances.
-        //			
+        
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
         String[] toAddresses = new String[] {'eric.blackwelder@compudata.com'}; 
         mail.setToAddresses(toAddresses);
@@ -67,42 +59,6 @@ global class EpicorSalesOrderHedAll {
     //		A future method runs in the background, asynchronously
     @future (callout=true) //makes this method able to have a callout
     public static void getEpicorOrderHedAll_Callout() {
-    
-		//SendTestEmail('message');
-
-        /*
-        //hardcoded poc to create a new sf sales order header
-        EpicorOrderHed__c newPocEpicorOrderHed = new EpicorOrderHed__c(
-            Name = '60501',  
-            AccountID__c = '0011U00001gyKLrQAM',  
-            OrderNum__c = 60501
-        );
-        insert newPocEpicorOrderHed;
-        */
-		/*
-		//hardcoded poc to update a sf sales order header        
-        EpicorOrderHed__c[] updEpicorOrderHed = [SELECT Id,AccountID__c,Name,OpenOrder__c,OrderDate__c,OrderNum__c,Terms__c FROM EpicorOrderHed__c WHERE OrderNum__c = 60501];
-        for (EpicorOrderHed__c a : updEpicorOrderHed) {
-            //a.AccountID__c = newEpicorOrderHed.AccountID__c;
-            //a.Name = newEpicorOrderHed.Name;
-            //a.OpenOrder__c = newEpicorOrderHed.OpenOrder__c;
-            //a.OrderDate__c = newEpicorOrderHed.OrderDate__c;
-            //a.OrderNum__c = newEpicorOrderHed.OrderNum__c;
-            a.Terms__c = 'test';
-            upsert updEpicorOrderHed;
-        }
-		*/
-
-        
-        //Sandbox email deliverability by default is "System Only" which will
-        // 	throw an exception when sending an email from Apex. To test you have 
-        // 	to switch it to "All Email".
-        //Did you check the Access Level on the settings. It should be set to "All Email".
-        //	Setup --> Type in "Deliverability" --> Access Level.
-        //	>> yes, already set that way
-        //this is causing the code to bomb:
-
-            
             
         Map<String, String> epicorSalesOrderData = new Map<String, String>();
 		string debugMessage = 'debugMessage';
@@ -114,9 +70,7 @@ global class EpicorSalesOrderHedAll {
             //		the catch never executes even if wrap one around it specifically
             //		even if try to send email anywhere in this method, that won't execute
             //NOTE: PII_Test is a named credential for better security and be more dynamic
-//	        String urlOrderHedAll = 'callout:PII_Test/BaqSvc/GetOrderHedForAllSF(PI03)/';
 	        String urlOrderHedAll = 'callout:PII_Test/BaqSvc/GetOrderHedForAllSF(PI03)';
-//SendTestEmail(urlOrderHedAll);
 
             // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
             HttpRequest req = new HttpRequest();
@@ -126,30 +80,32 @@ global class EpicorSalesOrderHedAll {
             Http h = new Http();
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
-//SendTestEmail(res.getStatus() );
             
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
-//if(res.getStatus() == 'Forbidden'){
-//	SendTestEmail('Forbidden');
-//}
+            if(res.getStatus() != 'OK'){
+                //temp/test hardcoded poc to update a sf sales order header with debug message    
+                EpicorOrderHed__c[] debugEpicorOrderHed = [SELECT Id,AccountID__c,Name,OpenOrder__c,OrderDate__c,OrderNum__c,Terms__c,TestErrorMessage__c FROM EpicorOrderHed__c WHERE OrderNum__c = 60501];
+                for (EpicorOrderHed__c a : debugEpicorOrderHed) {
+                    //a.Terms__c = 'test'; 
+                    a.TestErrorMessage__c = res.getStatus();
+                    upsert debugEpicorOrderHed;
+                }
+
+            	//SendTestEmail('Error connecting to Epicor: ' );
+            }
             
-debugMessage = '1';
+            
+			//debugMessage = '1';
 
             while(parser.nextToken() != JSONToken.END_ARRAY) { // we started with an array of objects
-debugMessage = '1.1';
             
-                //temp change to see if can swap between create/update:
+                //NOTE: this is where a new record will start
                 EpicorOrderHed__c newEpicorOrderHed = new EpicorOrderHed__c();
-                //string orderNum;
                 decimal orderNum;
-
-debugMessage = '1.2';
-
-                rowCount += 1; // >> 1 for each record in the epicor results
+                rowCount += 1; 
                 
                 while(parser.nextToken() != JSONToken.END_OBJECT){ // loop through each object
-debugMessage = '1.3';
                     if(parser.getCurrentToken() == JSONToken.FIELD_NAME) { //token should be field name            
                         string fieldName = parser.getText();
                         parser.nextToken();
@@ -185,27 +141,14 @@ debugMessage = '1.3';
                             }
                         } //end switch
 
-/*                        newEpicorOrderDtl.OrderNumOrderLine__c = 
-                            String.valueof(orderNum) + ' ' 
-                            + String.valueof(newEpicorOrderDtl.OrderLine__c);
-*/
-                        
                     } //end if
                 } //end while on each object
                 
                     
-                //check to see if the record exists in sf or not, then add or update                
-                //decimal orderNum = newEpicorOrderHed.OrderNum__c;
-//                EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,OrderNumOrderLine__c FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
+                //check to see if the record exists in sf or not, then add or update
                 EpicorOrderHed__c[] checkEpicorOrderHed = [SELECT Id,AccountID__c,Name,OpenOrder__c,OrderDate__c,OrderNum__c,Terms__c FROM EpicorOrderHed__c WHERE OrderNum__c = :orderNum];
-                
-debugMessage = '2';
-
-                //next: keep going with this, check for new/change and act appropriately
                 if (checkEpicorOrderHed.isEmpty()) {
-debugMessage = 'insert';
-                    
-//zzzz
+//debugMessage = 'insert';
                     try{
                         insert newEpicorOrderHed;
                     } catch (DmlException de) {
@@ -213,13 +156,11 @@ debugMessage = 'insert';
                     } catch (Exception e) {
                         errorMessage += '\r\n\n Error creating OrderNum ' + orderNum + ': ' + String.valueof(e);
                     }
-
-
                     
                 }
                 else {
                 //	checkEpicorOrderDtl.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
-debugMessage = 'update 2';
+//debugMessage = 'update 2';
                     for (EpicorOrderHed__c a : checkEpicorOrderHed) {
                         a.AccountID__c = newEpicorOrderHed.AccountID__c;
                         a.Name = newEpicorOrderHed.Name;
@@ -237,13 +178,14 @@ debugMessage = 'update 2';
                         }
                     } //end for loop
                 } //end else
-			} //end while on array of objects
+			} //end while on array of objects (loop through records from epicor)
+            
         } catch (DmlException de) {
             epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + de );
-debugMessage = String.valueof(de);
+            errorMessage += '\r\n\n Epicor Error: ' + de;
         } catch (Exception e) {
             epicorSalesOrderData.put('Epicor_Status', 'Epicor Error: ' + e );
-debugMessage = String.valueof(e);
+            errorMessage += '\r\n\n Epicor Error: ' + e;
         }
 
 		///*
@@ -251,15 +193,15 @@ debugMessage = String.valueof(e);
         EpicorOrderHed__c[] debugEpicorOrderHed = [SELECT Id,AccountID__c,Name,OpenOrder__c,OrderDate__c,OrderNum__c,Terms__c FROM EpicorOrderHed__c WHERE OrderNum__c = 60501];
 		for (EpicorOrderHed__c a : debugEpicorOrderHed) {
             //a.Terms__c = 'test'; 
-            a.TestErrorMessage__c = errorMessage;
-            upsert debugEpicorOrderHed;
+//            a.TestErrorMessage__c = errorMessage;
+//            upsert debugEpicorOrderHed;
         }
 		//*/
         
+        //NOTE: leave this in, this is the right place, but can only send 15 in a day
 		//SendTestEmail(debugMessage);
 		//SendTestEmail(errorMessage);
         
-
     }
 
 }
