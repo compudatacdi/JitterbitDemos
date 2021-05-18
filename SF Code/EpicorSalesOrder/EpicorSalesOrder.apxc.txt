@@ -21,10 +21,12 @@ global class EpicorSalesOrder {
         
         // ULTIMATELY NEED TO SPLIT OUT THE CREATION OF HEADER & DETAIL RECORDS
         // WHEN AUTOMATING A FULL PULL OF LOTS OF DATA IN A FLOW SITUATION
+        // BECAUSE CALLING THIS METHOD DOES NOT WORK DUE TO THE UPDATE OF THE PARENT IN THE METHOD CALLED PREVIOUSLY
         getEpicorOrderDtlForOrder_Callout(60501);
 
     }
 
+    
     @future (callout=true) //makes this method able to have a callout
     public static void getEpicorOrderHedForOrder_Callout(decimal orderNum) {
     
@@ -345,7 +347,7 @@ EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
 		            newEpicorOrderDtl.PartNum__c = String.valueof(parser2.getText());
                 }
                 when 'OrderDtl_LineDesc' {
-		            newEpicorOrderDtl.LineDesc__c = 'XXX1'; //String.valueof(parser2.getText());
+		            newEpicorOrderDtl.LineDesc__c = String.valueof(parser2.getText());
                 }
                 when 'OrderDtl_IUM' {
 		            newEpicorOrderDtl.IUM__c = String.valueof(parser2.getText());
@@ -610,7 +612,24 @@ epicorSalesOrderData.put('Debug_Message', '2.3');
             JSONParser parser2 = JSON.createParser(res2.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
 epicorSalesOrderData.put('Debug_Message', '2.5');
-
+//if(parser2.isEmpty()){
+if(res2.getStatus() == 'Forbidden'){
+	epicorSalesOrderData.put('Debug_Message', 'Forbidden found'); 
+}
+//epicorSalesOrderData.put('Debug_Message', res2.getBody());   // > long message
+//epicorSalesOrderData.put('Debug_Message', res2.getStatus()); // > Forbidden
+if(String.isBlank(res2.getBody())){
+	epicorSalesOrderData.put('Debug_Message', 'parser2 is null'); 
+}
+if(String.isEmpty(res2.getBody())){
+	epicorSalesOrderData.put('Debug_Message', 'parser2 is null'); 
+}
+if(res2.getBody() == ''){
+	epicorSalesOrderData.put('Debug_Message', 'parser2 is empty'); 
+}
+if(res2.getBody() == null){
+	epicorSalesOrderData.put('Debug_Message', 'parser2 is null'); 
+}
 //integer rowCount = 0;
 /*
 while (parser2.nextToken() != null) {
@@ -619,6 +638,8 @@ while (parser2.nextToken() != null) {
 }
 */
 while(parser2.nextToken() != JSONToken.END_ARRAY) { // we started with an array of objects
+
+epicorSalesOrderData.put('Debug_Message', '2.6');
 
 //temp change to see if can swap between create/update:
 EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
@@ -649,7 +670,13 @@ EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
 		            newEpicorOrderDtl.PartNum__c = String.valueof(parser2.getText());
                 }
                 when 'OrderDtl_LineDesc' {
-		            newEpicorOrderDtl.LineDesc__c = 'XXX1'; //String.valueof(parser2.getText());
+		            //newEpicorOrderDtl.LineDesc__c = String.valueof(parser2.getText());
+		            if((String.valueof(parser2.getText())).length() > 50){
+			            newEpicorOrderDtl.LineDesc__c = (String.valueof(parser2.getText()).Left(50));   
+                    }
+                    else {
+			            newEpicorOrderDtl.LineDesc__c = String.valueof(parser2.getText());                        
+                    }
                 }
                 when 'OrderDtl_IUM' {
 		            newEpicorOrderDtl.IUM__c = String.valueof(parser2.getText());
@@ -663,10 +690,11 @@ EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
             	String.valueof(orderNum) + ' ' 
                 + String.valueof(newEpicorOrderDtl.OrderLine__c);
             
+epicorSalesOrderData.put('Debug_Message', '3.0');
             
         }
 	}
-epicorSalesOrderData.put('Debug_Message', '3');
+//epicorSalesOrderData.put('Debug_Message', '3');
     
 //the insert works perfect, issue is it needs to also update if exists, so needs tweaking
 //    insert newEpicorOrderDtl;
@@ -680,15 +708,22 @@ string orderNumOrderLine = String.valueof(orderNum) + ' ' + String.valueof(newEp
 
 EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,OrderNumOrderLine__c FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
 
+epicorSalesOrderData.put('Debug_Message', '3.1');
     //zzzzzzzzzzz
 //next: keep going with this, check for new/change and act appropriately
 if (checkEpicorOrderDtl.isEmpty()) {
+epicorSalesOrderData.put('Debug_Message', '3.2');
 	insert newEpicorOrderDtl;
 }
 else {
 //	checkEpicorOrderDtl.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
 	for (EpicorOrderDtl__c a : checkEpicorOrderDtl) {
-		a.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+       
+        //error: System.SObjectException: Field is not writeable: EpicorOrderDtl__c.EpicorSalesOrderId__c
+		//a.EpicorSalesOrderId__c = newEpicorOrderDtl.EpicorSalesOrderId__c;
+        
+        
+//epicorSalesOrderData.put('Debug_Message', '3.5 ' + newEpicorOrderDtl.Name);
 		a.Name = newEpicorOrderDtl.Name;
 		a.OrderLine__c = newEpicorOrderDtl.OrderLine__c;
 		a.PartNum__c = newEpicorOrderDtl.PartNum__c;
@@ -699,6 +734,10 @@ else {
         try {
             upsert checkEpicorOrderDtl;
         } catch (DmlException e) {
+epicorSalesOrderData.put('Debug_Message', String.valueof(e));
+            // Process exception here
+        } catch (Exception ex) {
+epicorSalesOrderData.put('Debug_Message', String.valueof(ex));
             // Process exception here
         }        
     }

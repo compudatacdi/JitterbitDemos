@@ -35,8 +35,10 @@
    	<aura:attribute name="lblRefreshAccount" type="String" default="Refresh this Account's Orders" />
     <lightning:button aura:id="btnRefreshAccount" name="btnRefreshAccount" label="{!v.lblRefreshAccount}" onclick="{!c.handle_btnRefreshAccount}" />
 
+    <!--
     <aura:attribute name="lblRefreshAll" type="String" default="Refresh All Orders" />
     <lightning:button name="btnRefreshAll" label="{!v.lblRefreshAll}" onclick="{!c.handle_btnRefreshAll}" />
+	-->
 
 
 

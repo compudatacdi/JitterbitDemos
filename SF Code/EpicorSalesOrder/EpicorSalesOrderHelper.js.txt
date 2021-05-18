@@ -27,6 +27,7 @@
         //for testing:
 		//component.set("v.lblRefresh", product2ID);
 
+
         //instantiate getEpicorOrderHedForOrder which actually resides in EpicorSalesOrder.apxc apex code,
         //	which is referenced in the controller EpicorSalesOrder.cmp as a controller itself in the definition up top
 		var epicorOrderHed = component.get("c.getEpicorOrderHedForOrder");        
@@ -91,7 +92,7 @@
         });
         $A.enqueueAction(epicorOrderHed);
 
-        
+
         
         
         //----------------------
@@ -161,6 +162,7 @@
             }
         });
         $A.enqueueAction(epicorOrderHed);
+//component.set("v.lblEpicorUpdateStatus", "xxx");
 
 
         

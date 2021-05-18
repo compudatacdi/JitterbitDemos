@@ -95,7 +95,7 @@
 
     handle_btnRefreshAccount : function(component, event, helper) 
     {
-		//alert("hello");
+		alert("that functionality is a future enhancement");
         //component.set("v.HideSpinner", "true");
         //
     },
