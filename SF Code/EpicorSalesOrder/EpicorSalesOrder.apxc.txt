@@ -684,6 +684,9 @@ EpicorOrderDtl__c newEpicorOrderDtl = new EpicorOrderDtl__c();
                 when 'OrderDtl_OrderQty' {
 		            newEpicorOrderDtl.OrderQty__c = Decimal.valueof(parser2.getText());
                 }
+                when 'OrderDtl_UnitPrice' {
+		            newEpicorOrderDtl.UnitPrice__c = Decimal.valueof(parser2.getText());
+                }
 
             }
     		newEpicorOrderDtl.OrderNumOrderLine__c = 
@@ -706,7 +709,8 @@ string orderNumOrderLine = String.valueof(orderNum) + ' ' + String.valueof(newEp
 //NEED TO ADD THE LINE UP ABOVE, BUT THIS IS TOO SOON!!!!
 //ugh, populating the MAP epicorSalesOrderData won't work with multiple records, unless clear inbetween
 
-EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,OrderNumOrderLine__c FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
+EpicorOrderDtl__c[] checkEpicorOrderDtl = [SELECT Id,EpicorSalesOrderId__c,Name,OrderLine__c,PartNum__c,LineDesc__c,IUM__c,OrderQty__c,UnitPrice__c,OrderNumOrderLine__c 
+                                           FROM EpicorOrderDtl__c WHERE OrderNumOrderLine__c = :orderNumOrderLine];
 
 epicorSalesOrderData.put('Debug_Message', '3.1');
     //zzzzzzzzzzz
@@ -730,7 +734,8 @@ else {
 		a.LineDesc__c = newEpicorOrderDtl.LineDesc__c;
 		a.IUM__c = newEpicorOrderDtl.IUM__c;
 		a.OrderQty__c = newEpicorOrderDtl.OrderQty__c;
-		a.OrderNumOrderLine__c = newEpicorOrderDtl.OrderNumOrderLine__c;
+		a.UnitPrice__c = newEpicorOrderDtl.UnitPrice__c;
+    	a.OrderNumOrderLine__c = newEpicorOrderDtl.OrderNumOrderLine__c;
         try {
             upsert checkEpicorOrderDtl;
         } catch (DmlException e) {
