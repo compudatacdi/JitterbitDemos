@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\Epicor DLLs\E10_1_500_10 DLLs\inetpub stuff\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Json">
+      <HintPath>System.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
