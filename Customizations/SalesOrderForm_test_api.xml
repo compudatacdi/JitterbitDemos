@@ -78,7 +78,7 @@
     <Description>testing api calls</Description>
     <LastUpdated>2021-06-02T00:00:00-04:00</LastUpdated>
     <LastUpdatedBy>manager</LastUpdatedBy>
-    <Version>6/2/2021 9:47:11 AM</Version>
+    <Version>6/2/2021 10:04:07 AM</Version>
     <DataBaseVersion>0</DataBaseVersion>
     <SysCharacter01 />
     <SysCharacter02 />
@@ -98,7 +98,7 @@
     <CommentText />
     <CGCCode />
     <SystemFlag>false</SystemFlag>
-    <SysRevID>72590010</SysRevID>
+    <SysRevID>72590016</SysRevID>
     <SysRowID>06428864-96e7-4183-a208-7a6360de9596</SysRowID>
     <SysCheckBox06>false</SysCheckBox06>
     <SysCheckBox07>false</SysCheckBox07>
@@ -291,17 +291,6 @@ using System.Net.Http.Headers;
 
 using System.Threading.Tasks;
 
-//3:
-/*
-//https://www.forcetalks.com/blog/integrate-net-console-application-with-salesforce-rest-api/
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-*/
-
-
 //using Json.NET;
 using Newtonsoft.Json.Linq;
 
@@ -338,15 +327,9 @@ public class Script
 	// Add Custom Module Level Variables Here **
 
 
-//https://dev.to/rachelsoderberg/integrating-c-net-and-salesforce-s-rest-api-d00
-	//status 400 bad request:
-    //public const string LoginEndpoint = "https://test.salesforce.com/services/oauth2/token";
-	//status 200 OK:
-    //public const string LoginEndpoint = "https://cdi-dev-ed.my.salesforce.com/";
+	//https://dev.to/rachelsoderberg/integrating-c-net-and-salesforce-s-rest-api-d00
     public const string LoginEndpoint = "https://eb1-dev-ed.my.salesforce.com/services/oauth2/token";
-//    public const string ApiEndpoint = "/services/data/51.0/"; //Use your org's version number
     public const string ApiEndpoint = "/services/data/v51.0/"; //Use your org's version number
-	//NOTE: get version from the workbench tool similar to epicor swagger
     private string Username { get; set; }
     private string Password { get; set; }
     private string Token { get; set; }
@@ -360,20 +343,6 @@ public class Script
     static HttpClient Client = new HttpClient();
 
         
-	//3:
-	/*
-	//https://www.forcetalks.com/blog/integrate-net-console-application-with-salesforce-rest-api/
-	public static string USERNAME = "frmartell3@gmail.com";
-    public static string PASSWORD = "Spider#8.3";
-    public static string TOKEN ="fGwleDX053vvNRuZSwWqQCvgi";
-    public static string CONSUMER_KEY = "REPLACE WITH YOUR CONNECTED APP CONSUMER KEY";
-    public static string CONSUMER_SECRET = "REPLACE WITH YOUR CONNECTED APP CONSUMER SECRET";
-    public static string TOKEN_REQUEST_ENDPOINTURL = "https://login.salesforce.com/services/oauth2/token";
-    //public static string TOKEN_REQUEST_QUERYURL = "/services/data/v43.0/query?q=select+Id+,name+from+account+limit+10";
-    public static string TOKEN_REQUEST_QUERYURL = "/services/data/v51.0/query?q=select+Id+,name+from+account+limit+10";
-	//note: got the version from the sf workbench thingy (like epicor swagger)
-	*/
-
 	public void InitializeCustomCode()
 	{
 		// ** Wizard Insert Location - Do not delete 'Begin/End Wizard Added Variable Initialization' lines **
@@ -439,163 +408,64 @@ MessageBox.Show("response: " + response.ToString());
 */
         }
 
-	public void btnTest_Click(object sender, System.EventArgs args)
-	{
-/*
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-*/
-
-		//string USERNAME = "REPLACE WITH YOUR USERNAME";
-		string USERNAME = "frmartell3@gmail.com";
-        //string PASSWORD = "REPLACE WITH YOUR PASSWORD";
-        string PASSWORD = "Spider#8.3";
-        //string TOKEN = "REPLACE WITH YOUR SECURITY TOKEN";
-        string TOKEN = "VVrWKdSl9I9TJzL4bFvYmDdJ";
-        //string CONSUMER_KEY = "REPLACE WITH YOUR CONNECTED APP CONSUMER KEY";
-        string CONSUMER_KEY = "3MVG9KsVczVNcM8wV1h42C3_gZKVYrH4JVYFw.PctBiGFGMp.bzzVIWB2wW.PK2tYBMDlwFd8FzAwJQ7nWkwm";
-        //string CONSUMER_SECRET = "REPLACE WITH YOUR CONNECTED APP CONSUMER SECRET";
-        string CONSUMER_SECRET = "FE27E7A8FA60FCBF36D6395557BD8622335A02C7C0EE97F73FF4A8F1BEE625A0";
-
-        //string TOKEN_REQUEST_ENDPOINTURL = "https://login.salesforce.com/services/oauth2/token";
-        //string TOKEN_REQUEST_ENDPOINTURL = "https://login.salesforce.com/services/oauth2/token";
-        string TOKEN_REQUEST_ENDPOINTURL = "https://eb1-dev-ed.my.salesforce.com/services/oauth2/token";
-
-        //string TOKEN_REQUEST_QUERYURL = "/services/data/v43.0/query?q=select+Id+,name+from+account+limit+10";
-        string TOKEN_REQUEST_QUERYURL = "/services/data/v51.0/query?q=select+Id+,name+from+account+limit+10";
-
-		System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-//ERROR: session expired or invalid : INVALID_SESSION_ID
-
-//added trying to understand the issue below it....
-Task leadResponse = Task.Run(() =&amp;gt; 
-//Script.AsyncQueryRequest(authResponse.Result.access_token , 
-Script.AsyncQueryRequest("fGwleDX053vvNRuZSwWqQCvgi" , 
-//authResponse.Result.instance_url));
-"https://cdi-dev-ed.my.salesforce.com/"));
-
-
-
-
-
-/*
-		HttpClient _httpClient = new HttpClient();
-        var request = new HttpRequestMessage&amp;lt;br /&amp;gt;
-        {
-            Method = HttpMethod.Post,
-            RequestUri = new Uri(Constants.TOKEN_REQUEST_ENDPOINTURL),
-            Content = content
-        };
-        var responseMessage = await _httpClient.SendAsync(request).ConfigureAwait(false);
-        var response = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-*/
-	}
 
 	public void old_btnTest_Click(object sender, System.EventArgs args)
 	{
-/*
-		string URL = "https://sub.domain.com/objects.json?api_key=123";
-		string DATA = @"{""object"":{""name"":""Name""}}";
+		//https://dev.to/rachelsoderberg/integrating-c-net-and-salesforce-s-rest-api-d00
+		//NOTE: stuff defined further above like AuthToken
+		//ALSO: The above getters and setters contain confidential information. 
+		//	These should be stored using a secure method for retrieval during authentication.
+		Client = new HttpClient();
+		
+		//in ms vs version, this is not done
+		//String myUrl = "https://eb1-dev-ed.my.salesforce.com/services/oauth2/token";
+		//Uri myURI = new Uri(myUrl);
+		//Client.BaseAddress = myURI;
+		
+		Username = "frmartell3@gmail.com";
+		Password = "Spider#8.3";
+		Token = "VVrWKdSl9I9TJzL4bFvYmDdJ";
+		ClientId = "3MVG9KsVczVNcM8wV1h42C3_gZKVYrH4JVYFw.PctBiGFGMp.bzzVIWB2wW.PK2tYBMDlwFd8FzAwJQ7nWkwm";
+		ClientSecret = "FE27E7A8FA60FCBF36D6395557BD8622335A02C7C0EE97F73FF4A8F1BEE625A0";
+		string PwdToken = Password + Token;
+		//https://developer.salesforce.com/forums/?id=906F0000000AfcgIAC
+		// &amp;gt;&amp;gt; created a connected app called TestAPIConnect
+		//	that gave me a client id and secret to use
+		//	takes 2-10 minutes to become effective
+		HttpContent content = new FormUrlEncodedContent(new Dictionary&amp;lt;string, string&amp;gt;
+		{
+		    {"grant_type", "password"},
+		    {"client_id", ClientId},
+		    {"client_secret", ClientSecret},
+		    {"username", Username},
+		//    {"password", Password}
+		    {"password", PwdToken}
+		});
+		//MessageBox.Show("1");
+		HttpResponseMessage message = Client.PostAsync(LoginEndpoint, content).Result;
+		MessageBox.Show(message.ToString());
+		
+		string response2 = message.Content.ReadAsStringAsync().Result;
+		
+		JObject obj = JObject.Parse(response2);
+		
+		AuthToken = (string)obj["access_token"];
+		// &amp;gt;&amp;gt; "00D1U0000010xom!AQMAQJZKPjCuneGyOKh8HAV7GnYKpASbALVqfMvGMwVUUAK6U0MPzZShVDNdwiw.rBRZPo9j9YAJTahknyetSK.NMM3dGPbk"
+		ServiceUrl = (string)obj["instance_url"];
+		// &amp;gt;&amp;gt; "https://eb1-dev-ed.my.salesforce.com"
+		
+		// Get an sf record
+		string companyName = "Acme North";
+		//string queryMessage = $"SELECT Id, Name, Phone, Type FROM Account WHERE Name = '{companyName}'";
+		//string queryMessage2 = "SELECT Id, Name, Phone, Type FROM Account WHERE Name = '{companyName}'";
+		string queryMessage2 = "SELECT Id, Name, Phone, Type FROM Account WHERE Name = '" + companyName + "'";
 
-		HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
-		request.Method = "POST";
-		request.ContentType = "application/json";
-		request.ContentLength = DATA.Length;
-		StreamWriter requestWriter = new StreamWriter(request.GetRequestStream(), System.Text.Encoding.ASCII);
-		requestWriter.Write(DATA);
-		requestWriter.Close();
-*/
 
+		JObject obj2 = JObject.Parse(QueryRecord(Client, queryMessage2));
+		//NOTE: had to copy System.Text.Json.dll from laptop into epicor folder and add reference here
+		//also add ref to: System.Memory.dll
 
-//https://dev.to/rachelsoderberg/integrating-c-net-and-salesforce-s-rest-api-d00
-//NOTE: stuff defined further above like AuthToken
-//ALSO: The above getters and setters contain confidential information. 
-//	These should be stored using a secure method for retrieval during authentication.
-Client = new HttpClient();
-
-//in ms vs version, this is not done
-//String myUrl = "https://eb1-dev-ed.my.salesforce.com/services/oauth2/token";
-//Uri myURI = new Uri(myUrl);
-//Client.BaseAddress = myURI;
-
-Username = "frmartell3@gmail.com";
-Password = "Spider#8.3";
-Token = "VVrWKdSl9I9TJzL4bFvYmDdJ";
-ClientId = "3MVG9KsVczVNcM8wV1h42C3_gZKVYrH4JVYFw.PctBiGFGMp.bzzVIWB2wW.PK2tYBMDlwFd8FzAwJQ7nWkwm";
-ClientSecret = "FE27E7A8FA60FCBF36D6395557BD8622335A02C7C0EE97F73FF4A8F1BEE625A0";
-string PwdToken = Password + Token;
-//https://developer.salesforce.com/forums/?id=906F0000000AfcgIAC
-// &amp;gt;&amp;gt; created a connected app called TestAPIConnect
-//	that gave me a client id and secret to use
-//	takes 2-10 minutes to become effective
-HttpContent content = new FormUrlEncodedContent(new Dictionary&amp;lt;string, string&amp;gt;
-{
-    {"grant_type", "password"},
-    {"client_id", ClientId},
-    {"client_secret", ClientSecret},
-    {"username", Username},
-//    {"password", Password}
-    {"password", PwdToken}
-});
-//MessageBox.Show("1");
-HttpResponseMessage message = Client.PostAsync(LoginEndpoint, content).Result;
-MessageBox.Show(message.ToString());
-
-string response2 = message.Content.ReadAsStringAsync().Result;
-//MessageBox.Show(response2.ToString());
-
-            JObject obj = JObject.Parse(response2);
-
-            AuthToken = (string)obj["access_token"];
-            // &amp;gt;&amp;gt; "00D1U0000010xom!AQMAQJZKPjCuneGyOKh8HAV7GnYKpASbALVqfMvGMwVUUAK6U0MPzZShVDNdwiw.rBRZPo9j9YAJTahknyetSK.NMM3dGPbk"
-            ServiceUrl = (string)obj["instance_url"];
-            // &amp;gt;&amp;gt; "https://eb1-dev-ed.my.salesforce.com"
-
-//MessageBox.Show("AuthToken: " + AuthToken + " / ServiceUrl: " + ServiceUrl);
-
-            // Get an sf record
-            string companyName = "Acme North";
-            //string queryMessage = $"SELECT Id, Name, Phone, Type FROM Account WHERE Name = '{companyName}'";
-            //string queryMessage2 = "SELECT Id, Name, Phone, Type FROM Account WHERE Name = '{companyName}'";
-            string queryMessage2 = "SELECT Id, Name, Phone, Type FROM Account WHERE Name = '" + companyName + "'";
-MessageBox.Show("2");
-//An invalid request URI was provided. The request URI must either be an absolute URI or BaseAddress must be set.
-//String myUrl = "https://eb1-dev-ed.lightning.force.com/";
-//  String myUrl = "https://eb1-dev-ed.my.salesforce.com/services/oauth2/token";
-//  Uri myURI = new Uri(myUrl);
-//  Client.BaseAddress = myURI;
-//add lines above, now get:
-//  This instance has already started one or more requests. Properties can only be modified before sending the first request.
-//move 3 lines above up further, now get:
-//  Unexpected character encountered while parsing value: &amp;lt;. Path '', line 0, position 0.
-//  url doesn't exist!!!
-//MessageBox.Show("2.5: " + QueryRecord(Client, queryMessage2) );
-            JObject obj2 = JObject.Parse(QueryRecord(Client, queryMessage2));
-MessageBox.Show("obj2: " + obj2);
-
-//NOTE: had to copy System.Text.Json.dll from laptop into epicor folder and add reference here
-//also add ref to: System.Memory.dll
-
-            //using var doc = JsonDocument.Parse(obj2["records"].ToString());
-            //using (var doc = JsonDocument.Parse(obj2["records"].ToString()) );
-//zzzzzz
-            //var doc = JsonDocument.Parse(obj2["records"].ToString());
-            //string doc = JsonDocument.Parse(obj2["records"].ToString());
-            //System.Text.Json.JsonDocument doc = JsonDocument.Parse(obj2["records"].ToString());
-// Error: CS1705 - line 0 (0) - Assembly 'System.Text.Json, Version=4.0.1.2,
-// Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' uses 'System.Memory, Version=4.2.1.0, 
-//Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51' which has a higher version than referenced assembly 
-//'System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'
-//			MessageBox.Show("doc: " + doc);
-
-        string accountId = "";
+		string accountId = "";
 
         if ((string)obj2["totalSize"] == "1")
         {
@@ -649,81 +519,6 @@ MessageBox.Show("obj2: " + obj2);
            string result2 = CreateRecord(Client, createMessage, "Account");
 
 
-
-//code below wasn't working before, added code above that does work
-return;
-
-
-//NOTE:  added ref to: Newtonsoft.Json.dll
-//	   added: using Newtonsoft.Json.Linq;
-/*
-string response2 = message.Content.ReadAsStringAsync().Result;
-//MessageBox.Show(response2);
-txtTestResults.Text = response2;
-MessageBox.Show("0");
-//Unexpected character encountered while parsing value: &amp;lt;. Path '', line 0, position 0.
-JObject obj = JObject.Parse(response2);
-MessageBox.Show("1");
-AuthToken = (string)obj["access_token"];
-MessageBox.Show("2");
-ServiceUrl = (string)obj["instance_url"];
-MessageBox.Show("3");
-MessageBox.Show("AuthToken: " + AuthToken + " / ServiceUrl: " + ServiceUrl );
-MessageBox.Show("4");
-*/
-/*
-    private string ClientId { get; set; }
-    private string ClientSecret { get; set; }
-    public string AuthToken { get; set; }
-    public string ServiceUrl { get; set; }
-*/
-
-//    public const string LoginEndpoint = "https://cdi-dev-ed.my.salesforce.com/";
-//    public const string ApiEndpoint = "/services/data/v51.0/"; //Use your org's version number
-
-//    public const string ApiEndpoint = "/services/data/51.0/"; //Use your org's version number
-//    public const string ApiEndpoint = "/services/data/v51.0/"; //Use your org's version number
-ServiceUrl = "https://eb1-dev-ed.lightning.force.com/";
-//ServiceUrl = "https://eb1-dev-ed.lightning.force.com/services/data/51.0/";
-//string queryMessage = $"SELECT Id, Name, Phone, Type FROM Account WHERE Name = '{companyName}'";
-//string queryMessage = "SELECT Id, Name FROM Account WHERE Name = 'Acme North'";
-//string queryMessage = "SELECT Id, Name FROM Account LIMIT 1";
-string queryMessage = "SELECT%7DId,%7DName%7DFROM%7DAccount%7DLIMIT%7D1";
-//string restQuery = $"{ServiceUrl}{ApiEndpoint}query?q={queryMessage}";
-//string restQuery = "{ServiceUrl}{ApiEndpoint}query?q={queryMessage}";
-string restQuery = ServiceUrl + ApiEndpoint + "query?q=" + queryMessage;
-//string restQuery = ServiceUrl + ApiEndpoint + "search/?q=" + queryMessage;
-//url no longer exists:
-//string restQuery = ServiceUrl + "query?q=" + queryMessage;
-
-//An invalid request URI was provided. The request URI must either be an absolute URI or BaseAddress must be set.
-
-HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, restQuery);
-request.Headers.Add("Authorization", "Bearer " + AuthToken);
-request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-MessageBox.Show("1");
-
-//An invalid request URI was provided. The request URI must either be an absolute URI or BaseAddress must be set.
-//HttpResponseMessage response = client.SendAsync(request).Result;
-MessageBox.Show("5");
-HttpResponseMessage response = Client.SendAsync(request).Result;
-MessageBox.Show(response.ToString());
-//return response.Content.ReadAsStringAsync().Result;
-MessageBox.Show("6");
-MessageBox.Show(response.Content.ReadAsStringAsync().Result);
-
-
-//3:
-/*
-//https://www.forcetalks.com/blog/integrate-net-console-application-with-salesforce-rest-api/
-System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-//Task authResponse = Task.Run(() =&amp;gt; Program.AsyncAuthRequesult != null)
-//{
-//	Object obj = AsyncQueryRequest();
-//}
-*/
-
-
 	}
 
        //public static string QueryRecord(HttpClient client, string queryMessage)
@@ -775,52 +570,6 @@ System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
 
 
 
-	//3:
-	//https://www.forcetalks.com/blog/integrate-net-console-application-with-salesforce-rest-api/
-	/*
- 	public async static Task AsyncQueryRequest(string token, string url)
-        {
-            HttpClient _httpClient = new HttpClient();
-            var request = new HttpRequestMessage
-            {
-                Method = HttpMethod.Get,
-                //RequestUri = new Uri(url + Constants.TOKEN_REQUEST_QUERYURL),
-                RequestUri = new Uri(url + TOKEN_REQUEST_QUERYURL),
-                Content = null
-            };
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            var responseMessage = await new HttpClient().SendAsync(request).ConfigureAwait(false);
-            var response = await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false);
-            return response;
-        }
-	*/
-
-
-	//probably won't be used:
-	//https://stackoverflow.com/questions/43089786/making-a-simple-c-sharp-api-call
-	/*
-    private static async Task&amp;lt;string&amp;gt; GetGameData(string id)
-    {
-
-		var url = "http://hivemc.com/json/userprofile/";
-
-		using (var client = new HttpClient())
-		{
-			client.BaseAddress = new Uri(url);
-			HttpResponseMessage response = await client.GetAsync(url);
-
-			if (response.IsSuccessStatusCode)
-			{
-				string strResult = await response.Content.ReadAsStringAsync();
-				return strResult;
-			}
-			else
-			{
-				return null;
-			}
-		}
-	}
-	*/
 
 }
 
