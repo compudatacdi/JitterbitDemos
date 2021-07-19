@@ -1,0 +1,65 @@
+({
+	helperMethod : function() {
+		
+	},
+    
+    
+    getEpicorPricing : function(component) 
+    {
+    
+		//var productCode = component.get("v.ProductCode");
+        //alert("ProductCode: " + productCode);
+
+		var opportunityLineItemID = component.get("v.recordId");
+        //alert("opportunityLineItemID: " + opportunityLineItemID);
+		component.set("v.lblMessage", "0");
+        
+        //note: 'c.getEpicorPricing' is actually calling out to the apex class CDIEpicorPricing_apex
+        //		and needs to have the same name as the calling function here
+		var sfOpportunityLineItem = component.get("c.getEpicorPricing");
+        sfOpportunityLineItem.setParams({"opportunityLineItemID":opportunityLineItemID});
+        
+        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+        sfOpportunityLineItem.setCallback(this, function(response) {
+            var state = response.getState();
+            if (state === "SUCCESS") {
+                
+                //returns a dictionary with known values in each pair:
+                var sfOpportunityLineItemData = response.getReturnValue();
+
+
+                //for debugging:
+                //component.set("v.lblMessage", sfOpportunityLineItemData["ProductCode"]);
+                component.set("v.lblMessage", sfOpportunityLineItemData);
+
+//                component.set("v.valueOnHand", sfOpportunityLineItemData["EpicorOnHand"]);
+
+//				component.set("v.lblSalesforceUpdateStatus", "Salesforce Status: OK");
+                
+                //refresh the form
+				$A.get('e.force:refreshView').fire();
+            }
+            else {
+                //console.log("Failed with state: " + state);
+
+                //note: state is always "ERROR" if it fails it seems
+                //component.set("v.lblMessage", "Failed with state: " + state);
+
+                let errors = response.getError();
+                let message = 'Unknown error'; // Default error message
+                // Retrieve the error message sent by the server
+                if (errors && Array.isArray(errors) && errors.length > 0) {
+                    message = errors[0].message;
+                }
+                // Display the message
+                //console.error(message);
+				component.set("v.lblMessage", "ERROR Status: " + message);
+                
+            }
+        });
+        $A.enqueueAction(sfOpportunityLineItem);
+
+    }
+
+    
+})

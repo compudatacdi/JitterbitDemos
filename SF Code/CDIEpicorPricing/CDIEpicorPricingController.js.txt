@@ -1,0 +1,34 @@
+({
+	myAction : function(component, event, helper) {
+		
+	},
+    
+    
+    doInit : function(component, event, helper) 
+    {
+		//alert("hello");
+        
+    },
+
+   	onRender: function(component, event, helper) {     
+        
+	},
+
+    
+    handle_btnGetPricing : function(component, event, helper) 
+    {
+		//alert("hello");
+        //component.set("v.HideSpinner", "true");
+
+        
+        //component.set("v.loaded", "false");
+        //helper.getEpicorOrderHedForOrder(component);
+        //component.set("v.loaded", "true");
+
+		helper.getEpicorPricing(component);
+//		alert("after getEpicorPricing");
+
+    },
+    
+
+})

@@ -1,0 +1,16 @@
+<!-- <aura:component > -->
+<!-- NOTE: "controller=" below indicates the apex class to be called -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="CDIEpicorPricing_apex">
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+	<aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
+
+   	<aura:attribute name="lblGetPricing" type="String" default="Get Epicor Pricing" />
+    <lightning:button name="btnGetPricing" label="{!v.lblGetPricing}" onclick="{!c.handle_btnGetPricing}" />
+
+   	<aura:attribute name="lblMessage" type="String" default="Status: OK" />
+    <p><lightning:formattedText name="txtMessage" value="{!v.lblMessage}" /></p>    
+    
+    
+</aura:component>
