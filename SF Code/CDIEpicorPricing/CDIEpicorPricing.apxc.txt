@@ -1,42 +1,32 @@
 global class CDIEpicorPricing_apex {
 
-    //public static String url_result = 'xyz';
-    public static Map<String, String> epicorInventoryData = new Map<String, String>();
-    //public static Map<String, String> salesforceProduct2Data = new Map<String, String>();
+    public static Map<String, String> epicorPricingData = new Map<String, String>();
 
     @AuraEnabled  //needed to be able to call it from the aura realm
     //public static Map<String,String> getEpicorPricing(string product2ID) {        
-    public static String getEpicorPricing(string opportunityLineItemID) {
-
+    //public static String getEpicorPricing(string opportunityLineItemID) {
+    
+//REVERSE:
+//    public static Map<String, String> getEpicorPricing(string opportunityLineItemID) {
+//    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart) {
+    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart, integer intQuantity, string strUOM, string strCustID) {
+        
         String strReturnValue = 'apex';
 
+// !!! THIS DOES NOT WORK, DID IT BEFORE???? !!
+// issue = opportunityLineItemID is null, dafuq?!?!
         //get the related sf opportunity line item record from the id
         OpportunityLineItem[] opportunityLineItem;
         opportunityLineItem = [SELECT Id,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
-
         for (OpportunityLineItem row : opportunityLineItem) {
             //salesforceProduct2Data.put('Name', a.Name);
             strReturnValue = row.ProductCode;
+epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / strPart:' + strPart + ' / strUOM:' + strUOM);
+//epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue );
         }
+//epicorPricingData.put('debugInfo', 'opportunityLineItemID: ' + opportunityLineItemID);
 
         
-        //test url on server: https://pii-app1/ERPPIITest/api/help/v1/odata/Erp.BO.PriceListInquirySvc/index?urls.primaryName=Custom%20methods#/Custom%20methods/GetPriceListInquiry
-		//curl from swagger:
-		//	curl -X POST "https://pii-app1/ERPPIITest/api/v1/Erp.BO.PriceListInquirySvc/GetPriceListInquiry" -H  
-		//	"accept: application/json" -H  "Content-Type: application/json" -d "{  \"icCustID\": \"\",  \"icShipToNum\": \"\",  \"icPartNum\": \"Widget Red\",  \"icCustGroupCode\": \"\",  \"icProductCode\": \"\",  \"idQuantity\": \"10\",  \"icUOMCode\": \"ea\",  \"icWarehouseCode\": \"\",  \"icCurrencyCode\": \"\",  \"pageSize\": 0,  \"absolutePage\": 0}"
-        //named credential:   https://piiepicor.compudatacloud.com/ERPPIITest/api/v1/
-		//for inventory apex: String url = 'callout:CDI_Epicor/BaqSvc/GetInventoryForSF(PI03)/?SFId=' + product2ID;
-
-//String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(PI03,Widget Red)';
-//String url = 'https://pii-app1/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts(PI03,Widget Red)';
-
-//  !!!!  DOCUMENT THE ERRORS BELOW AND THE SOLUTION ONCE FOUND  !!!
-//        String url = 'callout:CDI_Epicor/odata/Erp.BO.PriceListInquirySvc/index?urls.primaryName=Custom%20methods#/Custom%20methods/GetPriceListInquiry/';
-		// >> Incorrect service name.
-//	    String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/index?urls.primaryName=Custom%20methods#/Custom%20methods/GetPriceListInquiry';
-        //  >> NotFound   /  REST API Exception   /   OData path is undefined for the request
-
-//https://pii-app1/ERPPIITest/api/v1/Erp.BO.PriceListInquirySvc/GetPriceListInquiry
         String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
 
 
@@ -50,100 +40,39 @@ global class CDIEpicorPricing_apex {
             req.setMethod('POST');
 
 
-strReturnValue += ' 1 ';
-            
-            //KEEP, may need for something else: not need anymore since now using a named credential
-            /*
-            String username = 'username';
-            String password = 'password';
-            Blob headerValue = Blob.valueOf(username + ':' + password);
-            String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
-            req.setHeader('Authorization', authorizationHeader);
-            */
+//epicorPricingData.put('debugInfo', 'x: ' + opportunityLineItemID + ' / ' + strPart + ' / '  + intQuantity + ' / '  + strUOM + ' / '  + strCustID);
             
             Http h = new Http();
 
-//zzz put stuff here to complete the curl:
-            //Blob headerValue = Blob.valueOf('6areV' +':' + 'v*IZuhn@&LclXo9HijrY$O@gB3tpbF2HpXBl&Hdz&hAb5ABqk');
-            //String authorizationHeader = 'Basic ' + EncodingUtil.base64Encode(headerValue);
-            //req.setHeader('Authorization', authorizationHeader);
-            //req.setBody('grant_type=password&username=a.tripathi@mysystem.com');
-//req.ContentType = 'application/json';
-//req.Expect = 'application/json';
-//HttpWebRequest request;
-//request.setBody('some post body');
-            //req.setBody('{  \"icCustID\": \"\",  \"icShipToNum\": \"\",  \"icPartNum\": \"Widget Red\",  \"icCustGroupCode\": \"\",  \"icProductCode\": \"\",  \"idQuantity\": \"10\",  \"icUOMCode\": \"ea\",  \"icWarehouseCode\": \"\",  \"icCurrencyCode\": \"\",  \"pageSize\": 0,  \"absolutePage\": 0}');
-            //req.setBody('{ "icCustID": "",  "icShipToNum": "",  "icPartNum": "Widget Red",  "icCustGroupCode": "",  "icProductCode": "",  "idQuantity": "10",  "icUOMCode": "ea",  "icWarehouseCode": "",  "icCurrencyCode": "",  "pageSize": 0,  "absolutePage": 0}');
-            //req.setBody(' ');
-/*
-//example from: https://salesforce.stackexchange.com/questions/241726/apex-callout-how-to-set-body
-String body = 
-    '"mode": "formdata", ' +
-    '  "formdata": [ ' +
-    '        { ' +
-    '            "key": "sourceFile", ' +
-    '            "type": "file", ' +
-    '              "src": "...",   ' +
-    '            "disabled": true' +    
-    '        }' +
-    '      ]';
-/*
-this is what works in swagger for input parameters:
-{
-  "icCustID": "",
-  "icShipToNum": "",
-  "icPartNum": "Widget Red",
-  "icCustGroupCode": "",
-  "icProductCode": "",
-  "idQuantity": "10",
-  "icUOMCode": "ea",
-  "icWarehouseCode": "",
-  "icCurrencyCode": "",
-  "pageSize": 0,
-  "absolutePage": 0
-}
-*/
-String body = 
-//    '"mode": "formdata", ' +
-//    '  "formdata": [ ' +
+//string strPart, integer intQuantity, string strUOM, string strCustID) {
+            String body = 
+                '        { ' +
+                '            "icCustID": "' + strCustID + '", ' +
+                '            "icShipToNum": "", ' +
+                '            "icPartNum": "' + strPart + '", ' +
+                '            "icCustGroupCode": "", ' +
+                '            "icProductCode": "", ' +
+                '            "idQuantity": "' + intQuantity + '", ' +
+                '            "icUOMCode": "' + strUOM + '", ' +
+                '            "icWarehouseCode": "", ' +
+                '            "icCurrencyCode": "", ' +
+                '            "pageSize": 0, ' +
+                '            "absolutePage": 0 ' +
+                '        }' +            
+                '';
 
-    
-//	'        Content-Length: 3495 ' +
-
-	'        { ' +
-    '            "icCustID": "", ' +
-    '            "icShipToNum": "", ' +
-    '            "icPartNum": "Widget Red", ' +
-    '            "icCustGroupCode": "", ' +
-    '            "icProductCode": "", ' +
-    '            "idQuantity": "10", ' +
-    '            "icUOMCode": "ea", ' +
-    '            "icWarehouseCode": "", ' +
-    '            "icCurrencyCode": "", ' +
-    '            "pageSize": 0, ' +
-    '            "absolutePage": 0 ' +
-    '        }' +
-
-//    '      ]'+
-    '';
-
-//req.setHeader('Content-Length', '50');
-integer intHeaderLength = body.length();
-//req.setHeader('Content-Length', body.length().toString());
-req.setHeader('Content-Length', String.valueOf(intHeaderLength));
-req.setHeader('Content-Type', 'application/json');
-req.setHeader('accept', 'application/json');
-
-req.setBody(body);
+                integer intHeaderLength = body.length();
+                req.setHeader('Content-Length', String.valueOf(intHeaderLength));
+                req.setHeader('Content-Type', 'application/json');
+                req.setHeader('accept', 'application/json');
+                
+                req.setBody(body);
 
             
             
 strReturnValue += ' 2 ';
 String zzz = req.getBody();
 strReturnValue += ' 2.5 ' + zzz;
-//HttpResponse res2 = h.send(req);
-//strReturnValue += ' 2.5 ' + res2.getBody();
-//req.setBody(zzz);
     
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
@@ -156,21 +85,21 @@ strReturnValue += ' 4 ';
             while (parser.nextToken() != null) {
 strReturnValue += ' 5 ';
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
-                    (parser.getText() == 'Part_PartNum' || parser.getText() == 'Calculated_OnHand'
-
-                     || parser.getText() == 'ListCode' || parser.getText() == 'BasePrice'
-                     
-                     || parser.getText() == 'Calculated_Allocated' || parser.getText() == 'Calculated_Demand'
-                    || parser.getText() == 'Calculated_Available')) 
+                    (parser.getText() == 'ListCode' || parser.getText() == 'CurrencyCode'
+                     || parser.getText() == 'BasePrice' || parser.getText() == 'BreakPrice'
+                     || parser.getText() == 'NetPrice' || parser.getText() == 'Quantity'
+                     || parser.getText() == 'zz')) 
                 {
                     string fieldName = parser.getText();
 
-strReturnValue += ' 6 ';
+strReturnValue += ' 6 ' + parser.getText();
                     
                     parser.nextToken();
                     
                     //original trial returning one value
                     //url_result = parser.getText();
+
+strReturnValue += ' 7 ' + parser.getText();
                     
                     string fieldValue; 
                     if(fieldName == 'Calculated_OnHand'
@@ -185,27 +114,32 @@ strReturnValue += ' 6 ';
                         fieldValue = parser.getText();
                     }
                     
-                    epicorInventoryData.put(fieldName, fieldValue);
+                    epicorPricingData.put(fieldName, fieldValue);
+ 
+//strReturnValue += ' /x: ' + epicorPricingData['x'];
                     
                     //KEEP: for debugging, to add debug log info
                     //System.debug('url_result: ' + url_result );
                     
-                    epicorInventoryData.put('Epicor_Status', 'OK');
+                    epicorPricingData.put('Epicor_Status', 'OK');
                     
                 }
             }
         } catch (DmlException de) {
-            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + de );
+            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + de );
         }
         catch (Exception e) {
-            epicorInventoryData.put('Epicor_Status', 'Epicor Error: ' + e );
+            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + e );
         }
 
+
+strReturnValue += ' /ListCode ' + epicorPricingData.get('ListCode');
         
 // !!! there is more below this in epicorinventory.apxc
+       
         
-        
-        return strReturnValue;
+        //return strReturnValue;
+        return epicorPricingData;
 
     }
 

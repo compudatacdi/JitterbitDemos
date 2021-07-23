@@ -11,6 +11,101 @@
 
    	<aura:attribute name="lblMessage" type="String" default="Status: OK" />
     <p><lightning:formattedText name="txtMessage" value="{!v.lblMessage}" /></p>    
+	
+	<!--
+    <p></p>
+    <aura:attribute name="valueQuantity" type="String" default="0" />
+	<lightning:formattedText name="lblQuantity" value="Quantity: " />
+    <lightning:formattedText name="txtQuantity" value="{!v.valueQuantity}" />
+
+    <aura:attribute name="valuePrice" type="String" default="0" />
+	<lightning:formattedText name="lblPrice" value="Price: " />
+    <lightning:formattedText name="txtPrice" value="{!v.valuePrice}" />
+	-->
+
+	<!-- trying a layout: https://developer.salesforce.com/docs/component-library/bundle/lightning:layout/example#lightningcomponentdemo:exampleLayoutSimple-->
+    <!-- aura:attribute name="valueQuantity1" type="String" default="0" / -->
+    <!--aura:attribute name="valueQuantity2" type="String" default="0" / -->
+
+    <aura:attribute name="valuePriceTemp" type="String" default="0" />    
+    <aura:attribute name="valuePrice1" type="String" default="0" />
+    <aura:attribute name="valuePrice2" type="String" default="0" />
+    <aura:attribute name="valuePrice3" type="String" default="" />
+    <aura:attribute name="valuePrice4" type="String" default="" />
+    <aura:attribute name="valuePrice5" type="String" default="" />
+
+    <aura:attribute name="valuePriceCodeTemp" type="String" default="" />
+    <aura:attribute name="valuePriceCode1" type="String" default="" />
+    <aura:attribute name="valuePriceCode2" type="String" default="" />
+    <aura:attribute name="valuePriceCode3" type="String" default="" />
+    <aura:attribute name="valuePriceCode4" type="String" default="" />
+    <aura:attribute name="valuePriceCode5" type="String" default="" />
+
+    <aura:attribute name="valueQuantity1" type="Integer" default="1" />
+    <aura:attribute name="valueQuantity2" type="Integer" default="5" />
+    <aura:attribute name="valueQuantity3" type="Integer" default="0" />
+    <aura:attribute name="valueQuantity4" type="Integer" default="0" />
+    <aura:attribute name="valueQuantity5" type="Integer" default="0" />
     
+    
+    <div class="c-container">
+        <lightning:layout >
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Quantity">Quantity</p>
+                	
+                    <lightning:input type="number" name="inputQuantity1" value="{!v.valueQuantity1}" label="" />                
+                    <p></p>
+                    <lightning:input type="number" name="inputQuantity2" value="{!v.valueQuantity2}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="inputQuantity3" value="{!v.valueQuantity3}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="inputQuantity4" value="{!v.valueQuantity4}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="inputQuantity5" value="{!v.valueQuantity5}" label="" />
+                    
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Price">Price</p>
+
+                    <lightning:input type="String" name="dispPrice1" readonly="true" value="{!v.valuePrice1 }" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPrice2" readonly="true" value="{!v.valuePrice2}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPrice3" readonly="true" value="{!v.valuePrice3}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPrice4" readonly="true" value="{!v.valuePrice4}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPrice5" readonly="true" value="{!v.valuePrice5}" label="" />
+
+                </div>
+            </lightning:layoutItem>
+
+            <lightning:layoutItem padding="around-small">
+                <div class="header-column">
+                    <p class="field-title" title="Price Code">Price Code</p>
+
+                    <lightning:input type="String" name="dispPriceCode1" readonly="true" value="{!v.valuePriceCode1 }" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPriceCode2" readonly="true" value="{!v.valuePriceCode2}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPriceCode3" readonly="true" value="{!v.valuePriceCode3}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPriceCode4" readonly="true" value="{!v.valuePriceCode4}" label="" />
+                    <p></p>
+                    <lightning:input type="number" name="dispPriceCode5" readonly="true" value="{!v.valuePriceCode5}" label="" />
+
+                </div>
+            </lightning:layoutItem>
+            
+            
+        </lightning:layout>
+    </div>
+
+
+
     
 </aura:component>

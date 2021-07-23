@@ -7,6 +7,7 @@
     doInit : function(component, event, helper) 
     {
 		//alert("hello");
+
         
     },
 
@@ -25,9 +26,72 @@
         //helper.getEpicorOrderHedForOrder(component);
         //component.set("v.loaded", "true");
 
-		helper.getEpicorPricing(component);
+component.set("v.lblMessage", "1");
+
+        //helper.getEpicorPricing(component, "strPart");
+        //helper.getEpicorPricing(component, "strPart", 1, "strUOM", "strCustID");
+        //helper.getEpicorPricing(component, "Widget Red", 1, "EA", "");
+        helper.getEpicorPricing(
+            component, 
+//need to fix to be actual part from quote:         
+//            component.get("v.????"), 
+            "Widget Red", 
+            
+//            10, 
+            component.get("v.valueQuantity1"),
+            
+//need to fix to be actual UOM & CustID from quote:         
+            "EA", 
+            ""); 
+       	component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
+       	component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp"));
+
+        
+component.set("v.lblMessage", "2");
+
+        if(component.get("v.valueQuantity2") != 0)
+        {
+            helper.getEpicorPricing(
+                component, 
+//need to fix to be actual part from quote:         
+//            component.get("v.????"), 
+                "Widget Red", 
+                
+//            	10, 
+                component.get("v.valueQuantity2"),
+                
+//need to fix to be actual UOM & CustID from quote:         
+                "EA", 
+                "");
+            
+        	component.set("v.valuePrice2", component.get("v.valuePriceTemp"));
+        	component.set("v.valuePriceCode2", component.get("v.valuePriceCodeTemp"));
+            
+component.set("v.lblMessage", "3");
+        }
+
+        component.set("v.valuePriceTemp", "222");
+        component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
+
+        component.set("v.valuePriceTemp", "999");
+        component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
+        
+        
+        //inputQuantity1
+        
+        //strPart, intQuantity, strUOM, strCustID)
 //		alert("after getEpicorPricing");
 
+        
+//causing a silent failure:
+//component.set("v.valuePrice1", "1");
+
+//        component.set("dispPrice1", component.get("v.loaded"));
+//        component.set("dispPrice1", 1);
+        
+        //works:
+        //		component.set("v.lblMessage", "x");
+              
     },
     
 

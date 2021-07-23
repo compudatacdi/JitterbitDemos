@@ -4,21 +4,36 @@
 	},
     
     
-    getEpicorPricing : function(component) 
+    getEpicorPricing : function(component, strPart, intQuantity, strUOM, strCustID) 
+    //getEpicorPricing : function(component, strPart) 
     {
-    
+//component.set("v.valuePriceCode1", strPart);
+        
 		//var productCode = component.get("v.ProductCode");
         //alert("ProductCode: " + productCode);
 
 		var opportunityLineItemID = component.get("v.recordId");
         //alert("opportunityLineItemID: " + opportunityLineItemID);
-		component.set("v.lblMessage", "0");
+		component.set("v.lblMessage", "Retrieving Information....");
         
         //note: 'c.getEpicorPricing' is actually calling out to the apex class CDIEpicorPricing_apex
         //		and needs to have the same name as the calling function here
 		var sfOpportunityLineItem = component.get("c.getEpicorPricing");
-        sfOpportunityLineItem.setParams({"opportunityLineItemID":opportunityLineItemID});
+//        sfOpportunityLineItem.setParams({"opportunityLineItemID":opportunityLineItemID});
+        sfOpportunityLineItem.setParams({
+            "opportunityLineItemID":opportunityLineItemID, 
+            "strPart":strPart, 
+            
+            "intQuantity":intQuantity, 
+            //experimenting with going direct to form and not take in parameter
+            //"intQuantity":component.get("v.valueQuantity1"), 
+            
+            "strUOM":strUOM, 
+            "strCustID":strCustID
+        });
         
+
+//zzz async caused here by setCallback 
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
         sfOpportunityLineItem.setCallback(this, function(response) {
             var state = response.getState();
@@ -29,8 +44,22 @@
 
 
                 //for debugging:
-                //component.set("v.lblMessage", sfOpportunityLineItemData["ProductCode"]);
-                component.set("v.lblMessage", sfOpportunityLineItemData);
+                //component.set("v.lblMessage", sfOpportunityLineItemData["ListCode"]);
+                component.set("v.lblMessage", sfOpportunityLineItemData + " / " 
+                              + sfOpportunityLineItemData["ListCode"]
+                              + " / " + sfOpportunityLineItemData["BasePrice"]
++ " / " + sfOpportunityLineItemData["debugInfo"]
+                );
+
+//component.set("v.valuePriceCode1", strPart);
+//zzz:
+                //component.set("v.valuePrice1", sfOpportunityLineItemData["NetPrice"]);
+                //component.set("v.valuePriceCode1", sfOpportunityLineItemData["ListCode"]);
+                component.set("v.valuePriceTemp", sfOpportunityLineItemData["NetPrice"]);
+                component.set("v.valuePriceCodeTemp", sfOpportunityLineItemData["ListCode"]); 
+                
+
+//component.set("valuePrice1", "1");
 
 //                component.set("v.valueOnHand", sfOpportunityLineItemData["EpicorOnHand"]);
 
