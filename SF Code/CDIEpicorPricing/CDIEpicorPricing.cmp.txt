@@ -2,6 +2,10 @@
 <!-- NOTE: "controller=" below indicates the apex class to be called -->
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="CDIEpicorPricing_apex">
 
+<!-- //https://salesforce.stackexchange.com/questions/305639/component-set-does-not-pass-value-from-helper-to-controller-via-component -->
+<!--aura:attribute name="consoleNavigation" type="Boolean" default="false" access="global"/ -->
+
+    
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
 
 	<aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
@@ -71,18 +75,18 @@
                 <div class="header-column">
                     <p class="field-title" title="Price">Price</p>
 
-                    <lightning:input type="String" name="dispPrice1" readonly="true" value="{!v.valuePrice1 }" label="" />
+                    <lightning:input type="String" name="dispPrice1" readonly="true" value="{!v.valuePrice1}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPrice2" readonly="true" value="{!v.valuePrice2}" label="" />
+                    <lightning:input type="String" name="dispPrice2" readonly="true" value="{!v.valuePrice2}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPrice3" readonly="true" value="{!v.valuePrice3}" label="" />
+                    <lightning:input type="String" name="dispPrice3" readonly="true" value="{!v.valuePrice3}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPrice4" readonly="true" value="{!v.valuePrice4}" label="" />
+                    <lightning:input type="String" name="dispPrice4" readonly="true" value="{!v.valuePrice4}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPrice5" readonly="true" value="{!v.valuePrice5}" label="" />
+                    <lightning:input type="String" name="dispPrice5" readonly="true" value="{!v.valuePrice5}" label="" />
 
                 </div>
-            </lightning:layoutItem>
+            </lightning:layoutItem> 
 
             <lightning:layoutItem padding="around-small">
                 <div class="header-column">
@@ -90,13 +94,13 @@
 
                     <lightning:input type="String" name="dispPriceCode1" readonly="true" value="{!v.valuePriceCode1 }" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPriceCode2" readonly="true" value="{!v.valuePriceCode2}" label="" />
+                    <lightning:input type="String" name="dispPriceCode2" readonly="true" value="{!v.valuePriceCode2}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPriceCode3" readonly="true" value="{!v.valuePriceCode3}" label="" />
+                    <lightning:input type="String" name="dispPriceCode3" readonly="true" value="{!v.valuePriceCode3}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPriceCode4" readonly="true" value="{!v.valuePriceCode4}" label="" />
+                    <lightning:input type="String" name="dispPriceCode4" readonly="true" value="{!v.valuePriceCode4}" label="" />
                     <p></p>
-                    <lightning:input type="number" name="dispPriceCode5" readonly="true" value="{!v.valuePriceCode5}" label="" />
+                    <lightning:input type="String" name="dispPriceCode5" readonly="true" value="{!v.valuePriceCode5}" label="" />
 
                 </div>
             </lightning:layoutItem>

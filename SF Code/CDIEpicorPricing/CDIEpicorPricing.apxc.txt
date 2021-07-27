@@ -2,6 +2,19 @@ global class CDIEpicorPricing_apex {
 
     public static Map<String, String> epicorPricingData = new Map<String, String>();
 
+    
+    //https://salesforce.stackexchange.com/questions/299060/how-to-get-return-value-from-helper-class-to-controller-class
+    @AuraEnabled  //needed to be able to call it from the aura realm
+    public static String apexCreateRecord(String strPart) {
+		
+        //String strReturnValue = 'test';
+        String strReturnValue = strPart;
+        
+        return strReturnValue;
+        
+    }
+	
+
     @AuraEnabled  //needed to be able to call it from the aura realm
     //public static Map<String,String> getEpicorPricing(string product2ID) {        
     //public static String getEpicorPricing(string opportunityLineItemID) {
@@ -134,8 +147,6 @@ strReturnValue += ' 7 ' + parser.getText();
 
 
 strReturnValue += ' /ListCode ' + epicorPricingData.get('ListCode');
-        
-// !!! there is more below this in epicorinventory.apxc
        
         
         //return strReturnValue;

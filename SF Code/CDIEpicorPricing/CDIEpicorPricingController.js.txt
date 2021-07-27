@@ -15,6 +15,65 @@
         
 	},
 
+    //https://salesforce.stackexchange.com/questions/211053/accessing-data-in-the-controller-and-app-file-that-is-returned-from-a-helper-fun/211054#211054
+    handle_btnGetPricing_poc_works : function(component, event, helper) 
+    {
+		//alert('Called in controller 1' ); // >>this gets hit        
+		helper.loadData(component, event, helper, "part x", function(){
+			//component.set("v.valuePriceCode1", component.get("v.lblMessage"));
+			component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp"));
+		}); 
+
+        helper.loadData(component, event, helper, "part z", function(){
+			//component.set("v.valuePriceCode2", component.get("v.lblMessage"));
+			component.set("v.valuePriceCode2", component.get("v.valuePriceCodeTemp"));
+            
+      	}); 
+                
+    },
+
+
+    /*
+    //https://salesforce.stackexchange.com/questions/305639/component-set-does-not-pass-value-from-helper-to-controller-via-component
+    handle_btnGetPricing : function(component, event, helper) 
+    {
+component.set("v.lblMessage", "1");
+        
+        helper.isConsoleNavigation(component, event, helper)
+        .then(function(result) {
+            var consoleNavigation = component.get("v.consoleNavigation");
+            console.log('consoleNavigation '+consoleNavigation);
+            
+component.set("v.lblMessage", consoleNavigation);
+component.set("v.lblMessage", "2");
+            
+        })
+        .catch(function(error) {
+            console.log(error);
+component.set("v.lblMessage", "3");
+        });
+        
+    },
+    */
+    
+    /*
+    //https://salesforce.stackexchange.com/questions/299060/how-to-get-return-value-from-helper-class-to-controller-class
+    handle_btnGetPricing : function(component, event, helper) 
+    {
+        //component.set("v.lblMessage", "1");
+        
+        var abc123 = 
+        helper.createRecord(component,'dum1')
+        .then(function(result) {
+           console.log(result);
+
+//component.set("v.lblMessage", result); //>> "SUCCESS"
+            
+        });
+component.set("v.lblMessage", abc123); //>> 
+
+    },
+	*/
     
     handle_btnGetPricing : function(component, event, helper) 
     {
@@ -31,6 +90,22 @@ component.set("v.lblMessage", "1");
         //helper.getEpicorPricing(component, "strPart");
         //helper.getEpicorPricing(component, "strPart", 1, "strUOM", "strCustID");
         //helper.getEpicorPricing(component, "Widget Red", 1, "EA", "");
+        //var price1 = 
+
+        helper.getEpicorPricing(
+            component, event, helper, 
+            "Widget Red",
+            component.get("v.valueQuantity1"),
+            "EA", 
+            "",
+            function(){
+                component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
+                component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp")); 
+                //component.set("v.valuePriceCode1", "500"); 
+
+            }
+        ); 
+/*
         helper.getEpicorPricing(
             component, 
 //need to fix to be actual part from quote:         
@@ -42,13 +117,97 @@ component.set("v.lblMessage", "1");
             
 //need to fix to be actual UOM & CustID from quote:         
             "EA", 
-            ""); 
-       	component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
-       	component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp"));
+            ""
+            
+//zzz new idea:
+        ); 
+*/
+        /*
+    ).then(function(result) {
+//component.set("v.valuePrice1", "1.99");
+       console.log(result);
+//console.log("test test");
+    });
+*/
+
+//component.set("v.valuePrice1", "1.99");
+//component.set("v.valuePrice1", price1);
+//refresh the form >> not help
+//$A.get('e.force:refreshView').fire();
+        
+//       	component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
+       	//component.set("v.valuePrice1", price1);
+//       	component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp"));
+
+//refresh the form >> not help
+//$A.get('e.force:refreshView').fire();
 
         
 component.set("v.lblMessage", "2");
 
+        if(component.get("v.valueQuantity2") != 0)
+        {
+            helper.getEpicorPricing(
+                component, event, helper, 
+                "Widget Red",
+                component.get("v.valueQuantity2"),
+                "EA", 
+                "",
+                function(){
+    //this is not hit???            
+                    component.set("v.valuePrice2", component.get("v.valuePriceTemp"));
+                    component.set("v.valuePriceCode2", component.get("v.valuePriceCodeTemp")); 
+                    //component.set("v.valuePriceCode1", "500"); 
+    
+                }
+            ); 
+        };
+
+        if(component.get("v.valueQuantity3") != 0)
+        {
+            helper.getEpicorPricing(
+                component, event, helper, 
+                "Widget Red",
+                component.get("v.valueQuantity3"),
+                "EA", 
+                "",
+                function(){
+                    component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
+                    component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp")); 
+                }
+            ); 
+        };
+
+        if(component.get("v.valueQuantity4") != 0)
+        {
+            helper.getEpicorPricing(
+                component, event, helper, 
+                "Widget Red",
+                component.get("v.valueQuantity4"),
+                "EA", 
+                "",
+                function(){
+                    component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
+                    component.set("v.valuePriceCode4", component.get("v.valuePriceCodeTemp")); 
+                }
+            ); 
+        };
+
+        if(component.get("v.valueQuantity5") != 0)
+        {
+            helper.getEpicorPricing(
+                component, event, helper, 
+                "Widget Red",
+                component.get("v.valueQuantity5"),
+                "EA", 
+                "",
+                function(){
+                    component.set("v.valuePrice5", component.get("v.valuePriceTemp"));
+                    component.set("v.valuePriceCode5", component.get("v.valuePriceCodeTemp")); 
+                }
+            ); 
+        };
+/*
         if(component.get("v.valueQuantity2") != 0)
         {
             helper.getEpicorPricing(
@@ -69,12 +228,13 @@ component.set("v.lblMessage", "2");
             
 component.set("v.lblMessage", "3");
         }
+*/
+        
+//        component.set("v.valuePriceTemp", "222");
+//        component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
 
-        component.set("v.valuePriceTemp", "222");
-        component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
-
-        component.set("v.valuePriceTemp", "999");
-        component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
+//        component.set("v.valuePriceTemp", "999");
+//        component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
         
         
         //inputQuantity1
