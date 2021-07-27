@@ -15,30 +15,20 @@ global class CDIEpicorPricing_apex {
     }
 	
 
-    @AuraEnabled  //needed to be able to call it from the aura realm
-    //public static Map<String,String> getEpicorPricing(string product2ID) {        
-    //public static String getEpicorPricing(string opportunityLineItemID) {
-    
-//REVERSE:
-//    public static Map<String, String> getEpicorPricing(string opportunityLineItemID) {
-//    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart) {
+    @AuraEnabled  //needed to be able to call it from the aura realm    
     public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart, integer intQuantity, string strUOM, string strCustID) {
         
         String strReturnValue = 'apex';
 
-// !!! THIS DOES NOT WORK, DID IT BEFORE???? !!
-// issue = opportunityLineItemID is null, dafuq?!?!
         //get the related sf opportunity line item record from the id
         OpportunityLineItem[] opportunityLineItem;
         opportunityLineItem = [SELECT Id,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
         for (OpportunityLineItem row : opportunityLineItem) {
             //salesforceProduct2Data.put('Name', a.Name);
             strReturnValue = row.ProductCode;
-epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / strPart:' + strPart + ' / strUOM:' + strUOM);
-//epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue );
-        }
-//epicorPricingData.put('debugInfo', 'opportunityLineItemID: ' + opportunityLineItemID);
 
+            epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / strPart:' + strPart + ' / strUOM:' + strUOM);
+        }
         
         String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
 
@@ -52,12 +42,10 @@ epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / st
             req.setEndpoint(url);
             req.setMethod('POST');
 
-
-//epicorPricingData.put('debugInfo', 'x: ' + opportunityLineItemID + ' / ' + strPart + ' / '  + intQuantity + ' / '  + strUOM + ' / '  + strCustID);
+			//epicorPricingData.put('debugInfo', 'x: ' + opportunityLineItemID + ' / ' + strPart + ' / '  + intQuantity + ' / '  + strUOM + ' / '  + strCustID);
             
             Http h = new Http();
 
-//string strPart, integer intQuantity, string strUOM, string strCustID) {
             String body = 
                 '        { ' +
                 '            "icCustID": "' + strCustID + '", ' +
@@ -129,8 +117,6 @@ strReturnValue += ' 7 ' + parser.getText();
                     
                     epicorPricingData.put(fieldName, fieldValue);
  
-//strReturnValue += ' /x: ' + epicorPricingData['x'];
-                    
                     //KEEP: for debugging, to add debug log info
                     //System.debug('url_result: ' + url_result );
                     
@@ -145,10 +131,7 @@ strReturnValue += ' 7 ' + parser.getText();
             epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + e );
         }
 
-
-strReturnValue += ' /ListCode ' + epicorPricingData.get('ListCode');
-       
-        
+		//strReturnValue += ' /ListCode ' + epicorPricingData.get('ListCode');
         //return strReturnValue;
         return epicorPricingData;
 
