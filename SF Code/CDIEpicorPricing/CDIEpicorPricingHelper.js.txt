@@ -45,8 +45,119 @@
         $A.enqueueAction(action);
 	},
     
+    //-------------------
+	getEpicorPart: function(component, event, helper, strPart, callback) {
+//component.set("v.valuePriceCode1", "xxx");
+//component.set("v.valuePriceCode1", "helper strPart:  " + strPart );
+//component.set("v.lblMessage", "helper strPart:  " + strPart );
+		        
+        var epicorPart = component.get("c.getEpicorPart");
+        epicorPart.setParams({
+            "strPart":strPart
+        });
+//component.set("v.valuePriceCode3", "x");
+        
+		epicorPart.setCallback(this, function(response) {
+            var state = response.getState();
+component.set("v.valuePriceCode4", "x");
+            if(component.isValid() && state == "SUCCESS") {         
+                //var dp = JSON.parse(response.getReturnValue()); 
+component.set("v.valuePriceCode4", "xx");
+
+                //var strReturnValue = response.getReturnValue();
+                var epicorPartData = response.getReturnValue();
+component.set("v.valuePriceCode4", "xxx");
+                
+//                component.set("v.opportunityLineItemProductCode", strReturnValue);  
+//                component.set("v.lblMessage", "strReturnValue:  " + strReturnValue); 
+
+component.set("v.valuePriceCode4", "xxxx");
+                component.set("v.valuePriceCode2", "debug:  " + epicorPartData["debug"]);
+component.set("v.valuePriceCode4", "xxxxX");
+
+
+//!!! PUM is undefined here: !!!
+                component.set("v.lblMessage", "PUM:  " + epicorPartData["PUM"]);  
+                
+
+
+                if(callback){
+                    callback();
+                }
+            }
+            else if (response.getState() === "ERROR") {
+                //component.set("v.lblMessage", "error 1");
+//component.set("v.valuePriceCode3", "error 1");
+                
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "type":"error",
+                    "title": "Error!",
+                    "message": "Internal Server Error"
+                });
+                toastEvent.fire();
+            }
+        });
+        $A.enqueueAction(epicorPart);
+	},
+    //-------------------
+    
+    
+    //getEpicorPricing : function(component, event, helper, strPart, intQuantity, strUOM, strCustID, callback) 
+	getOpportunityLineItemProductCode: function(component, event, helper, callback) {
+		//component.set("v.lblMessage", "1");
+		
+        var opportunityLineItemID = component.get("v.recordId");
+        
+        var sfOpportunityLineItemProductCode = component.get("c.getOpportunityLineItemProductCode");
+        sfOpportunityLineItemProductCode.setParams({
+            "opportunityLineItemID":opportunityLineItemID
+        });
+
+//component.set("v.lblMessage", "opportunityLineItemID:  " + opportunityLineItemID);
+//component.set("v.lblMessage", "1");
+
+		sfOpportunityLineItemProductCode.setCallback(this, function(response) {
+
+//component.set("v.lblMessage", "opportunityLineItemID:  " + opportunityLineItemID);
+//component.set("v.lblMessage", "2");
+
+            var state = response.getState();
+            if(component.isValid() && state == "SUCCESS") {         
+                //var dp = JSON.parse(response.getReturnValue()); 
+                
+//                component.set("v.valuePriceCodeTemp", strPart);
+//                component.set("v.valuePriceCodeTemp", response.getReturnValue() + "_xx");
+                
+                var strReturnValue = response.getReturnValue();
+                component.set("v.opportunityLineItemProductCode", strReturnValue);  
+
+                //refresh the form
+                //does not help ability to use v.opportunityLineItemProductCode after this is done though
+                //$A.get('e.force:refreshView').fire();
+				
+                if(callback){
+                    callback();
+                }
+            }
+            else if (response.getState() === "ERROR") {
+                //component.set("v.lblMessage", "error 1");
+    
+                var toastEvent = $A.get("e.force:showToast");
+                toastEvent.setParams({
+                    "type":"error",
+                    "title": "Error!",
+                    "message": "Internal Server Error"
+                });
+                toastEvent.fire();
+            }
+        });
+        $A.enqueueAction(sfOpportunityLineItemProductCode);
+	},
+    
     getEpicorPricing : function(component, event, helper, strPart, intQuantity, strUOM, strCustID, callback) 
-    {        
+    {
+//component.set('v.loaded', false);
 		var opportunityLineItemID = component.get("v.recordId");
         //alert("opportunityLineItemID: " + opportunityLineItemID);
 		component.set("v.lblMessage", "Retrieving Information....");
@@ -111,6 +222,7 @@
         });
         $A.enqueueAction(sfOpportunityLineItem);
         
+//component.set('v.loaded', true);
     }
     
 })

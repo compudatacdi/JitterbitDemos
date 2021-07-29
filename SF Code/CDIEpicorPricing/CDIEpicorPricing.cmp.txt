@@ -10,10 +10,24 @@
 
 	<aura:handler name="render" value="{!this}" action="{!c.onRender}"/>
 
+<!--aura:handler event="aura:doneRendering" action="{!c.doneRendering}"/ -->
+<!--aura:attribute name="firstRenderHit" type="Boolean" default="false" / -->
+	
+    <aura:handler name="change" value="{!v.opportunityLineItemProductCode}" action="{!c.handleValueChange}"/>
+
    	<aura:attribute name="lblGetPricing" type="String" default="Get Epicor Pricing" />
     <lightning:button name="btnGetPricing" label="{!v.lblGetPricing}" onclick="{!c.handle_btnGetPricing}" />
+    <aura:attribute name="loaded" type="Boolean" default="true" />
+    <div class="exampleHolder">
+        <aura:if isTrue="{! v.loaded }">
+            <!-- Put loaded content here -->
+            <aura:set attribute="else">
+                <lightning:spinner alternativeText="Loading" size="small" />
+            </aura:set>
+        </aura:if>
+    </div>
 
-   	<aura:attribute name="lblMessage" type="String" default="Status: OK" />
+    <aura:attribute name="lblMessage" type="String" default="Status: OK" />
     <p><lightning:formattedText name="txtMessage" value="{!v.lblMessage}" /></p>    
 	
 	<!--
@@ -30,6 +44,8 @@
 	<!-- trying a layout: https://developer.salesforce.com/docs/component-library/bundle/lightning:layout/example#lightningcomponentdemo:exampleLayoutSimple-->
     <!-- aura:attribute name="valueQuantity1" type="String" default="0" / -->
     <!--aura:attribute name="valueQuantity2" type="String" default="0" / -->
+
+    <aura:attribute name="opportunityLineItemProductCode" type="String" default="" />
 
     <aura:attribute name="valuePriceTemp" type="String" default="0" />    
     <aura:attribute name="valuePrice1" type="String" default="0" />
@@ -104,7 +120,6 @@
 
                 </div>
             </lightning:layoutItem>
-            
             
         </lightning:layout>
     </div>

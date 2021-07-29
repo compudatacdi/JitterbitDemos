@@ -1,8 +1,9 @@
-global class CDIEpicorPricing_apex {
+global class CDIEpicorPricing_apex { 
 
+    public static Map<String, String> epicorPartData = new Map<String, String>();
     public static Map<String, String> epicorPricingData = new Map<String, String>();
 
-    
+    //poc method for async
     //https://salesforce.stackexchange.com/questions/299060/how-to-get-return-value-from-helper-class-to-controller-class
     @AuraEnabled  //needed to be able to call it from the aura realm
     public static String apexCreateRecord(String strPart) {
@@ -14,21 +15,163 @@ global class CDIEpicorPricing_apex {
         
     }
 	
-
     @AuraEnabled  //needed to be able to call it from the aura realm    
-    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart, integer intQuantity, string strUOM, string strCustID) {
+    public static string getOpportunityLineItemProductCode(string opportunityLineItemID) {
+        String strOpportunityLineItemProductCode = '';
         
-        String strReturnValue = 'apex';
-
         //get the related sf opportunity line item record from the id
         OpportunityLineItem[] opportunityLineItem;
         opportunityLineItem = [SELECT Id,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
         for (OpportunityLineItem row : opportunityLineItem) {
-            //salesforceProduct2Data.put('Name', a.Name);
-            strReturnValue = row.ProductCode;
-
-            epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / strPart:' + strPart + ' / strUOM:' + strUOM);
+            strOpportunityLineItemProductCode = row.ProductCode;
         }
+        
+        return strOpportunityLineItemProductCode;
+
+    } 
+    
+//----------------
+    @AuraEnabled  //needed to be able to call it from the aura realm     
+    public static Map<String, String> getEpicorPart(string strPart) {
+
+        //String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
+//https://pii-app1/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts?%24filter=Company%20eq%20'PI03'%20and%20PartNum%20eq%20'Widget%20Red'
+
+//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts?%24filter=Company%20eq%20\'PI03\'%20and%20PartNum%20eq%20\'Widget%20Red\'';
+//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts?%24filter=Company%20eq%20\'PI03\'%20and%20PartNum%20eq%20\'' + strPart + '\'';
+//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts?%24filter=Company%20eq%20PI03%20and%20PartNum%20eq%20Widget%20Red';
+
+//        https://pii-app1/ERPPIITest/api/v1/Erp.BO.PartSvc/Parts('PI03','Widget%20Red') 
+
+//!!! THIS WORKS !!!
+//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'Widget%20Red\')';
+//!!! THIS DOES NOT WORK !!! > PROBABLY DUE TO SPACE IN THE PART
+//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'' + strPart + '\')';
+//!!! THIS WORKS !!!
+        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'' + strPart.replace(' ', '%20') + '\')';
+        
+epicorPartData.put('debug', '1'); 
+
+        
+//map: epicorPartData
+        
+		try {
+            //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
+            //		and return of variable never happens
+            
+            // Instantiate a new HTTP request, specify the method (GET) as well as the endpoint
+            HttpRequest req = new HttpRequest();
+            req.setEndpoint(url);
+            req.setMethod('GET');
+
+			//epicorPricingData.put('debugInfo', 'x: ' + opportunityLineItemID + ' / ' + strPart + ' / '  + intQuantity + ' / '  + strUOM + ' / '  + strCustID);
+            
+            Http h = new Http();
+
+/*
+            String body = 
+                '        { ' +
+//                '            "icCustID": "' + strCustID + '", ' +
+                '            "icShipToNum": "", ' +
+                '            "icPartNum": "' + strPart + '", ' +
+                '            "icCustGroupCode": "", ' +
+                '            "icProductCode": "", ' +
+//                '            "idQuantity": "' + intQuantity + '", ' +
+//                '            "icUOMCode": "' + strUOM + '", ' +
+                '            "icWarehouseCode": "", ' +
+                '            "icCurrencyCode": "", ' +
+                '            "pageSize": 0, ' +
+                '            "absolutePage": 0 ' +
+                '        }' +            
+                '';
+
+                integer intHeaderLength = body.length();
+                req.setHeader('Content-Length', String.valueOf(intHeaderLength));
+                req.setHeader('Content-Type', 'application/json');
+                req.setHeader('accept', 'application/json');
+                
+                req.setBody(body);
+*/
+
+epicorPartData.put('debug', '2');
+            
+            HttpResponse res = h.send(req);
+            System.debug(res.getBody());
+epicorPartData.put('debug', '3');
+epicorPartData.put('debug', res.getBody());
+
+            JSONParser parser = JSON.createParser(res.getBody());
+            //NOTE:  if epicor is down, this is where it fails because parser is empty:
+    
+            while (parser.nextToken() != null) {
+                if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+                    (parser.getText() == 'PartNum'
+                     || parser.getText() == 'PUM')) 
+                {
+                    string fieldName = parser.getText();
+                    
+                    parser.nextToken();
+                    
+                    //original trial returning one value
+                    //url_result = parser.getText();
+epicorPartData.put('debug', '4');
+                    
+                    string fieldValue; 
+                    if(fieldName == '<currency field>')
+                    {
+                        //fieldValue = String.valueOf(decimal.valueOf(parser.getText()));
+                        fieldValue = currency(parser.getText());
+                    }
+                    else
+                    {
+                        fieldValue = parser.getText();
+                    }
+                    
+                    epicorPartData.put(fieldName, fieldValue);
+ 
+                    //KEEP: for debugging, to add debug log info
+                    //System.debug('url_result: ' + url_result );
+                    
+                    epicorPartData.put('Epicor_Status', 'OK');
+                    
+                }
+            }
+        } catch (DmlException de) {
+            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + de );
+        }
+        catch (Exception e) {
+            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + e );
+        }
+
+		//strReturnValue += ' /ListCode ' + epicorPartData.get('ListCode');
+        //return strReturnValue;
+        return epicorPartData;
+
+    }
+//----------------
+    
+    
+    
+    @AuraEnabled  //needed to be able to call it from the aura realm    
+    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart, integer intQuantity, string strUOM, string strCustID) {
+        
+        String strReturnValue = 'apex';
+        //String strOpportunityLineItemProductCode = '';
+
+        /*
+        //get the related sf opportunity line item record from the id
+        if(strPart == ''){
+            OpportunityLineItem[] opportunityLineItem;
+            opportunityLineItem = [SELECT Id,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
+            for (OpportunityLineItem row : opportunityLineItem) {
+                //salesforceProduct2Data.put('Name', a.Name);
+                //strReturnValue = row.ProductCode;
+                strPart = row.ProductCode;
+    
+                epicorPricingData.put('debugInfo', 'row.ProductCode: ' + strReturnValue + ' / strPart:' + strPart + ' / strUOM:' + strUOM);
+            }
+        }
+		*/
         
         String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
 

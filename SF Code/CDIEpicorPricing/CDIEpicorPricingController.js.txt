@@ -1,19 +1,155 @@
 ({
 	myAction : function(component, event, helper) {
 		
-	},
-    
-    
+	}, 
+        
+
     doInit : function(component, event, helper) 
     {
-		//alert("hello");
-
+        //alert("doInit"); 
         
+        //var strPartNum = '';
+component.set("v.valuePriceCode1", "xxxx"); 
+component.set("v.valuePriceCode2", "x");
+        
+        //get and store the product on the current opportunity line item
+		helper.getOpportunityLineItemProductCode(
+            component, event, helper, 
+            function(){
+                strPartNum = component.get("v.opportunityLineItemProductCode");
+                
+//component.set("v.valuePriceCode3", "strPartNum: " + strPartNum);
+                
+            }
+        );
+//component.set("v.valuePriceCode2", component.get("v.opportunityLineItemProductCode"));
+//component.set("v.valuePriceCode2", "abc123");
+
     },
 
-   	onRender: function(component, event, helper) {     
+   	onRender: function(component, event, helper) {
+/*
+        if(component.get("v.firstRenderHit") == false)
+        {
+			component.set("v.firstRenderHit", true);
+			
+            alert("onRender");
+    
+component.set("v.valuePriceCode2", "x");
+component.set("v.valuePriceCode2", component.get("v.opportunityLineItemProductCode"));
+            
+            //get and store the epicor part info
+            helper.getEpicorPart(
+                component, event, helper, 
+    
+                component.get("v.opportunityLineItemProductCode"),
+                //"part z",
+    
+                function(){
+                    //component.set("v.valuePriceCode2", "x");
+                    //				component.set("v.valuePriceCode4", "abc1");  
+                    //                var strPartNum = component.get("v.opportunityLineItemProductCode");
+                    //                component.set("v.valuePriceCode3", "part: " + strPartNum);
+    
+                }
+                
+            );
+
+
+        }
+*/
         
 	},
+
+    handleValueChange : function (component, event, helper) {
+        //alert("old value: " + event.getParam("oldValue"));
+        //alert("current value: " + event.getParam("value"));
+        
+
+		//strPartNum = component.get("v.opportunityLineItemProductCode");
+        var strPartNum = event.getParam("value");
+                
+//component.set("v.valuePriceCode3", "strPartNum: " + strPartNum);
+//component.set("v.valuePriceCode3", "strPartNum: " + strPartNum);
+component.set("v.valuePriceCode3", "x");
+        
+        //get and store the epicor part info
+        helper.getEpicorPart(
+            component, event, helper, 
+            
+            strPartNum,
+            //"part z",
+            
+            function(){
+                component.set("v.valuePriceCode3", "xx");
+                //				component.set("v.valuePriceCode4", "abc1");  
+                //                var strPartNum = component.get("v.opportunityLineItemProductCode");
+                //                component.set("v.valuePriceCode3", "part: " + strPartNum);
+                
+            }
+            
+        );
+        
+        
+    },
+    
+    
+    doneRendering: function(component, event, helper) {
+/*
+        if(component.get("v.firstRenderHit") == false)
+        {
+			component.set("v.firstRenderHit", true);
+			
+            //alert("doneRendering");
+    
+//component.set("v.valuePriceCode2", "x");
+//component.set("v.valuePriceCode2", "part: " + component.get("v.opportunityLineItemProductCode"));
+            
+            //get and store the epicor part info
+            helper.getEpicorPart(
+                component, event, helper, 
+    
+                component.get("v.opportunityLineItemProductCode"),
+                //"part z",
+    
+                function(){
+                    //component.set("v.valuePriceCode2", "x");
+                    //				component.set("v.valuePriceCode4", "abc1");  
+                    //                var strPartNum = component.get("v.opportunityLineItemProductCode");
+                    //                component.set("v.valuePriceCode3", "part: " + strPartNum);
+    
+                }
+                
+            );
+
+        }
+*/
+
+        
+//alert("doneRendering");  
+/*
+component.set("v.valuePriceCode2", "x"); 
+//component.set("v.valuePriceCode4", component.get("v.opportunityLineItemProductCode"));
+        
+        //get and store the epicor part info
+		helper.getEpicorPart(
+            component, event, helper, 
+
+            component.get("v.opportunityLineItemProductCode"),
+            //"part z",
+
+            function(){
+//component.set("v.valuePriceCode2", "x");
+//				component.set("v.valuePriceCode4", "abc1");  
+//                var strPartNum = component.get("v.opportunityLineItemProductCode");
+//                component.set("v.valuePriceCode3", "part: " + strPartNum);
+
+            }
+        );
+*/
+    },
+
+    
 
     //https://salesforce.stackexchange.com/questions/211053/accessing-data-in-the-controller-and-app-file-that-is-returned-from-a-helper-fun/211054#211054
     handle_btnGetPricing_poc_works : function(component, event, helper) 
@@ -32,17 +168,46 @@
     handle_btnGetPricing : function(component, event, helper) 
     {
 		//alert("hello");
-        //component.set("v.HideSpinner", "true");
+        //component.set("v.HideSpinner", "false");
+        //component.set('v.loaded', !cmp.get('v.loaded'));
+        //component.set('v.loaded', false);
+		component.set('v.loaded', false);
 
+//strPartNum = component.get("v.opportunityLineItemProductCode");
+//component.set("v.valuePriceCode3", strPartNum);
+//component.set("v.valuePriceCode4", component.get("v.opportunityLineItemProductCode"));
+
+        var strPartNum = component.get("v.opportunityLineItemProductCode");
+        
+        /*
+        var strPartNum = '';
+		helper.getOpportunityLineItemProductCode(
+            component, event, helper, 
+            function(){
+
+//temp:
+//                component.set("v.valuePriceCode3", component.get("v.opportunityLineItemProductCode"));
+                
+                strPartNum = component.get("v.opportunityLineItemProductCode");
+//component.set("v.valuePriceCode3", strPartNum);
+
+            }
+        );
+        */
+        
         helper.getEpicorPricing(
             component, event, helper, 
-            "Widget Red",
+
+            //"Widget Red",
+            strPartNum,
+
             component.get("v.valueQuantity1"),
             "EA", 
             "",
             function(){
                 component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
                 component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp")); 
+				component.set('v.loaded', true);
             }
         );
         
@@ -50,65 +215,82 @@
 
         if(component.get("v.valueQuantity2") != 0)
         {
+			component.set('v.loaded', false);
             helper.getEpicorPricing(
                 component, event, helper, 
-                "Widget Red",
+                //"Widget Red",
+                strPartNum,
                 component.get("v.valueQuantity2"),
                 "EA", 
                 "",
                 function(){
                     component.set("v.valuePrice2", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode2", component.get("v.valuePriceCodeTemp")); 
+					component.set('v.loaded', true);
                 }
             ); 
         };
 
         if(component.get("v.valueQuantity3") != 0)
         {
+			component.set('v.loaded', false);
             helper.getEpicorPricing(
                 component, event, helper, 
-                "Widget Red",
+                //"Widget Red",
+                strPartNum,
                 component.get("v.valueQuantity3"),
                 "EA", 
                 "",
                 function(){
                     component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
-                    component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp")); 
+                    component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp"));
+					component.set('v.loaded', true);
                 }
             ); 
         };
 
         if(component.get("v.valueQuantity4") != 0)
         {
+			component.set('v.loaded', false);
             helper.getEpicorPricing(
                 component, event, helper, 
-                "Widget Red",
+                //"Widget Red",
+                strPartNum,
                 component.get("v.valueQuantity4"),
                 "EA", 
                 "",
                 function(){
                     component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode4", component.get("v.valuePriceCodeTemp")); 
+					component.set('v.loaded', true);
                 }
             ); 
         };
 
         if(component.get("v.valueQuantity5") != 0)
         {
+			component.set('v.loaded', false);
             helper.getEpicorPricing(
                 component, event, helper, 
-                "Widget Red",
+                //"Widget Red",
+                strPartNum,
                 component.get("v.valueQuantity5"),
                 "EA", 
                 "",
                 function(){
                     component.set("v.valuePrice5", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode5", component.get("v.valuePriceCodeTemp")); 
+					component.set('v.loaded', true);
+
                 }
             ); 
         };
 
+
+		//component.set("v.HideSpinner", "true");
+		//component.set('v.loaded', !cmp.get('v.loaded'));
+//        component.set('v.loaded', true);
+
     },
 
 })
-
