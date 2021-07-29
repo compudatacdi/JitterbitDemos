@@ -59,26 +59,30 @@
         
 		epicorPart.setCallback(this, function(response) {
             var state = response.getState();
-component.set("v.valuePriceCode4", "x");
+//component.set("v.valuePriceCode4", "x");
             if(component.isValid() && state == "SUCCESS") {         
                 //var dp = JSON.parse(response.getReturnValue()); 
-component.set("v.valuePriceCode4", "xx");
+//component.set("v.valuePriceCode4", "xx");
 
                 //var strReturnValue = response.getReturnValue();
                 var epicorPartData = response.getReturnValue();
-component.set("v.valuePriceCode4", "xxx");
+//component.set("v.valuePriceCode4", "xxx");
                 
 //                component.set("v.opportunityLineItemProductCode", strReturnValue);  
 //                component.set("v.lblMessage", "strReturnValue:  " + strReturnValue); 
 
-component.set("v.valuePriceCode4", "xxxx");
-                component.set("v.valuePriceCode2", "debug:  " + epicorPartData["debug"]);
-component.set("v.valuePriceCode4", "xxxxX");
+//component.set("v.valuePriceCode4", "xxxx");
+//                component.set("v.valuePriceCode2", "debug:  " + epicorPartData["debug"]);
+//component.set("v.valuePriceCode4", "xxxxX");
 
 
 //!!! PUM is undefined here: !!!
-                component.set("v.lblMessage", "PUM:  " + epicorPartData["PUM"]);  
-                
+//                component.set("v.lblMessage", "PUM:  " + epicorPartData["PUM"]);  
+//                
+
+//zzz
+                component.set("v.epicorPartUOM", epicorPartData["PUM"]);
+
 
 
                 if(callback){
