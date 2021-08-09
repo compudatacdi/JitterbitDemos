@@ -23,9 +23,14 @@
     </div>
 
     <aura:attribute name="lblMessage" type="String" default="Status: OK" />
-    <p><lightning:formattedText name="txtMessage" value="{!v.lblMessage}" /></p>    
+    <aura:attribute name="lblDebugMessage" type="String" default="" />
+    <p>
+    <lightning:formattedText name="txtMessage" value="{!v.lblMessage}" />
+    <lightning:formattedText name="txtDebugMessage" value="{!v.lblDebugMessage}" />
+    </p>    
 	
-	<!--
+
+    <!--
     <p></p>
     <aura:attribute name="valueQuantity" type="String" default="0" />
 	<lightning:formattedText name="lblQuantity" value="Quantity: " />
@@ -41,8 +46,8 @@
     <!--aura:attribute name="valueQuantity2" type="String" default="0" / -->
 
     <aura:attribute name="opportunityLineItemProductCode" type="String" default="" />
-
     <aura:attribute name="epicorPartUOM" type="String" default="" />
+    <aura:attribute name="epicorCustId" type="String" default="" />
 
     <aura:attribute name="valuePriceTemp" type="String" default="0" />    
     <aura:attribute name="valuePrice1" type="String" default="0" />

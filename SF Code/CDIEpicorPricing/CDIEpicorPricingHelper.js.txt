@@ -3,7 +3,7 @@
 		
 	},
 
-    //poc for sync:
+    //poc for synchronous:
 	loadData: function(component, event, helper, strPart, callback) {
 		//component.set("v.lblMessage", "1");
 		//var action = component.get("c.loadSalesRepView");
@@ -80,9 +80,7 @@
 //                component.set("v.lblMessage", "PUM:  " + epicorPartData["PUM"]);  
 //                
 
-//zzz
                 component.set("v.epicorPartUOM", epicorPartData["PUM"]);
-
 
 
                 if(callback){
@@ -113,6 +111,7 @@
 		
         var opportunityLineItemID = component.get("v.recordId");
         
+        //setup the call to apex method getOpportunityLineItemProductCode:
         var sfOpportunityLineItemProductCode = component.get("c.getOpportunityLineItemProductCode");
         sfOpportunityLineItemProductCode.setParams({
             "opportunityLineItemID":opportunityLineItemID
@@ -133,8 +132,17 @@
 //                component.set("v.valuePriceCodeTemp", strPart);
 //                component.set("v.valuePriceCodeTemp", response.getReturnValue() + "_xx");
                 
-                var strReturnValue = response.getReturnValue();
-                component.set("v.opportunityLineItemProductCode", strReturnValue);  
+//zzz
+                //var strReturnValue = response.getReturnValue();                
+                //component.set("v.opportunityLineItemProductCode", strReturnValue);
+                //returns a dictionary with known values in each pair:
+                var sfOpportunityData = response.getReturnValue();
+                component.set("v.opportunityLineItemProductCode", sfOpportunityData["ProductCode"]);
+
+//zzzzz 
+component.set("v.lblDebugMessage", "   EpicorCustId: " + sfOpportunityData["EpicorCustId"]);
+component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
+
 
                 //refresh the form
                 //does not help ability to use v.opportunityLineItemProductCode after this is done though
@@ -159,44 +167,59 @@
         $A.enqueueAction(sfOpportunityLineItemProductCode);
 	},
     
-    getEpicorPricing : function(component, event, helper, strPart, intQuantity, strUOM, strCustID, callback) 
+    //getEpicorPricing : function(component, event, helper, strEpicorCustId, strPart, intQuantity, strUOM, strCustID, callback) 
+    getEpicorPricing : function(component, event, helper, strEpicorCustId, strPart, intQuantity, strUOM, callback) 
     {
 //component.set('v.loaded', false);
 		var opportunityLineItemID = component.get("v.recordId");
         //alert("opportunityLineItemID: " + opportunityLineItemID);
-		component.set("v.lblMessage", "Retrieving Information....");
+
+        //component.set("v.lblMessage", "Retrieving Information....");
         
         //note: 'c.getEpicorPricing' is actually calling out to the apex class CDIEpicorPricing_apex
         //		and needs to have the same name as the calling function here
-		var sfOpportunityLineItem = component.get("c.getEpicorPricing");
-        sfOpportunityLineItem.setParams({
+//change sfOpportunityLineItem to ecPricing
+        var ecPricing = component.get("c.getEpicorPricing");
+        ecPricing.setParams({
             "opportunityLineItemID":opportunityLineItemID, 
-            "strPart":strPart, 
-            "intQuantity":intQuantity,             
-            "strUOM":strUOM, 
-            "strCustID":strCustID
+
+            "strEpicorCustId":strEpicorCustId,
+
+            "strPart":strPart,
+            "intQuantity":intQuantity,
+            "strUOM":strUOM
+            
+            //"strCustID":strCustID
         });
         
     
         //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
-        sfOpportunityLineItem.setCallback(this, function(response) {
+        ecPricing.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 
                 //returns a dictionary with known values in each pair:
-                var sfOpportunityLineItemData = response.getReturnValue();
+//change sfOpportunityLineItemData to ecPricingData
+                var ecPricingData = response.getReturnValue();
 
-                //for debugging:
-                component.set("v.lblMessage", sfOpportunityLineItemData + " / " 
-                              + sfOpportunityLineItemData["ListCode"]
-                              + " / " + sfOpportunityLineItemData["BasePrice"]
+                //KEEP for debugging:
+                /*
+                component.set("v.lblMessage", ecPricingData + " / " 
+                              + ecPricingData["ListCode"]
+                              + " / " + ecPricingData["BasePrice"]
                               + " / " + intQuantity
-							  + " / " + sfOpportunityLineItemData["debugInfo"]
+							  + " / " + ecPricingData["debugInfo"]
                 );
+                */
 
-                component.set("v.valuePriceTemp", sfOpportunityLineItemData["NetPrice"]);
-                component.set("v.valuePriceCodeTemp", sfOpportunityLineItemData["ListCode"]); 
+                component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
+                //component.set("v.valuePriceCodeTemp", ecPricingData["ListCode"]); 
+                component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
+                
+//zzz temp test:
+//component.set("v.lblDebugMessage", '  / record count: ' + ecPricingData["count"]);
 
+                
                 //refresh the form
 				//$A.get('e.force:refreshView').fire();
                 if(callback){
@@ -224,7 +247,7 @@
 
 
         });
-        $A.enqueueAction(sfOpportunityLineItem);
+        $A.enqueueAction(ecPricing);
         
 //component.set('v.loaded', true);
     }

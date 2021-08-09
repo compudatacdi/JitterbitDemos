@@ -2,8 +2,9 @@ global class CDIEpicorPricing_apex {
 
     public static Map<String, String> epicorPartData = new Map<String, String>();
     public static Map<String, String> epicorPricingData = new Map<String, String>();
+    public static Map<String, String> sfOpportunityData = new Map<String, String>();
 
-    //poc method for async
+    //poc method for asynchronous
     //https://salesforce.stackexchange.com/questions/299060/how-to-get-return-value-from-helper-class-to-controller-class
     @AuraEnabled  //needed to be able to call it from the aura realm
     public static String apexCreateRecord(String strPart) {
@@ -15,18 +16,44 @@ global class CDIEpicorPricing_apex {
         
     }
 	
-    @AuraEnabled  //needed to be able to call it from the aura realm    
-    public static string getOpportunityLineItemProductCode(string opportunityLineItemID) {
+    @AuraEnabled  //needed to be able to call it from the aura realm
+    //public static string getOpportunityLineItemProductCode(string opportunityLineItemID) {
+    public static Map<String, String> getOpportunityLineItemProductCode(string opportunityLineItemID) {
         String strOpportunityLineItemProductCode = '';
-        
+        String strOpportunityId = '';
+        String strAccountId = '';
+		//String strEpicorCustId = '';        
+            
         //get the related sf opportunity line item record from the id
         OpportunityLineItem[] opportunityLineItem;
-        opportunityLineItem = [SELECT Id,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
+        opportunityLineItem = [SELECT Id,OpportunityId,ProductCode FROM OpportunityLineItem WHERE Id = :opportunityLineItemID];
         for (OpportunityLineItem row : opportunityLineItem) {
-            strOpportunityLineItemProductCode = row.ProductCode;
+            //strOpportunityLineItemProductCode = row.ProductCode;
+            sfOpportunityData.put('ProductCode', row.ProductCode);
+            strOpportunityId = row.OpportunityId;
         }
         
-        return strOpportunityLineItemProductCode;
+//zzzzz
+
+        //get the related sf opportunity record
+        Opportunity[] opportunity;
+        opportunity = [SELECT Id,AccountId FROM Opportunity WHERE Id = :strOpportunityId];
+        for (Opportunity row : opportunity) {
+            //sfOpportunityData.put('ProductCode', row.ProductCode);
+            strAccountId = row.AccountId;
+        }
+
+//zzzzz
+        //get the related sf account record
+        Account[] account;
+        account = [SELECT Id,EpicorCustId__c FROM Account WHERE Id = :strAccountId];
+        for (Account row : account) {
+			sfOpportunityData.put('EpicorCustId', row.EpicorCustId__c);
+        }
+
+    
+        //return strOpportunityLineItemProductCode;
+        return sfOpportunityData;
 
     } 
     
@@ -46,7 +73,7 @@ global class CDIEpicorPricing_apex {
 
 			//epicorPricingData.put('debugInfo', 'x: ' + opportunityLineItemID + ' / ' + strPart + ' / '  + intQuantity + ' / '  + strUOM + ' / '  + strCustID);
             
-            Http h = new Http();            
+            Http h = new Http();
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
 
@@ -95,7 +122,8 @@ global class CDIEpicorPricing_apex {
     
     
     @AuraEnabled  //needed to be able to call it from the aura realm    
-    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strPart, integer intQuantity, string strUOM, string strCustID) {
+    //public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strEpicorCustId, string strPart, integer intQuantity, string strUOM, string strCustID) {
+    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strEpicorCustId, string strPart, integer intQuantity, string strUOM) {
         
         String strReturnValue = 'apex';
         String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
@@ -115,7 +143,10 @@ global class CDIEpicorPricing_apex {
 
             String body = 
                 '        { ' +
-                '            "icCustID": "' + strCustID + '", ' +
+
+//                '            "icCustID": "' + strCustID + '", ' +
+                '            "icCustID": "' + strEpicorCustId + '", ' +
+
                 '            "icShipToNum": "", ' +
                 '            "icPartNum": "' + strPart + '", ' +
                 '            "icCustGroupCode": "", ' +
@@ -128,18 +159,14 @@ global class CDIEpicorPricing_apex {
                 '            "absolutePage": 0 ' +
                 '        }' +            
                 '';
-
-                integer intHeaderLength = body.length();
-                req.setHeader('Content-Length', String.valueOf(intHeaderLength));
-                req.setHeader('Content-Type', 'application/json');
-                req.setHeader('accept', 'application/json');
-                
-                req.setBody(body);
             
-//strReturnValue += ' 2 ';
-//String zzz = req.getBody();
-//strReturnValue += ' 2.5 ' + zzz;
-    
+            integer intHeaderLength = body.length();
+            req.setHeader('Content-Length', String.valueOf(intHeaderLength));
+            req.setHeader('Content-Type', 'application/json');
+            req.setHeader('accept', 'application/json');
+            
+            req.setBody(body);
+
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
     
@@ -148,13 +175,29 @@ global class CDIEpicorPricing_apex {
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
 //strReturnValue += ' 4 ';
     
+//zzz temp testing code
+integer intRecordCount = 1;
+epicorPricingData.put('count', String.valueOf(intRecordCount));
+string strLastArray = '';
+            
             while (parser.nextToken() != null) {
-//strReturnValue += ' 5 ';
+
+//zzz
+//START_OBJECT = {}
+//START_ARRAY = []
+if(parser.getCurrentToken() == JSONToken.START_OBJECT)
+{
+    parser.nextToken();
+    //strLastArray = parser.getText();
+    strLastArray += parser.getText() + ' / ';
+    //yields: returnObj / PriceListInquiry / Company / Company /
+}
+                
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
                     (parser.getText() == 'ListCode' || parser.getText() == 'CurrencyCode'
                      || parser.getText() == 'BasePrice' || parser.getText() == 'BreakPrice'
                      || parser.getText() == 'NetPrice' || parser.getText() == 'Quantity'
-                     || parser.getText() == 'zz')) 
+                     || parser.getText() == 'ListDescription')) 
                 {
                     string fieldName = parser.getText();
 
@@ -181,7 +224,16 @@ global class CDIEpicorPricing_apex {
                     }
                     
                     epicorPricingData.put(fieldName, fieldValue);
- 
+//zzz
+//epicorPricingData.get('ListDescription')
+if(fieldName == 'ListDescription' && epicorPricingData.containsKey('ListDescription'))
+{
+    //NOTE: ListDescription is in the data before any of the price fields
+    intRecordCount += 2;
+    epicorPricingData.put('count', String.valueOf(intRecordCount) + ' / last array: ' + strLastArray);
+}
+
+                    
                     //KEEP: for debugging, to add debug log info
                     //System.debug('url_result: ' + url_result );
                     
@@ -229,4 +281,3 @@ global class CDIEpicorPricing_apex {
     }
     
 }
-
