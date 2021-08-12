@@ -17,22 +17,14 @@
 		action.setCallback(this, function(response) {
             var state = response.getState();
             if(component.isValid() && state == "SUCCESS") {         
-                //var dp = JSON.parse(response.getReturnValue()); 
-                
-//                component.set("v.valuePriceCodeTemp", strPart);
-//                component.set("v.valuePriceCodeTemp", response.getReturnValue() + "_xx");
-                
                 var strReturnValue = response.getReturnValue();
                 component.set("v.valuePriceCodeTemp", strReturnValue + "_xxxx");  
-
                 
                 if(callback){
                     callback();
                 }
             }
             else if (response.getState() === "ERROR") {
-                //component.set("v.lblMessage", "error 1");
-    
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
                     "type":"error",
@@ -47,41 +39,18 @@
     
     //-------------------
 	getEpicorPart: function(component, event, helper, strPart, callback) {
-//component.set("v.valuePriceCode1", "xxx");
-//component.set("v.valuePriceCode1", "helper strPart:  " + strPart );
-//component.set("v.lblMessage", "helper strPart:  " + strPart );
 		        
         var epicorPart = component.get("c.getEpicorPart");
         epicorPart.setParams({
             "strPart":strPart
         });
-//component.set("v.valuePriceCode3", "x");
         
 		epicorPart.setCallback(this, function(response) {
             var state = response.getState();
-//component.set("v.valuePriceCode4", "x");
             if(component.isValid() && state == "SUCCESS") {         
-                //var dp = JSON.parse(response.getReturnValue()); 
-//component.set("v.valuePriceCode4", "xx");
-
-                //var strReturnValue = response.getReturnValue();
                 var epicorPartData = response.getReturnValue();
-//component.set("v.valuePriceCode4", "xxx");
-                
-//                component.set("v.opportunityLineItemProductCode", strReturnValue);  
-//                component.set("v.lblMessage", "strReturnValue:  " + strReturnValue); 
 
-//component.set("v.valuePriceCode4", "xxxx");
-//                component.set("v.valuePriceCode2", "debug:  " + epicorPartData["debug"]);
-//component.set("v.valuePriceCode4", "xxxxX");
-
-
-//!!! PUM is undefined here: !!!
-//                component.set("v.lblMessage", "PUM:  " + epicorPartData["PUM"]);  
-//                
-
-                component.set("v.epicorPartUOM", epicorPartData["PUM"]);
-
+                component.set("v.epicorPartUOM", epicorPartData["PUM"]); 
 
                 if(callback){
                     callback();
@@ -89,7 +58,7 @@
             }
             else if (response.getState() === "ERROR") {
                 //component.set("v.lblMessage", "error 1");
-//component.set("v.valuePriceCode3", "error 1");
+                //component.set("v.valuePriceCode3", "error 1");
                 
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
@@ -102,10 +71,9 @@
         });
         $A.enqueueAction(epicorPart);
 	},
+    
+    
     //-------------------
-    
-    
-    //getEpicorPricing : function(component, event, helper, strPart, intQuantity, strUOM, strCustID, callback) 
 	getOpportunityLineItemProductCode: function(component, event, helper, callback) {
 		//component.set("v.lblMessage", "1");
 		
@@ -117,32 +85,16 @@
             "opportunityLineItemID":opportunityLineItemID
         });
 
-//component.set("v.lblMessage", "opportunityLineItemID:  " + opportunityLineItemID);
-//component.set("v.lblMessage", "1");
-
 		sfOpportunityLineItemProductCode.setCallback(this, function(response) {
-
-//component.set("v.lblMessage", "opportunityLineItemID:  " + opportunityLineItemID);
-//component.set("v.lblMessage", "2");
 
             var state = response.getState();
             if(component.isValid() && state == "SUCCESS") {         
-                //var dp = JSON.parse(response.getReturnValue()); 
-                
-//                component.set("v.valuePriceCodeTemp", strPart);
-//                component.set("v.valuePriceCodeTemp", response.getReturnValue() + "_xx");
-                
-//zzz
-                //var strReturnValue = response.getReturnValue();                
-                //component.set("v.opportunityLineItemProductCode", strReturnValue);
+
                 //returns a dictionary with known values in each pair:
                 var sfOpportunityData = response.getReturnValue();
                 component.set("v.opportunityLineItemProductCode", sfOpportunityData["ProductCode"]);
-
-//zzzzz 
-component.set("v.lblDebugMessage", "   EpicorCustId: " + sfOpportunityData["EpicorCustId"]);
-component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
-
+                component.set("v.lblDebugMessage", "   EpicorCustId: " + sfOpportunityData["EpicorCustId"]);
+                component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
 
                 //refresh the form
                 //does not help ability to use v.opportunityLineItemProductCode after this is done though
@@ -167,59 +119,35 @@ component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
         $A.enqueueAction(sfOpportunityLineItemProductCode);
 	},
     
-    //getEpicorPricing : function(component, event, helper, strEpicorCustId, strPart, intQuantity, strUOM, strCustID, callback) 
+    //-------------------
     getEpicorPricing : function(component, event, helper, strEpicorCustId, strPart, intQuantity, strUOM, callback) 
     {
-//component.set('v.loaded', false);
 		var opportunityLineItemID = component.get("v.recordId");
         //alert("opportunityLineItemID: " + opportunityLineItemID);
-
         //component.set("v.lblMessage", "Retrieving Information....");
+        //component.set("v.lblDebugMessage", "Retrieving Information....");
         
         //note: 'c.getEpicorPricing' is actually calling out to the apex class CDIEpicorPricing_apex
         //		and needs to have the same name as the calling function here
-//change sfOpportunityLineItem to ecPricing
         var ecPricing = component.get("c.getEpicorPricing");
         ecPricing.setParams({
             "opportunityLineItemID":opportunityLineItemID, 
-
             "strEpicorCustId":strEpicorCustId,
-
             "strPart":strPart,
             "intQuantity":intQuantity,
             "strUOM":strUOM
-            
-            //"strCustID":strCustID
         });
-        
-    
-        //NOTE: not sure why all this is necessary (instead of just 'component.set("v.buttonLabel", name);'), but it is
+            
         ecPricing.setCallback(this, function(response) {
             var state = response.getState();
             if (state === "SUCCESS") {
                 
                 //returns a dictionary with known values in each pair:
-//change sfOpportunityLineItemData to ecPricingData
                 var ecPricingData = response.getReturnValue();
 
-                //KEEP for debugging:
-                /*
-                component.set("v.lblMessage", ecPricingData + " / " 
-                              + ecPricingData["ListCode"]
-                              + " / " + ecPricingData["BasePrice"]
-                              + " / " + intQuantity
-							  + " / " + ecPricingData["debugInfo"]
-                );
-                */
-
                 component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
-                //component.set("v.valuePriceCodeTemp", ecPricingData["ListCode"]); 
                 component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
-                
-//zzz temp test:
-//component.set("v.lblDebugMessage", '  / record count: ' + ecPricingData["count"]);
-
-                
+                                
                 //refresh the form
 				//$A.get('e.force:refreshView').fire();
                 if(callback){
@@ -249,7 +177,6 @@ component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
         });
         $A.enqueueAction(ecPricing);
         
-//component.set('v.loaded', true);
     }
     
 })

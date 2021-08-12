@@ -51,8 +51,6 @@
 
     handle_btnGetPricing : function(component, event, helper) 
     {
-		//alert("hello");
-
         component.set("v.lblMessage", "Retrieving Information....");
         component.set("v.lblDebugMessage", "");
         component.set('v.loaded', false);
@@ -66,7 +64,6 @@
             strPartNum,
             component.get("v.valueQuantity1"),
             component.get("v.epicorPartUOM"),
-            //"",
             function(){
                 component.set("v.valuePrice1", component.get("v.valuePriceTemp"));
                 component.set("v.valuePriceCode1", component.get("v.valuePriceCodeTemp")); 
@@ -84,7 +81,6 @@
                 strPartNum,
                 component.get("v.valueQuantity2"),
                 component.get("v.epicorPartUOM"),
-                //"",
                 function(){
                     component.set("v.valuePrice2", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode2", component.get("v.valuePriceCodeTemp")); 
@@ -99,15 +95,10 @@
 			component.set('v.loaded', false);
             helper.getEpicorPricing(
                 component, event, helper, 
-
-//temp test: 
                 component.get("v.epicorCustId"),
-//	            'eb1', 
-
                 strPartNum,
                 component.get("v.valueQuantity3"),
                 component.get("v.epicorPartUOM"),
-                //"",
                 function(){
                     component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp"));
@@ -126,7 +117,6 @@
                 strPartNum,
                 component.get("v.valueQuantity4"),
                 component.get("v.epicorPartUOM"),
-                //"",
                 function(){
                     component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode4", component.get("v.valuePriceCodeTemp")); 
@@ -145,7 +135,6 @@
                 strPartNum,
                 component.get("v.valueQuantity5"),
                 component.get("v.epicorPartUOM"),
-                //"",
                 function(){
                     component.set("v.valuePrice5", component.get("v.valuePriceTemp"));
                     component.set("v.valuePriceCode5", component.get("v.valuePriceCodeTemp")); 
