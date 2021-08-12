@@ -32,8 +32,6 @@ global class CDIEpicorPricing_apex {
             sfOpportunityData.put('ProductCode', row.ProductCode);
             strOpportunityId = row.OpportunityId;
         }
-        
-//zzzzz
 
         //get the related sf opportunity record
         Opportunity[] opportunity;
@@ -43,7 +41,6 @@ global class CDIEpicorPricing_apex {
             strAccountId = row.AccountId;
         }
 
-//zzzzz
         //get the related sf account record
         Account[] account;
         account = [SELECT Id,EpicorCustId__c FROM Account WHERE Id = :strAccountId];
@@ -174,11 +171,16 @@ global class CDIEpicorPricing_apex {
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
 //strReturnValue += ' 4 ';
-    
+
 //zzz temp testing code
 integer intRecordCount = 1;
 epicorPricingData.put('count', String.valueOf(intRecordCount));
 string strLastArray = '';
+//stuff to keep:
+string strCurrentRecordType = '';
+integer intPriceListInquiryCount = 0;
+
+
             
             while (parser.nextToken() != null) {
 
@@ -188,12 +190,25 @@ string strLastArray = '';
 if(parser.getCurrentToken() == JSONToken.START_OBJECT)
 {
     parser.nextToken();
+
+    //for testing:
     //strLastArray = parser.getText();
     strLastArray += parser.getText() + ' / ';
     //yields: returnObj / PriceListInquiry / Company / Company /
+    //PriceListInquiry is the record we want to go after, first one only
+    
+    strCurrentRecordType = parser.getText();
+    if(parser.getText() == 'PriceListInquiry')
+    {
+	    intPriceListInquiryCount += 1;        
+    }
 }
+
                 
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
+//zzz
+(intPriceListInquiryCount == 1) &&
+                    
                     (parser.getText() == 'ListCode' || parser.getText() == 'CurrencyCode'
                      || parser.getText() == 'BasePrice' || parser.getText() == 'BreakPrice'
                      || parser.getText() == 'NetPrice' || parser.getText() == 'Quantity'
