@@ -39,7 +39,7 @@
     
     //-------------------
 	getEpicorPart: function(component, event, helper, strPart, callback) {
-		        
+
         var epicorPart = component.get("c.getEpicorPart");
         epicorPart.setParams({
             "strPart":strPart
@@ -50,7 +50,29 @@
             if(component.isValid() && state == "SUCCESS") {         
                 var epicorPartData = response.getReturnValue();
 
-                component.set("v.epicorPartUOM", epicorPartData["PUM"]); 
+//zzz
+                //change to look for error:
+                //component.set("v.epicorPartUOM", epicorPartData["PUM"]);
+//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["PUM"]); 
+// >> / 6: undefined
+//component.set("v.lblDebugMessage", "  / 6: " + " / " + epicorPartData["Epicor_Status"]);
+// >> Epicor Error: System.JSONException: Unexpected character ('<' (code 60)): 
+// 		expected a valid value (number, String, array, object, 'true', 'false' or 'null') at input location [1,2]
+//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["debug"] );
+//  ~~stuff
+//  <title>401 - Unauthorized: Access is denied due to invalid credentials.</title> 
+//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["Epicor_Status"] ); 
+if(epicorPartData["Epicor_Status"] != 'OK'){
+	//component.set("v.lblDebugMessage", epicorPartData["Epicor_Status"] );
+	component.set("v.lblMessage", epicorPartData["Epicor_Status"] ); 
+    
+}
+else{
+	component.set("v.epicorPartUOM", epicorPartData["PUM"]);                
+}
+    
+                
+
 
                 if(callback){
                     callback();
@@ -93,15 +115,15 @@
                 //returns a dictionary with known values in each pair:
                 var sfOpportunityData = response.getReturnValue();
                 component.set("v.opportunityLineItemProductCode", sfOpportunityData["ProductCode"]);
-                component.set("v.lblDebugMessage", "   EpicorCustId: " + sfOpportunityData["EpicorCustId"]);
                 component.set("v.epicorCustId", sfOpportunityData["EpicorCustId"]);
+                //component.set("v.lblDebugMessage", "   / EpicorCustId: " + sfOpportunityData["EpicorCustId"]);
 
                 //refresh the form
                 //does not help ability to use v.opportunityLineItemProductCode after this is done though
                 //$A.get('e.force:refreshView').fire();
 				
                 if(callback){
-                    callback();
+                    callback(); 
                 }
             }
             else if (response.getState() === "ERROR") {
@@ -144,9 +166,22 @@
                 
                 //returns a dictionary with known values in each pair:
                 var ecPricingData = response.getReturnValue();
+                
+//zzz
+                //change to look for error:  
+                //component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
+                //component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
+if(ecPricingData["Epicor_Status"] != 'OK'){ 
+	//component.set("v.lblDebugMessage", ecPricingData["Epicor_Status"] );
+	component.set("v.lblMessage", ecPricingData["Epicor_Status"] ); 
+    
+}
+else{
+	component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
+	component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
+}
+   
 
-                component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
-                component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
                                 
                 //refresh the form
 				//$A.get('e.force:refreshView').fire();

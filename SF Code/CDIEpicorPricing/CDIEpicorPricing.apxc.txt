@@ -1,5 +1,7 @@
 global class CDIEpicorPricing_apex { 
 
+public class myException extends Exception {}
+
     public static Map<String, String> epicorPartData = new Map<String, String>();
     public static Map<String, String> epicorPricingData = new Map<String, String>();
     public static Map<String, String> sfOpportunityData = new Map<String, String>();
@@ -65,9 +67,19 @@ global class CDIEpicorPricing_apex {
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
 
+//zzz
+//looking for this error:
+//	401 - Unauthorized: Access is denied due to invalid credentials.
+//epicorPartData.put('debug', res.getBody());
+if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
+	throw new myException('Login Failed due to invalid credentials');
+    
+}
+
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
     
+
             while (parser.nextToken() != null) {
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
                     (parser.getText() == 'PartNum'
@@ -97,10 +109,10 @@ global class CDIEpicorPricing_apex {
                 }
             }
         } catch (DmlException de) {
-            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + de );
+            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + de.getMessage() );
         }
         catch (Exception e) {
-            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + e );
+            epicorPartData.put('Epicor_Status', 'Epicor Error: ' + e.getMessage() );
         }
 
         return epicorPartData;
@@ -152,7 +164,17 @@ global class CDIEpicorPricing_apex {
 
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
+
+
+//zzz
+//looking for this error:
+//	401 - Unauthorized: Access is denied due to invalid credentials.
+//epicorPartData.put('debug', res.getBody());
+if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
+	throw new myException('Login Failed due to invalid credentials');
     
+}
+
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
             
@@ -223,10 +245,10 @@ global class CDIEpicorPricing_apex {
                 }
             }
         } catch (DmlException de) {
-            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + de );
+            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + de.getMessage() );
         }
         catch (Exception e) {
-            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + e );
+            epicorPricingData.put('Epicor_Status', 'Epicor Error: ' + e.getMessage() );
         }
 
         return epicorPricingData;
