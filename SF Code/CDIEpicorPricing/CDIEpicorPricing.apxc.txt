@@ -52,11 +52,7 @@ public class myException extends Exception {}
     @AuraEnabled  //needed to be able to call it from the aura realm     
     public static Map<String, String> getEpicorPart(string strPart) {
 
-//reverse this:
-//zzzzzzz temp change to break stuff:
-//        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'' + strPart.replace(' ', '%20') + '\')?%24select=PartNum%2CPUM';
-        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'' + 'badpart' + '\')?%24select=PartNum%2CPUM';
- 
+        String url = 'callout:CDI_Epicor/Erp.BO.PartSvc/Parts(\'PI03\',\'' + strPart.replace(' ', '%20') + '\')?%24select=PartNum%2CPUM';
         
 		try {
             //NOTE: if connection to epicor fails, this crashes hard, the catch never executes, 
@@ -71,32 +67,25 @@ public class myException extends Exception {}
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
 
-//zzzzzzzzzz
-//epicorPartData.put('debug', res.getBody());
+            //for debugging:
+			//epicorPartData.put('debug', res.getBody());
             
             
-//zzzz
-//epicorPartData.put('debug', ' / x: ' + res.getBody());
-if(res.getBody().containsIgnoreCase('Record not found')){
-	throw new myException('Part Number not on file');
-}
-if(res.getBody().containsIgnoreCase('REST API Exception')){
-    //note: could be bad url, epicor down, paramaters changed, etc
-	throw new myException('Login Failed due to REST API Exception');
-}
-
-            
-//zzz
-//looking for this error:
-//	401 - Unauthorized: Access is denied due to invalid credentials.
-//epicorPartData.put('debug', res.getBody());
-if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
-	throw new myException('Login Failed due to invalid credentials');
-}
+            if(res.getBody().containsIgnoreCase('Record not found')){
+                throw new myException('Part Number not on file');
+            }
+            if(res.getBody().containsIgnoreCase('REST API Exception')){
+                //note: could be bad url, epicor down, paramaters changed, etc
+                throw new myException('Login Failed due to REST API Exception');
+            }
+            if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
+                //full error:
+                //	401 - Unauthorized: Access is denied due to invalid credentials.
+                throw new myException('Login Failed due to invalid credentials');
+            }
 
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
-    
 
             while (parser.nextToken() != null) {
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
@@ -185,37 +174,22 @@ if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials
             HttpResponse res = h.send(req);
             System.debug(res.getBody());
 
-//zzzzzzzzzz
-//epicorPricingData.put('debug', res.getBody());
+            //for debugging:
+            //epicorPricingData.put('debug', res.getBody());
             
+            if(res.getBody().containsIgnoreCase('REST API Exception')){
+                throw new myException('Login Failed due to REST API Exception');
+            }
             
-//zzzzzzzzzz
-//epicorPartData.put('debug', ' / x: ' + res.getBody());
-/*if(res.getBody().containsIgnoreCase('Record not found')){
-	throw new myException('Part Number not on file');
-}
-*/
-            
-if(res.getBody().containsIgnoreCase('REST API Exception')){
-	throw new myException('Login Failed due to REST API Exception');
-}
-            
-//zzz
-//looking for this error:
-//	401 - Unauthorized: Access is denied due to invalid credentials.
-//epicorPartData.put('debug', res.getBody());
-if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
-	throw new myException('Login Failed due to invalid credentials');
-    
-}
+            if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials')){
+                //the full error:
+                //	401 - Unauthorized: Access is denied due to invalid credentials.
+                throw new myException('Login Failed due to invalid credentials');
+                
+            }
 
             JSONParser parser = JSON.createParser(res.getBody());
             //NOTE:  if epicor is down, this is where it fails because parser is empty:
-            
-            //zzz temp testing code
-            //integer intRecordCount = 1;
-            //epicorPricingData.put('count', String.valueOf(intRecordCount));
-            //string strLastArray = '';
 
             string strCurrentRecordType = '';
             integer intPriceListInquiryCount = 0;
@@ -259,17 +233,6 @@ if(res.getBody().containsIgnoreCase('Access is denied due to invalid credentials
                     }
                     
                     epicorPricingData.put(fieldName, fieldValue);
-
-                    //testing stuff:
-                    /*
-                    if(fieldName == 'ListDescription' && epicorPricingData.containsKey('ListDescription'))
-                    {
-                        //NOTE: ListDescription is in the data before any of the price fields
-                        intRecordCount += 2;
-                        epicorPricingData.put('count', String.valueOf(intRecordCount) + ' / last array: ' + strLastArray);
-                    }
-					*/
-                    
                     
                     //KEEP: for debugging, to add debug log info
                     //System.debug('url_result: ' + url_result );

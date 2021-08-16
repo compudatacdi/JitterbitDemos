@@ -50,40 +50,24 @@
             if(component.isValid() && state == "SUCCESS") {         
                 var epicorPartData = response.getReturnValue();
 
-//zzzzzzz
-//component.set("v.lblDebugMessage", "  / 1: " + epicorPartData["debug"] );  
+                //for debugging:
+				//component.set("v.lblDebugMessage", "  / 1: " + epicorPartData["debug"] );   
                 
-                
-//zzz
-                //change to look for error:
                 //component.set("v.epicorPartUOM", epicorPartData["PUM"]);
-//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["PUM"]); 
-// >> / 6: undefined
-//component.set("v.lblDebugMessage", "  / 6: " + " / " + epicorPartData["Epicor_Status"]);
-// >> Epicor Error: System.JSONException: Unexpected character ('<' (code 60)): 
-// 		expected a valid value (number, String, array, object, 'true', 'false' or 'null') at input location [1,2]
-//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["debug"] );
-//  ~~stuff
-//  <title>401 - Unauthorized: Access is denied due to invalid credentials.</title> 
-//component.set("v.lblDebugMessage", "  / 6: " + epicorPartData["Epicor_Status"] ); 
-if(epicorPartData["Epicor_Status"] != 'OK'){
-	//component.set("v.lblDebugMessage", epicorPartData["Epicor_Status"] );
-	component.set("v.lblMessage", epicorPartData["Epicor_Status"] ); 
-}
-else{
-	component.set("v.epicorPartUOM", epicorPartData["PUM"]);                
-}
+                if(epicorPartData["Epicor_Status"] != 'OK'){
+                    //component.set("v.lblDebugMessage", epicorPartData["Epicor_Status"] );
+                    component.set("v.lblMessage", epicorPartData["Epicor_Status"] ); 
+                }
+                else{
+                    component.set("v.epicorPartUOM", epicorPartData["PUM"]);                
+                }
     
-                
-
-
                 if(callback){
                     callback();
                 }
             }
             else if (response.getState() === "ERROR") {
                 //component.set("v.lblMessage", "error 1");
-                //component.set("v.valuePriceCode3", "error 1");
                 
                 var toastEvent = $A.get("e.force:showToast");
                 toastEvent.setParams({
@@ -170,27 +154,20 @@ else{
                 //returns a dictionary with known values in each pair:
                 var ecPricingData = response.getReturnValue();
                 
-//component.set("v.lblDebugMessage", "  / 1: " + ecPricingData["debug"] );  
-
-
-//zzz
-                //change to look for error:  
+				//component.set("v.lblDebugMessage", "  / 1: " + ecPricingData["debug"] );  
                 //component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
                 //component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
-if(ecPricingData["Epicor_Status"] != 'OK'){ 
-	//component.set("v.lblDebugMessage", ecPricingData["Epicor_Status"] );
-	component.set("v.lblMessage", ecPricingData["Epicor_Status"] ); 
-    
-}
-else{
-	component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
-	component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
-}
+                if(ecPricingData["Epicor_Status"] != 'OK'){ 
+                    component.set("v.lblMessage", ecPricingData["Epicor_Status"] );     
+                }
+                else{
+                    component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
+                    component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
+                }
    
-
-                                
                 //refresh the form
 				//$A.get('e.force:refreshView').fire();
+				//
                 if(callback){
                     callback();
                 }
