@@ -77,7 +77,15 @@ component.set("v.lblDebugMessage", " / getRestOfPricing 4 ");
     
     
     handle_btnGetPricing : function(component, event, helper) 
-    { 
+    {
+        
+        //Epicor Error
+        if(component.get("v.lblMessage").indexOf("Epicor Error") != -1){
+            alert("Please fix Epicor Error and hit refresh before continuing.");
+            return;
+        }
+            
+        
         component.set("v.lblMessage", "Retrieving Information....");
         component.set("v.lblDebugMessage", "");
 

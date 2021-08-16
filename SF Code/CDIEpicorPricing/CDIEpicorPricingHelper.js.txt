@@ -50,6 +50,10 @@
             if(component.isValid() && state == "SUCCESS") {         
                 var epicorPartData = response.getReturnValue();
 
+//zzzzzzz
+//component.set("v.lblDebugMessage", "  / 1: " + epicorPartData["debug"] );  
+                
+                
 //zzz
                 //change to look for error:
                 //component.set("v.epicorPartUOM", epicorPartData["PUM"]);
@@ -65,7 +69,6 @@
 if(epicorPartData["Epicor_Status"] != 'OK'){
 	//component.set("v.lblDebugMessage", epicorPartData["Epicor_Status"] );
 	component.set("v.lblMessage", epicorPartData["Epicor_Status"] ); 
-    
 }
 else{
 	component.set("v.epicorPartUOM", epicorPartData["PUM"]);                
@@ -167,6 +170,9 @@ else{
                 //returns a dictionary with known values in each pair:
                 var ecPricingData = response.getReturnValue();
                 
+//component.set("v.lblDebugMessage", "  / 1: " + ecPricingData["debug"] );  
+
+
 //zzz
                 //change to look for error:  
                 //component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
