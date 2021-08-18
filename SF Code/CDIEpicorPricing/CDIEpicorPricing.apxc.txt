@@ -130,7 +130,8 @@ public class myException extends Exception {}
     
     
     @AuraEnabled  //needed to be able to call it from the aura realm
-    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strEpicorCustId, string strPart, integer intQuantity, string strUOM) {
+    //public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strEpicorCustId, string strPart, integer intQuantity, string strUOM) {
+    public static Map<String, String> getEpicorPricing(string opportunityLineItemID, string strEpicorCustId, string strPart, decimal dQuantity, string strUOM) {
         
         String strReturnValue = 'apex';
         String url = 'callout:CDI_Epicor/Erp.BO.PriceListInquirySvc/GetPriceListInquiry';
@@ -155,7 +156,7 @@ public class myException extends Exception {}
                 '            "icPartNum": "' + strPart + '", ' +
                 '            "icCustGroupCode": "", ' +
                 '            "icProductCode": "", ' +
-                '            "idQuantity": "' + intQuantity + '", ' +
+                '            "idQuantity": "' + dQuantity + '", ' +
                 '            "icUOMCode": "' + strUOM + '", ' +
                 '            "icWarehouseCode": "", ' +
                 '            "icCurrencyCode": "", ' +
@@ -175,8 +176,12 @@ public class myException extends Exception {}
             System.debug(res.getBody());
 
             //for debugging:
-            //epicorPricingData.put('debug', res.getBody());
+			//epicorPricingData.put('debug', res.getBody());
             
+
+            if(res.getBody().containsIgnoreCase('Invalid UOM')){
+                throw new myException('Invalid UOM');
+            }
             if(res.getBody().containsIgnoreCase('REST API Exception')){
                 throw new myException('Login Failed due to REST API Exception');
             }
@@ -207,6 +212,9 @@ public class myException extends Exception {}
                     }
                 }
 
+                if(intPriceListInquiryCount > 1){
+                    break;
+                }
                 
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
 					(intPriceListInquiryCount == 1) &&    
