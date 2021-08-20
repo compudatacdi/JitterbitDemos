@@ -113,7 +113,6 @@
                             component.get("v.epicorCustId"),
                             strPartNum,
                             component.get("v.valueQuantity2"),
-//                            component.get("v.epicorPartUOM"), 
 				            component.get("v.valueUOM2"),
                             function(){
 								if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
@@ -140,13 +139,18 @@
                             component.get("v.epicorCustId"),
                             strPartNum,
                             component.get("v.valueQuantity3"),
-//                            component.get("v.epicorPartUOM"),
 				            component.get("v.valueUOM3"),
                             function(){
-                                component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
-                                component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp"));
-                                component.set("v.lblMessage", "Epicor Data Loaded");
-                                component.set('v.loaded', true);
+                                if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
+                                    component.set("v.valuePrice3", component.get("v.valuePriceTemp"));
+                                    component.set("v.valuePriceCode3", component.get("v.valuePriceCodeTemp"));
+                                    component.set("v.lblMessage", "Epicor Data Loaded");
+                                    component.set('v.loaded', true);
+                                }
+                                else{
+                                    component.set("v.valuePriceCode3", "Invalid UOM");
+                                    component.set("v.lblMessage", "Epicor Data Loaded");         
+                                }
                             }
                         ); 
                     };
@@ -159,22 +163,18 @@
                             component.get("v.epicorCustId"),
                             strPartNum,
                             component.get("v.valueQuantity4"),
-//                            component.get("v.epicorPartUOM"),
 				            component.get("v.valueUOM4"),
                             function(){
-//zzz
-if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
-                                component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
-                                component.set("v.valuePriceCode4", component.get("v.valuePriceCodeTemp")); 
-                                component.set("v.lblMessage", "Epicor Data Loaded");
-                                component.set('v.loaded', true);
-
-}
-else{
-	component.set("v.valuePriceCode4", "Invalid UOM");
-    component.set("v.lblMessage", "Epicor Data Loaded");
-                                    
-}
+                                if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
+                                    component.set("v.valuePrice4", component.get("v.valuePriceTemp"));
+                                    component.set("v.valuePriceCode4", component.get("v.valuePriceCodeTemp")); 
+                                    component.set("v.lblMessage", "Epicor Data Loaded");
+                                    component.set('v.loaded', true);
+                                }
+                                else{
+                                    component.set("v.valuePriceCode4", "Invalid UOM");
+                                    component.set("v.lblMessage", "Epicor Data Loaded");         
+                                }
 
                             }
                         ); 
@@ -188,22 +188,18 @@ else{
                             component.get("v.epicorCustId"),
                             strPartNum,
                             component.get("v.valueQuantity5"),
-//                            component.get("v.epicorPartUOM"),
 				            component.get("v.valueUOM5"),
                             function(){
-//zzz 
-if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
-
-                                component.set("v.valuePrice5", component.get("v.valuePriceTemp"));
-                                component.set("v.valuePriceCode5", component.get("v.valuePriceCodeTemp")); 
-                                component.set("v.lblMessage", "Epicor Data Loaded");
-                                component.set('v.loaded', true);
-}
-else{
-	component.set("v.valuePriceCode5", "Invalid UOM");
-    component.set("v.lblMessage", "Epicor Data Loaded");
-                                    
-}
+                                if(component.get("v.lblMessage").indexOf('Invalid UOM') == -1  ){
+                                    component.set("v.valuePrice5", component.get("v.valuePriceTemp"));
+                                    component.set("v.valuePriceCode5", component.get("v.valuePriceCodeTemp")); 
+                                    component.set("v.lblMessage", "Epicor Data Loaded");
+                                    component.set('v.loaded', true);
+                                }
+                                else{
+                                    component.set("v.valuePriceCode5", "Invalid UOM");
+                                    component.set("v.lblMessage", "Epicor Data Loaded");
+                                }
 
                             } 
                         ); 

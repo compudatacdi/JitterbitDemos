@@ -198,8 +198,7 @@ public class myException extends Exception {}
 
             string strCurrentRecordType = '';
             integer intPriceListInquiryCount = 0;
-//zzz
-boolean blnUomMatch = false;
+			boolean blnUomMatch = false;
 
             while (parser.nextToken() != null) {
                 if(parser.getCurrentToken() == JSONToken.START_OBJECT)
@@ -214,8 +213,6 @@ boolean blnUomMatch = false;
                     }
                 }
 
-//zzz  
-//                if(intPriceListInquiryCount > 1){
                 if(intPriceListInquiryCount > 0
                   && blnUomMatch){
                     break;
@@ -243,16 +240,14 @@ boolean blnUomMatch = false;
                     {
                         fieldValue = parser.getText();
                     }
-                    
-//zzz
 
-if (epicorPricingData.containsKey(fieldName)) {
-	epicorPricingData.Remove(fieldName);
-}
-if(fieldName == 'UOMCode'
-  && fieldValue == strUOM){
-	blnUomMatch = true;
-}
+                    if (epicorPricingData.containsKey(fieldName)) {
+                        epicorPricingData.Remove(fieldName);
+                    }
+                    if(fieldName == 'UOMCode'
+                      && fieldValue == strUOM){
+                        blnUomMatch = true;
+                    }
     
                     epicorPricingData.put(fieldName, fieldValue);
                     

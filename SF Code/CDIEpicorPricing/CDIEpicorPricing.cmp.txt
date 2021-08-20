@@ -86,8 +86,6 @@
                 <div class="header-column">
                     <p class="field-title" title="Quantity">Quantity</p>
                 	 
-                    <!--lightning:input type="number" name="inputQuantity1" value="{!v.valueQuantity1}" label="" /-->
-                    <!--lightning:input type="decimal" name="inputQuantity1" value="{!v.valueQuantity1}" label="" /-->
                     <lightning:input type="number" step="0.01" name="inputQuantity1" value="{!v.valueQuantity1}" label="" />
                     <p></p>
                     <lightning:input type="number" step="0.01" name="inputQuantity2" value="{!v.valueQuantity2}" label="" />
