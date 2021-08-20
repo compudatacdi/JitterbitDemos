@@ -85,17 +85,18 @@
             <lightning:layoutItem padding="around-small">
                 <div class="header-column">
                     <p class="field-title" title="Quantity">Quantity</p>
-                	
-                    <!--lightning:input type="number" name="inputQuantity1" value="{!v.valueQuantity1}" label="" /--> 
-                    <lightning:input type="decimal" name="inputQuantity1" value="{!v.valueQuantity1}" label="" />                
+                	 
+                    <!--lightning:input type="number" name="inputQuantity1" value="{!v.valueQuantity1}" label="" /-->
+                    <!--lightning:input type="decimal" name="inputQuantity1" value="{!v.valueQuantity1}" label="" /-->
+                    <lightning:input type="number" step="0.01" name="inputQuantity1" value="{!v.valueQuantity1}" label="" />
                     <p></p>
-                    <lightning:input type="decimal" name="inputQuantity2" value="{!v.valueQuantity2}" label="" />
+                    <lightning:input type="number" step="0.01" name="inputQuantity2" value="{!v.valueQuantity2}" label="" />
                     <p></p>
-                    <lightning:input type="decimal" name="inputQuantity3" value="{!v.valueQuantity3}" label="" />
+                    <lightning:input type="number" step="0.01" name="inputQuantity3" value="{!v.valueQuantity3}" label="" />
                     <p></p>
-                    <lightning:input type="decimal" name="inputQuantity4" value="{!v.valueQuantity4}" label="" />
+                    <lightning:input type="number" step="0.01" name="inputQuantity4" value="{!v.valueQuantity4}" label="" />
                     <p></p>
-                    <lightning:input type="decimal" name="inputQuantity5" value="{!v.valueQuantity5}" label="" />
+                    <lightning:input type="number" step="0.01" name="inputQuantity5" value="{!v.valueQuantity5}" label="" />
                     
                 </div>
             </lightning:layoutItem>

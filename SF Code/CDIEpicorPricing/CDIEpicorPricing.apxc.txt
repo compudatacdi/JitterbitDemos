@@ -176,7 +176,7 @@ public class myException extends Exception {}
             System.debug(res.getBody());
 
             //for debugging:
-			//epicorPricingData.put('debug', res.getBody());
+            //epicorPricingData.put('debug', res.getBody());
             
 
             if(res.getBody().containsIgnoreCase('Invalid UOM')){
@@ -198,6 +198,8 @@ public class myException extends Exception {}
 
             string strCurrentRecordType = '';
             integer intPriceListInquiryCount = 0;
+//zzz
+boolean blnUomMatch = false;
 
             while (parser.nextToken() != null) {
                 if(parser.getCurrentToken() == JSONToken.START_OBJECT)
@@ -207,30 +209,32 @@ public class myException extends Exception {}
                     strCurrentRecordType = parser.getText();
                     if(parser.getText() == 'PriceListInquiry')
                     {
-                        //only want the first resulting record of type PriceListInquiry
+                        //only want the first resulting record of type PriceListInquiry with matching uom
                         intPriceListInquiryCount += 1;
                     }
                 }
 
-                if(intPriceListInquiryCount > 1){
+//zzz  
+//                if(intPriceListInquiryCount > 1){
+                if(intPriceListInquiryCount > 0
+                  && blnUomMatch){
                     break;
                 }
+                
                 
                 if ((parser.getCurrentToken() == JSONToken.FIELD_NAME) && 
 					(intPriceListInquiryCount == 1) &&    
                     (parser.getText() == 'ListCode' || parser.getText() == 'CurrencyCode'
-                     || parser.getText() == 'BasePrice' || parser.getText() == 'BreakPrice'
                      || parser.getText() == 'NetPrice' || parser.getText() == 'Quantity'
-                     || parser.getText() == 'ListDescription')) 
+                     || parser.getText() == 'ListDescription' || parser.getText() == 'UOMCode')) 
                 {
                     string fieldName = parser.getText();
                     
                     parser.nextToken();
                                         
                     string fieldValue; 
-                    if(fieldName == 'Calculated_OnHand'
-                       || fieldName == 'Calculated_Allocated' || fieldName == 'Calculated_Demand'
-                       || fieldName == 'Calculated_Available')
+                    if(fieldName == '<a currency field>'
+                       || fieldName == '<another currency field>' )
                     {
                         //fieldValue = String.valueOf(decimal.valueOf(parser.getText()));
                         fieldValue = currency(parser.getText());
@@ -240,6 +244,16 @@ public class myException extends Exception {}
                         fieldValue = parser.getText();
                     }
                     
+//zzz
+
+if (epicorPricingData.containsKey(fieldName)) {
+	epicorPricingData.Remove(fieldName);
+}
+if(fieldName == 'UOMCode'
+  && fieldValue == strUOM){
+	blnUomMatch = true;
+}
+    
                     epicorPricingData.put(fieldName, fieldValue);
                     
                     //KEEP: for debugging, to add debug log info

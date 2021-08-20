@@ -153,17 +153,18 @@
             "strUOM":strUOM
         });
             
-//component.set("v.lblDebugMessage", "  / helper 1 "  ); 
+
+		//component.set("v.lblDebugMessage", "  / helper 1 "  ); 
+
+
         ecPricing.setCallback(this, function(response) {
             var state = response.getState();
-//component.set("v.lblDebugMessage", "  / helper 2 "  ); 
             if (state === "SUCCESS") {
-//component.set("v.lblDebugMessage", "  / helper 3 "  );  
-                
                 //returns a dictionary with known values in each pair:
                 var ecPricingData = response.getReturnValue();
                 
-				//component.set("v.lblDebugMessage", "  / 1: " + ecPricingData["debug"] );  
+                //for debugging:
+                //component.set("v.lblDebugMessage", "  / 1: " + ecPricingData["debug"] );  
                 
                 //component.set("v.valuePriceTemp", ecPricingData["NetPrice"]);
                 //component.set("v.valuePriceCodeTemp", ecPricingData["ListDescription"]);
@@ -184,7 +185,6 @@
                 
             }
             else {
-//component.set("v.lblDebugMessage", "  / helper 4 "  ); 
                 //console.log("Failed with state: " + state);
 
                 //note: state is always "ERROR" if it fails it seems
@@ -198,6 +198,7 @@
                 }
                 // Display the message
                 //console.error(message);
+
 				component.set("v.lblMessage", "ERROR Status: " + message);
                 
             }
