@@ -198,8 +198,7 @@ public class myException extends Exception {}
 
             string strCurrentRecordType = '';
             integer intPriceListInquiryCount = 0;
-//zzz
-boolean blnUomMatch = false;
+			boolean blnUomMatch = false;
 
             while (parser.nextToken() != null) {
                 if(parser.getCurrentToken() == JSONToken.START_OBJECT)

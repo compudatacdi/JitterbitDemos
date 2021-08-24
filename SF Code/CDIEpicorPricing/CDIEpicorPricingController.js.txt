@@ -97,22 +97,9 @@
                   || component.get("v.strMessage").indexOf('Invalid UOM') != -1){
 					if(component.get("v.strMessage").indexOf('Invalid UOM') == -1  ){
                         component.set("v.strPrice1", component.get("v.strPriceTemp"));
-                        
-//component.set("v.strDebugMessage", " / x ");
-////Decimal strToDec = decimal.valueOf(component.get("v.strPrice1"));
-//var dQuantity = decimal.valueOf(component.get("v.dQuantity1"));
-//var dPrice = decimal.valueOf(component.get("v.strPrice1"));
-//var dExtPrice = dQuantity * dPrice;
-//component.set("v.strExtPrice1", dExtPrice);  
-//var strExtPrice = decimal.valueOf(component.get("v.dExtPrice"));
-//component.set("v.strExtPrice1", strExtPrice);
-
-//component.set("v.strExtPrice1", 5);
-component.set("v.dExtPrice1", component.get("v.dExtPriceTemp"));
-
-                        component.set("v.strPriceCode1", component.get("v.strPriceCodeTemp")); 
+						component.set("v.dExtPrice1", component.get("v.dExtPriceTemp"));
+                        component.set("v.strPriceCode1", component.get("v.strPriceCodeTemp"));
                         component.set("v.strMessage", "Epicor Data Loaded");
-
                     }
                     else{
                         component.set("v.strPriceCode1", "Invalid UOM");
@@ -136,7 +123,7 @@ component.set("v.dExtPrice1", component.get("v.dExtPriceTemp"));
                             function(){
 								if(component.get("v.strMessage").indexOf('Invalid UOM') == -1  ){
                                     component.set("v.strPrice2", component.get("v.strPriceTemp"));
-component.set("v.dExtPrice2", component.get("v.dExtPriceTemp"));
+									component.set("v.dExtPrice2", component.get("v.dExtPriceTemp"));
                                     component.set("v.strPriceCode2", component.get("v.strPriceCodeTemp")); 
                                     component.set("v.strMessage", "Epicor Data Loaded");
                                     component.set('v.blnLoaded', true);
@@ -163,7 +150,7 @@ component.set("v.dExtPrice2", component.get("v.dExtPriceTemp"));
                             function(){
                                 if(component.get("v.strMessage").indexOf('Invalid UOM') == -1  ){
                                     component.set("v.strPrice3", component.get("v.strPriceTemp"));
-component.set("v.dExtPrice3", component.get("v.dExtPriceTemp"));
+                                    component.set("v.dExtPrice3", component.get("v.dExtPriceTemp"));
                                     component.set("v.strPriceCode3", component.get("v.strPriceCodeTemp"));
                                     component.set("v.strMessage", "Epicor Data Loaded");
                                     component.set('v.blnLoaded', true);
@@ -188,7 +175,7 @@ component.set("v.dExtPrice3", component.get("v.dExtPriceTemp"));
                             function(){
                                 if(component.get("v.strMessage").indexOf('Invalid UOM') == -1  ){
                                     component.set("v.strPrice4", component.get("v.strPriceTemp"));
-component.set("v.dExtPrice4", component.get("v.dExtPriceTemp"));
+                                    component.set("v.dExtPrice4", component.get("v.dExtPriceTemp"));
                                     component.set("v.strPriceCode4", component.get("v.strPriceCodeTemp")); 
                                     component.set("v.strMessage", "Epicor Data Loaded");
                                     component.set('v.blnLoaded', true);
@@ -214,7 +201,7 @@ component.set("v.dExtPrice4", component.get("v.dExtPriceTemp"));
                             function(){
                                 if(component.get("v.strMessage").indexOf('Invalid UOM') == -1  ){
                                     component.set("v.strPrice5", component.get("v.strPriceTemp"));
-component.set("v.dExtPrice5", component.get("v.dExtPriceTemp"));
+                                    component.set("v.dExtPrice5", component.get("v.dExtPriceTemp"));
                                     component.set("v.strPriceCode5", component.get("v.strPriceCodeTemp")); 
                                     component.set("v.strMessage", "Epicor Data Loaded");
                                     component.set('v.blnLoaded', true);

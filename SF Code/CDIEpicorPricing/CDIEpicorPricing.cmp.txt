@@ -8,7 +8,6 @@
     
     <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
 
-    <!--aura:handler name="change" value="{!v.opportunityLineItemProductCode}" action="{!c.handleValueChange}"/-->
     <aura:handler name="change" value="{!v.strOpportunityLineItemProductCode}" action="{!c.handleProductCodeChange}"/>
 
    	<aura:attribute name="lblGetPricing" type="String" default="Get Epicor Pricing" />
@@ -22,7 +21,6 @@
         </aura:if>
     </div>
 
-<!-- changed lbl to str, txt to lbl -->
     <aura:attribute name="strMessage" type="String" default="Status: OK" />
     <aura:attribute name="strDebugMessage" type="String" default="" />
     <p>
@@ -30,28 +28,10 @@
     <lightning:formattedText name="lblDebugMessage" value="{!v.strDebugMessage}" />
     </p>
 	
-
-    <!--
-    <p></p>
-    <aura:attribute name="valueQuantity" type="String" default="0" />
-	<lightning:formattedText name="lblQuantity" value="Quantity: " />
-    <lightning:formattedText name="txtQuantity" value="{!v.valueQuantity}" />
-
-    <aura:attribute name="valuePrice" type="String" default="0" />
-	<lightning:formattedText name="lblPrice" value="Price: " />
-    <lightning:formattedText name="txtPrice" value="{!v.valuePrice}" />
-	-->
-
-	<!-- trying a layout: https://developer.salesforce.com/docs/component-library/bundle/lightning:layout/example#lightningcomponentdemo:exampleLayoutSimple-->
-    <!-- aura:attribute name="valueQuantity1" type="String" default="0" / -->
-    <!--aura:attribute name="valueQuantity2" type="String" default="0" / -->
-
     <aura:attribute name="strOpportunityLineItemProductCode" type="String" default="" />
     <aura:attribute name="strEpicorPartUOM" type="String" default="" />
     <aura:attribute name="strEpicorCustId" type="String" default="" />
-
     
-    <!--aura:attribute name="valueQuantity1" type="Integer" default="1" /  -->
     <aura:attribute name="dQuantity1" type="Decimal" default="1" />
     <aura:attribute name="dQuantity2" type="Decimal" default="5" />
     <aura:attribute name="dQuantity3" type="Decimal" default="0" />
@@ -70,16 +50,13 @@
     <aura:attribute name="strPrice3" type="String" default="" />
     <aura:attribute name="strPrice4" type="String" default="" />
     <aura:attribute name="strPrice5" type="String" default="" />
-
     
     <aura:attribute name="dExtPriceTemp" type="Decimal" default="0" />
-    <!--aura:attribute name="strExtPrice1" type="String" default="0" /-->
     <aura:attribute name="dExtPrice1" type="Decimal" default="0" />
     <aura:attribute name="dExtPrice2" type="Decimal" default="0" />
     <aura:attribute name="dExtPrice3" type="Decimal" default="" />
     <aura:attribute name="dExtPrice4" type="Decimal" default="" />
     <aura:attribute name="dExtPrice5" type="Decimal" default="" />
-
     
     <aura:attribute name="strPriceCodeTemp" type="String" default="" />
     <aura:attribute name="strPriceCode1" type="String" default="" />
@@ -131,9 +108,6 @@
              
             <!-- Price Column -->
             <lightning:layoutItem padding="around-small">  
-            <!--lightning:layoutItem-->
-            <!--lightning:layoutItem padding="horizontal-small"-->
-                
                 <div class="header-column">
                     <p class="field-title" title="Price">Price</p>
 
@@ -155,7 +129,6 @@
                 <div class="header-column">
                     <p class="field-title" title="ExtPrice">Ext Price</p>
 
-                    <!--lightning:input type="String" name="dispExtPrice1" readonly="true" value="{!v.strExtPrice1}" label="" /-->
                     <lightning:input type="number" step="0.01" name="dispExtPrice1" readonly="true" value="{!v.dExtPrice1}" label="" />
                     <p></p>
                     <lightning:input type="number" step="0.01" name="dispExtPrice2" readonly="true" value="{!v.dExtPrice2}" label="" />
@@ -171,18 +144,11 @@
 
             
             <!-- Price Code Column -->
-            <lightning:layoutItem padding="around-small">
-            <!--lightning:layoutItem flexibility="auto" padding="around-small"-->
-                
+            <lightning:layoutItem padding="around-small">                
                 <div class="header-column">
                     <p class="field-title" title="Price Code">Price Code</p>
 
-                    <!-- experimenting:  textarea = too big -->  
-                    <!--lightning:input type="String" name="dispPriceCode1" readonly="true" value="{!v.valuePriceCode1 }" label="" /-->
-                    <!--lightning:input type="String" padding="horizontal-small" name="dispPriceCode1" readonly="true" value="{!v.valuePriceCode1 }" label="" /-->
                     <lightning:input type="String" name="dispPriceCode1" style="width: 200px" readonly="true" value="{!v.strPriceCode1 }" label="" />
- 
-                     
                     <p></p>
                     <lightning:input type="String" name="dispPriceCode2" style="width: 200px" readonly="true" value="{!v.strPriceCode2}" label="" />
                     <p></p> 
@@ -216,8 +182,5 @@
             
         </lightning:layout>
     </div>
-
-
-
     
 </aura:component>

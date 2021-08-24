@@ -153,9 +153,7 @@
             "strUOM":strUOM
         });
             
-
 		//component.set("v.strDebugMessage", "  / helper 1 "  ); 
-
 
         ecPricing.setCallback(this, function(response) {
             var state = response.getState();
@@ -174,18 +172,8 @@
                 else{
                     component.set("v.strPriceTemp", ecPricingData["NetPrice"]);
                     
-//zzz
-//"NaN" = not a number
-var dTotalPrice = ecPricingData["NetPrice"] * dQuantity;
-//hangs: 
-//var dTotalPrice = decimal.valueOf(ecPricingData["NetPrice"] * dQuantity);
-
-//var dTotalPrice = decimal.valueOf(ecPricingData["NetPrice"]) * decimal.valueOf(dQuantity);
-//"45", not "45.00"
-component.set("v.dExtPriceTemp", dTotalPrice);
-//hangs:
-//component.set("v.dExtPriceTemp", decimal.valueOf(dTotalPrice));
-
+					var dTotalPrice = ecPricingData["NetPrice"] * dQuantity;
+					component.set("v.dExtPriceTemp", dTotalPrice);
 
                     component.set("v.strPriceCodeTemp", ecPricingData["ListDescription"]);
                 }
