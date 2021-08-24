@@ -1,4 +1,4 @@
-global class CDIEpicorPricing_apex { 
+global class CDIEpicorPricing_apex {
 
 public class myException extends Exception {}
 
@@ -198,7 +198,8 @@ public class myException extends Exception {}
 
             string strCurrentRecordType = '';
             integer intPriceListInquiryCount = 0;
-			boolean blnUomMatch = false;
+//zzz
+boolean blnUomMatch = false;
 
             while (parser.nextToken() != null) {
                 if(parser.getCurrentToken() == JSONToken.START_OBJECT)
