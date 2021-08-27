@@ -11,8 +11,6 @@
     <aura:handler name="change" value="{!v.strOpportunityLineItemProductCode}" action="{!c.handleProductCodeChange}"/>
 
    	<aura:attribute name="lblGetPricing" type="String" default="Get Epicor Pricing" />
-<!-- zzz  not help, put back later if this doesn't help at some point -->
-    <!--lightning:button name="btnGetPricing" label="{!v.lblGetPricing}" onclick="{!c.handle_btnGetPricing}" /-->
     <lightning:button name="btnGetPricing" aura:id="btnGetPricing" label="{!v.lblGetPricing}" onclick="{!c.handle_btnGetPricing}" />
 
     <aura:attribute name="blnLoaded" type="Boolean" default="true" />
@@ -68,8 +66,6 @@
     <aura:attribute name="strPriceCode3" type="String" default="" />
     <aura:attribute name="strPriceCode4" type="String" default="" />
     <aura:attribute name="strPriceCode5" type="String" default="" />
-
-    
     
     <div class="c-container">
         <lightning:layout >
@@ -78,36 +74,20 @@
             <lightning:layoutItem padding="around-small">
                 <div class="header-column">
                     <p class="field-title" title="Quantity">Quantity</p>
-                	 
-<!-- zzz -->
-                    <!--lightning:input type="number" step="0.01" name="inputQuantity1" value="{!v.dQuantity1}" label="" /-->
-<!-- error when load: Caused by: Assertion Failed!: Attribute not defined in the component : false
-	 apparently needs to be:   ui:inputText -->
-                    <!--lightning:input type="number" keyup="{!c.onKeyUp}" step="0.01" name="inputQuantity1" value="{!v.dQuantity1}" label="" /-->
-<!-- this works, but for "regular" key, NOT <tab> key, UGHHH -->
-                    <!--lightning:input onkeyup="{!c.onKeyUp}" type="number" step="0.01" name="inputQuantity1" value="{!v.dQuantity1}" label="" /-->
-<!-- this works, but in controller & helper, can't get the key   -->
-    				<!--lightning:input onkeydown="{!c.onKeyDown}" type="number" step="0.01" name="inputQuantity1" value="{!v.dQuantity1}" label="" /-->
-<span onkeydown="{!c.keyQtyCheck}" class="inputQtyFieldsCheck">
-<!-- NOTE: onkeydown does not work in an input field, need the span -->
-                    <!--lightning:input type="number" step="0.01" aura:id="inputQuantity1" name="inputQuantity1" value="{!v.dQuantity1}" label="" /-->
-                    <lightning:input aura:id="inputQuantity1" type="number" onfocus="{!c.onfocusCheck}" step="0.01"  name="inputQuantity1" value="{!v.dQuantity1}" label="" />
 
-<!-- /span   -->
+					<span onkeydown="{!c.keyQtyCheck}" class="inputQtyFieldsCheck">
 
-                    <p></p>
-<!-- zzz  -->                    
-                    <!--lightning:input type="number" step="0.01" name="inputQuantity2" value="{!v.dQuantity2}" label="" /-->
-                    <lightning:input aura:id="inputQuantity2" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity2" value="{!v.dQuantity2}" label="" />
+                  		<lightning:input aura:id="inputQuantity1" type="number" onfocus="{!c.onfocusCheck}" step="0.01"  name="inputQuantity1" value="{!v.dQuantity1}" label="" />
+                        <p></p>
+                        <lightning:input aura:id="inputQuantity2" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity2" value="{!v.dQuantity2}" label="" />
+                        <p></p>
+                        <lightning:input aura:id="inputQuantity3" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity3" value="{!v.dQuantity3}" label="" />
+                        <p></p>
+                        <lightning:input aura:id="inputQuantity4" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity4" value="{!v.dQuantity4}" label="" />
+                        <p></p>
+                        <lightning:input aura:id="inputQuantity5" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity5" value="{!v.dQuantity5}" label="" />
 
-                    <p></p>
-                    <lightning:input aura:id="inputQuantity3" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity3" value="{!v.dQuantity3}" label="" />
-                    <p></p>
-                    <lightning:input aura:id="inputQuantity4" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity4" value="{!v.dQuantity4}" label="" />
-                    <p></p>
-                    <lightning:input aura:id="inputQuantity5" type="number" onfocus="{!c.onfocusCheck}" step="0.01" name="inputQuantity5" value="{!v.dQuantity5}" label="" />
-
-</span>
+					</span>
 
                 </div>
             </lightning:layoutItem>
@@ -117,21 +97,17 @@
                 <div class="header-column">
                     <p class="field-title" title="UOM">UOM</p>
 
-<!-- zzz     -->
-<span onkeydown="{!c.keyUOMCheck}" class="inputUOMFieldsCheck">
-                    <!--lightning:input type="String" name="inputUOM1" style="width: 70px" value="{!v.strUOM1}" label="" /-->
-                    <lightning:input type="String" aura:id="inputUOM1" name="inputUOM1" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM1}" label="" />
-
-                    
-                    <p></p>
-                    <lightning:input type="String" aura:id="inputUOM2" name="inputUOM2" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM2}" label="" />
-                    <p></p>
-                    <lightning:input type="String" aura:id="inputUOM3" name="inputUOM3" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM3}" label="" />
-                    <p></p>
-                    <lightning:input type="String" aura:id="inputUOM4" name="inputUOM4" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM4}" label="" />
-                    <p></p>
-                    <lightning:input type="String" aura:id="inputUOM5" name="inputUOM5" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM5}" label="" />
-</span>
+					<span onkeydown="{!c.keyUOMCheck}" class="inputUOMFieldsCheck">
+                    	<lightning:input type="String" aura:id="inputUOM1" name="inputUOM1" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM1}" label="" />
+                        <p></p>
+                        <lightning:input type="String" aura:id="inputUOM2" name="inputUOM2" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM2}" label="" />
+                        <p></p>
+                        <lightning:input type="String" aura:id="inputUOM3" name="inputUOM3" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM3}" label="" />
+                        <p></p>
+                        <lightning:input type="String" aura:id="inputUOM4" name="inputUOM4" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM4}" label="" />
+                        <p></p>
+                        <lightning:input type="String" aura:id="inputUOM5" name="inputUOM5" onfocus="{!c.onfocusCheck}" style="width: 70px" value="{!v.strUOM5}" label="" />
+					</span>
 
                 </div>
             </lightning:layoutItem> 

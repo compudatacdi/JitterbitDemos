@@ -211,18 +211,6 @@
         
     },
     
-    //zzz
-    doKeyDown: function(component, event)
-    {
-        // access the event object in the helper using getParam() or getParams()
-        //console.log(event.getParam('keyCode'));
-        //console.log(event.getParams().keyCode);
-        
-        //yields "undefined"
-        //  ugh, needs to be "ui:inputText" instead of aura object
-        //component.set("v.strDebugMessage", "  /  " + event.getParam('keyCode'));
-        //component.set("v.strDebugMessage", "  /  " + event.getParams().keyCode);
 
-    }
     
 })
