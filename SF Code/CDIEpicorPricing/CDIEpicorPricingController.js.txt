@@ -52,6 +52,21 @@
     handle_btnGetPricing : function(component, event, helper) 
     {
         
+//zzz
+//component.set("v.strDebugMessage", " / xxxx ");
+//yields nothing:
+//alert(document.getElementById(elementFocus.id));
+//yields "undefined": 
+//alert(document.activeElement.id);
+//yields "SecureElement: [object HTMLBodyElement]{ key: {"namespace":"c"} }":
+//alert(event.target);
+//alert(event.currentTarget);
+        //// !!!  yields "btnGetPricing": 
+//alert(event.getSource().get("v.name"));
+
+
+
+
         if(component.get("v.strMessage").indexOf("Epicor Error") != -1){
             //note: make user fix connection error before trying to get pricing
 	        if(component.get("v.strMessage").indexOf("Invalid UOM") != -1){
@@ -80,7 +95,9 @@
         component.set("v.strPriceCode4", ""); 
         component.set("v.strPrice5", "");
         component.set("v.dExtPrice5", "");
-        component.set("v.strPriceCode5", ""); 
+        component.set("v.strPriceCode5", "");
+        
+        component.set("v.strCurrentInputField", "");
 
         component.set('v.blnLoaded', false);
         var strPartNum = component.get("v.strOpportunityLineItemProductCode");
@@ -127,6 +144,14 @@
                                     component.set("v.strPriceCode2", component.get("v.strPriceCodeTemp")); 
                                     component.set("v.strMessage", "Epicor Data Loaded");
                                     component.set('v.blnLoaded', true);
+//zzz
+//component.set("v.strDebugMessage", "  / x1.4  ");
+//this kills the run with no error
+//component.find("inputQuantity2").focus();
+//component.find("inputField1").focus();
+                                    
+//component.set("v.strDebugMessage", "  / xxxx  ");
+
                                 } 
                                 else{
                                     component.set("v.strPriceCode2", "Invalid UOM");
@@ -304,6 +329,228 @@
         };
 		*/ 
 
+//zzz
+//component.find("inputQuantity2").focus()
+//component.find("inputField1").focus();
+
+//NOTE: this works on the "aura:id" in the definition, not the "name"
+//	    this prevents any code after it from executing 
+//component.find("inputQuantity2").focus();
+//going to the next level.....
+
+//component.set("v.strDebugMessage", "  / xxx   ");
+//var strCurrentObjectID = "inputQuantity1";
+////component.set("v.strDebugMessage", strCurrentObjectID);
+//component.find(strCurrentObjectID).focus();
+
+        
+        
+    },
+    
+//zzz 
+    onKeyUp: function(component, event, helper)
+    {
+        //helper.doKeyUp(component, event);
+        alert("key up"); 
+    },
+//zzz 
+    onKeyDown: function(component, event, helper)
+    {
+        //helper.doKeyUp(component, event);
+        
+        //yields "undefined":
+        //alert("key down: " + event.which);
+        
+        /*
+component.set("v.strDebugMessage", "  / 1 ");
+        var whichOne = event.getSource().getLocalId();         
+component.set("v.strDebugMessage", "  / 2 ");
+        var mycmp = component.find(whichOne);
+component.set("v.strDebugMessage", "  / 3 ");
+        //console.log(whichOne + '=' + mycmp.get("v.value"));
+        //bombs here:
+        alert("key down: " + whichOne + '=' + mycmp.get("v.value"));
+        */
+
+        //yields "undefined":
+		//alert("key down: " + event.getParam('keyCode'));
+
+        //yields "undefined":
+        /*
+component.set("v.strDebugMessage", "  / 1 ");
+		alert("key down: " + event.getParams().keyCode);
+component.set("v.strDebugMessage", "  / 2 ");
+        */
+        
+        //helper.doKeyDown(component, event);
+        
+        //yields "undefined":
+        //alert("key down: " + event.keyCode);
+        
+    },
+    
+
+//zzz  
+	keyQtyCheck : function(component, event, helper){
+        //being executed from the span
+        
+        //yields:   keyCheck: SecureElement: [object HTMLSpanElement]{ key: {"namespace":"c"} }
+        //alert("keyCheck: " + event.currentTarget);
+        
+        //alert("keyCheck: " + event.keyCode);
+
+        //yields:   keyCheck: SecureDOMEvent: [object KeyboardEvent]{ key: {"namespace":"c"} }
+        //alert("keyCheck: " + event);
+        //yields:  keyCheck: SecureComponent: markup://c:CDIEpicorPricing {2834:0}{ key: {"namespace":"c"} }
+        //alert("keyCheck: " + component);
+        
+        //bombs:
+        //alert("keyCheck: " + event.getSource());
+        //alert("keyCheck: " + event.getSource().get("v.value"));
+        //nothing:
+        //alert("keyCheck: " + event.target.id.split("-").shift().trim());
+        //alert("keyCheck: " + event.target.id);
+        //yields "undefined":
+        //alert("keyCheck: " + event.target.value);
+
+/*
+component.set("v.strDebugMessage", "  / 1X ");
+        //BOMBS HERE:
+        var whichOne = event.getSource().getLocalId();       
+component.set("v.strDebugMessage", "  / 2 ");
+        var mycmp = component.find(whichOne);
+component.set("v.strDebugMessage", "  / 3 ");
+        //console.log(whichOne + '=' + mycmp.get("v.value"));
+        //bombs here:
+        alert("keyCheck: " + whichOne + '=' + mycmp.get("v.name"));
+*/
+        
+        //THIS WORKS!!!
+        if (event.keyCode == 9) {
+        	event.preventDefault();
+            
+//event.stopPropagation();
+            
+            //works:
+            //component.find("inputUOM1").focus();
+
+            if(component.get("v.strCurrentInputField") == "inputQuantity1"){
+                component.find("inputUOM1").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputQuantity2"){
+                component.find("inputUOM2").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputQuantity3"){
+                component.find("inputUOM3").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputQuantity4"){
+                component.find("inputUOM4").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputQuantity5"){
+                component.find("inputUOM5").focus();
+            }
+            
+/*             
+            if(component.get("v.strCurrentInputField") == "inputUOM1"){
+                component.find("inputQuantity2").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM2"){
+                component.find("inputQuantity3").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM3"){
+                component.find("inputQuantity4").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM4"){
+                component.find("inputQuantity5").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM5"){
+                component.find("inputQuantity1").focus();
+            }
+*/
+
+//event.preventDefault();
+
+            
+//            component.set("v.strDebugMessage", "  / onfocusCheck 1:  " + component.get("v.strCurrentInputField"));
+//           	component.set("v.strDebugMessage", "  / onfocusCheck 1.1     ");
+            
+            //bombs, no error:
+            //looks like CASE is for code behind custom objects, not for writing code here
+            /*
+			var strNextField = 
+                CASE(component.get("v.strCurrentInputField"),
+                    "inputQuantity1", "inputUOM1",
+                    "inputQuantity2", "inputUOM2",
+                     ""
+                    );
+            */
+            
+            //NO, this is apex code:
+            /*
+            var strCurrentInputField = component.get("v.strCurrentInputField");
+            switch on strCurrentInputField {
+               when "inputQuantity1" {
+                   component.find("inputUOM1").focus();
+               }
+               when "inputQuantity2" {
+                   component.find("inputUOM2").focus();
+               }
+               when else {
+               }
+            };
+            */
+//           	component.set("v.strDebugMessage", "  / onfocusCheck 1.2   ");
+//           	component.set("v.strDebugMessage", "  / onfocusCheck 2:  " + strNextField);
+//			component.find(strNextField).focus();
+            
+            
+        }
+
+//zzz 
+//component.set("v.strDebugMessage", "  / keyCheck   "); 
+        
+        //not work:
+        //alert(event.getSource().get("v.name"));
+		//component.set("v.strDebugMessage", "  / " + event.getSource().get("v.name"));
+        
     },
 
+//zzz 
+	keyUOMCheck : function(component, event, helper){
+        
+        //THIS WORKS!!! 
+        if (event.keyCode == 9) {
+        	event.preventDefault();
+
+            if(component.get("v.strCurrentInputField") == "inputUOM1"){
+                component.find("inputQuantity2").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM2"){
+                component.find("inputQuantity3").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM3"){
+                component.find("inputQuantity4").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM4"){
+                component.find("inputQuantity5").focus();
+            }
+            if(component.get("v.strCurrentInputField") == "inputUOM5"){
+                component.find("inputQuantity1").focus();
+            }
+
+        };
+        
+    },
+    
+	onfocusCheck : function(component, event, helper){
+        
+		//component.set("v.strDebugMessage", "  / onfocusCheck    ");
+		//component.set("v.strDebugMessage", "  /  " + event.getSource().get("v.name"));
+		component.set("v.strCurrentInputField", event.getSource().get("v.name"));
+    
+       	//component.set("v.strDebugMessage", "  /  " + event.getSource().get("v.name"));
+        
+    },
+
+    
 })
